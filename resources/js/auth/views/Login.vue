@@ -13,7 +13,10 @@
               <b-form-input id="password" v-model="form.password" type="password" required placeholder="Hasło"></b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="outline-primary">Zalguj się</b-button>
+            <b-alert variant="danger" v-if="errors._500.visible" show>{{ errors._500.content }}</b-alert>
+            <b-alert variant="danger" v-if="errors._401.visible" show>{{ errors._401.content }}</b-alert>
+
+            <b-button type="submit" variant="outline-primary" :disabled="isProcessing">Zaloguj się</b-button>
           </b-form>
         </b-col>
       </b-row>
@@ -35,12 +38,41 @@ export default {
         email: '',
         password: '',
       },
+      errors: {
+        _500: {
+          content: "Coś poszło nie tak! Spróbuj ponownie.",
+          visible: false,
+        },
+        _401: {
+          content: "Email lub hasło zostało źle wprowadzone",
+          visible: false,
+        },
+      },
+      isProcessing: false,
     };
   },
   methods: {
     submit(e) {
       e.preventDefault();
-      console.log(this.form);
+      this.isProcessing = true;
+      this.$store.dispatch('retrieveToken', {
+        email: this.form.email,
+        password: this.form.password
+      })
+      .then((resp) => {
+        this.$router.push({ name: 'home' });
+      })
+      .catch((err) => {
+        const code = err.response.status;
+        this.isProcessing = false;
+        if (code == 401) {
+          this.errors._401.visible = true;
+          this.errors._500.visible = false;
+        } else {
+          this.errors._500.visible = true;
+          this.errors._401.visible = false;
+        }
+      });
     },
   },
 };
@@ -77,5 +109,6 @@ export default {
 .form-holder {
   margin: 0 auto;
   margin-top: 50px;
+  margin-bottom: 50px;
 }
 </style>

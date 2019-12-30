@@ -8,7 +8,13 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <li class="nav-item">
-            <router-link :to="{name: 'login'}" target="_self" class="nav-link">Zalguj się</router-link>
+            <router-link :to="{ name: 'login' }" target="_self" class="nav-link" v-if="!this.$store.getters.loggedIn">Zaloguj się</router-link>
+          </li>
+        </b-navbar-nav>
+
+        <b-navbar-nav class="ml-auto" v-if="this.$store.getters.loggedIn">
+          <li class="nav-item">
+            <router-link :to="{ name: 'logout' }" target="_self" class="nav-link">Wyloguj się</router-link>
           </li>
         </b-navbar-nav>
       </b-collapse>
