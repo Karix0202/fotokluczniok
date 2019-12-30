@@ -3,7 +3,7 @@
     <AdminNav />
     <b-container>
       <b-row>
-        <b-col md="12" lg="6" class="form-holder">
+        <b-col md="12" lg="4" class="form-holder">
           <b-form @submit="submit" class="login-form">
             <b-form-group id="email-group" label="Email:" label-for="email">
               <b-form-input id="email" v-model="form.email" type="email" required placeholder="Email"></b-form-input>

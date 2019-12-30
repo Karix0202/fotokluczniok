@@ -348,7 +348,7 @@ var render = function() {
             [
               _c(
                 "b-col",
-                { staticClass: "form-holder", attrs: { md: "12", lg: "6" } },
+                { staticClass: "form-holder", attrs: { md: "12", lg: "4" } },
                 [
                   _c(
                     "b-form",
