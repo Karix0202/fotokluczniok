@@ -1,10 +1,11 @@
 <template>
   <header>
+    <Nav />
     <nav class="navbar nvbar-light custom-navbar">
       <b-container>
-        <a href="/" class="navbar-brand">Fotokluczniok</a>
+        <a href="/" class="navbar-brand">FOTOKLUCZNIOK</a>
 
-        <a href="#" class="burger">
+        <a href="#" class="burger" data-toggle="collapse" data-target="#main-navbar" v-on:click="burgerMenu()">
           <span></span>
         </a>
       </b-container>
@@ -13,19 +14,42 @@
 </template>
 
 <script>
+import Nav from './Nav.vue';
+
 export default {
   name: 'Header',
+  components: {
+    Nav
+  },
+  methods: {
+    burgerMenu() {
+      $(window).scrollTop(0);
+
+      if (!$('.burger').hasClass('active')) {
+        $('.burger').addClass('active');
+      } else {
+        $('.burger').removeClass('active');        
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 .custom-navbar {
-  padding-top: 50px;
+  padding-top: 25px;
   width: 100%;
 
   .navbar-brand {
     font-size: 1.7rem;
     color: #000;
+  }
+
+  @media (max-width: 780px) {
+    .container {
+      padding-right: 0;
+      padding-left: 0;
+    }
   }
 
   .burger {
