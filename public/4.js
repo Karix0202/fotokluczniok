@@ -120,7 +120,7 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       this.isProcessing = true;
-      var url = this.aciton === 0 ? 'createPhotographyGroup' : 'updatePhotographyGroup';
+      var url = this.action === 0 ? 'createPhotographyGroup' : 'updatePhotographyGroup';
       this.$store.dispatch(url, {
         name: this.form.name,
         id: this.id

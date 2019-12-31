@@ -67,7 +67,7 @@ export default {
       e.preventDefault();
       this.isProcessing = true;
 
-      const url = (this.aciton === 0) ? 'createPhotographyGroup' : 'updatePhotographyGroup';
+      const url = (this.action === 0) ? 'createPhotographyGroup' : 'updatePhotographyGroup';
 
       this.$store.dispatch(url, {
         name: this.form.name,
