@@ -44,7 +44,15 @@ const routes = [
     meta: {
       requiresAuth: true,
     },
-    component: () => import('./admin/views/PhotographyGroupCreateOrUpdate.vue'),
+    component: () => import('./admin/views/PhotographyGroupStore.vue'),
+  },
+  {
+    path: '/group/edit/:id',
+    name: 'photographyGroupEdit',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./admin/views/PhotographyGroupStore.vue'),
   },
 ];
 

@@ -51856,7 +51856,16 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupCreateOrUpdate.vue */ "./resources/js/admin/views/PhotographyGroupCreateOrUpdate.vue"));
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
+  }
+}, {
+  path: '/group/edit/:id',
+  name: 'photographyGroupEdit',
+  meta: {
+    requiresAuth: true
+  },
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -51969,6 +51978,59 @@ function endpoint(url) {
           });
         });
       }
+    },
+    getPhotographyGroups: function getPhotographyGroups(context) {
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint('group')).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
+    },
+    createPhotographyGroup: function createPhotographyGroup(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint('group/create'), {
+          name: credentials.name
+        }).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
+    },
+    deletePhotographyGroup: function deletePhotographyGroup(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"](endpoint("group/delete/".concat(credentials.id))).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
+    },
+    getPhotographyGroup: function getPhotographyGroup(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint("group/get/".concat(credentials.id))).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
+    },
+    updatePhotographyGroup: function updatePhotographyGroup(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(endpoint("group/update/".concat(credentials.id)), {
+          name: credentials.name
+        }).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
     }
   },
   modules: {}

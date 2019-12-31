@@ -69,6 +69,71 @@ export default new Vuex.Store({
         });
       }
     },
+    getPhotographyGroups(context) {
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint('group'))
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        })
+      });
+    },
+    createPhotographyGroup(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint('group/create'), {
+          name: credentials.name,
+        })
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+      });
+    },
+    deletePhotographyGroup(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.delete(endpoint(`group/delete/${credentials.id}`))
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+      });
+    },
+    getPhotographyGroup(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint(`group/get/${credentials.id}`))
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+      });
+    },
+    updatePhotographyGroup(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.put(endpoint(`group/update/${credentials.id}`), {name: credentials.name})
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+      });
+    },
   },
   modules: {
   },

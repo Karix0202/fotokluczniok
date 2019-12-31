@@ -77,13 +77,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'HomeTable',
   props: {
     items: Array,
     headers: Array,
     header: String,
-    addLink: String
+    create: String,
+    edit: String,
+    id: Number
+  },
+  methods: {
+    deleteRow: function deleteRow(elId) {
+      var _this = this;
+
+      if (this.id === 0) {
+        this.$store.dispatch('deletePhotographyGroup', {
+          id: elId
+        }).then(function (resp) {
+          _this.$parent.deleteRow(_this.$parent.photographyGroups, {
+            id: elId
+          });
+        })["catch"](function (err) {
+          console.log(err);
+        });
+      }
+    }
   }
 });
 
@@ -138,16 +164,56 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      activeSectionId: 0
+      activeSectionId: 0,
+      photographyGroups: []
     };
+  },
+  created: function created() {
+    this.getPhotographyGroups();
   },
   methods: {
     changeSection: function changeSection(id) {
       if (id !== this.activeSectionId) {
         $("div[section-id='".concat(this.activeSectionId, "']")).removeClass('active');
         $("div[section-id=".concat(id, "]")).addClass('active');
+        if (id === 0) this.getPhotographyGroups();
         this.activeSectionId = id;
       }
+    },
+    deleteRow: function deleteRow(arr, el) {
+      for (var i = 0; i < arr.length; i += 1) {
+        if (arr[i].id === el.id) {
+          arr.splice(i, 1);
+        }
+      }
+    },
+    getPhotographyGroups: function getPhotographyGroups() {
+      var _this = this;
+
+      this.$store.dispatch('getPhotographyGroups').then(function (resp) {
+        resp.data.forEach(function (newEl) {
+          var count = 0;
+
+          _this.photographyGroups.forEach(function (el) {
+            if (el.id === newEl.id) count += 1;
+          });
+
+          if (count === 0) _this.photographyGroups.push(newEl);
+        });
+
+        _this.photographyGroups.forEach(function (el) {
+          var count = 0;
+          resp.data.forEach(function (newEl) {
+            if (el.id === newEl.id) count += 1;
+          });
+
+          if (count === 0) {
+            _this.deleteRow(_this.photographyGroups, el);
+          }
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   }
 });
@@ -185,7 +251,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".custom-table {\n  border-top: none !important;\n}\n.section-header {\n  padding-top: 12px;\n  padding-bottom: 12px;\n}\n.section-header:last-child {\n  text-align: right;\n}\n.section-add-btn {\n  text-decoration: none;\n  color: #000;\n  border: 1px solid #000;\n  padding: 8px;\n  -webkit-transition: all 0.1s ease-out;\n  transition: all 0.1s ease-out;\n}\n.section-add-btn:hover {\n  text-decoration: none !important;\n  color: #fff;\n  background: #000;\n}", ""]);
+exports.push([module.i, ".custom-table {\n  border-top: none !important;\n}\n.section-header {\n  padding-top: 12px;\n  padding-bottom: 12px;\n}\n.section-header:last-child {\n  text-align: right;\n}\n.section-add-btn {\n  text-decoration: none;\n  color: #000;\n  border: 1px solid #000;\n  padding: 8px;\n  -webkit-transition: all 0.1s ease-out;\n  transition: all 0.1s ease-out;\n}\n.section-add-btn:hover {\n  text-decoration: none !important;\n  color: #fff;\n  background: #000;\n}\n.delete-row {\n  color: red;\n  text-decoration: underline;\n  border: none;\n  background: none;\n}\n.delete-row:hover {\n  color: red;\n}\n.edit-row {\n  color: #FFC107;\n  text-decoration: underline;\n  border: none;\n  background: none;\n}\n.edit-row:hover {\n  color: #FFC107;\n}\n.fade-enter-active, .fade-leave-active {\n  -webkit-transition: all 1.5s;\n  transition: all 1.5s;\n}\n.fade-enter, .fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}", ""]);
 
 // exports
 
@@ -437,14 +503,15 @@ var render = function() {
                     },
                     [
                       _c(
-                        "a",
+                        "router-link",
                         {
                           staticClass: "section-add-btn",
-                          attrs: { href: "/" }
+                          attrs: { to: { name: _vm.create } }
                         },
                         [_vm._v("Dodaj")]
                       )
-                    ]
+                    ],
+                    1
                   )
                 ],
                 1
@@ -454,21 +521,69 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("b-col", { attrs: { lg: "12", md: "12" } }, [
-            _c("table", { staticClass: "table table-striped custom-table" }, [
-              _c("thead", [
+            _c(
+              "table",
+              { staticClass: "table table-striped custom-table" },
+              [
+                _c("thead", [
+                  _c(
+                    "tr",
+                    _vm._l(_vm.headers, function(header, i) {
+                      return _c("th", { key: i, attrs: { scope: "col" } }, [
+                        _vm._v(_vm._s(header))
+                      ])
+                    }),
+                    0
+                  )
+                ]),
+                _vm._v(" "),
                 _c(
-                  "tr",
-                  _vm._l(_vm.headers, function(header, i) {
-                    return _c("th", { key: i, attrs: { scope: "col" } }, [
-                      _vm._v(_vm._s(header))
+                  "transition-group",
+                  { attrs: { tag: "tbody", name: "fade" } },
+                  _vm._l(_vm.items, function(item, i) {
+                    return _c("tr", { key: item.id }, [
+                      _c("th", { attrs: { scope: "row" } }, [
+                        _vm._v(_vm._s(i + 1))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(_vm._s(item.name))]),
+                      _vm._v(" "),
+                      _c(
+                        "th",
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "delete-row",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteRow(item.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Usuń")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "router-link",
+                            {
+                              staticClass: "edit-row",
+                              attrs: {
+                                to: { name: _vm.edit, params: { id: item.id } }
+                              }
+                            },
+                            [_vm._v("Edytuj")]
+                          )
+                        ],
+                        1
+                      )
                     ])
                   }),
                   0
                 )
-              ]),
-              _vm._v(" "),
-              _c("tbody")
-            ])
+              ],
+              1
+            )
           ])
         ],
         1
@@ -581,7 +696,11 @@ var render = function() {
                             ? _c("HomeTable", {
                                 attrs: {
                                   headers: ["#", "Nazwa", "Akcja"],
-                                  header: "Nagłówki"
+                                  header: "Nagłówki",
+                                  items: _vm.photographyGroups,
+                                  create: "photographyGroupCreate",
+                                  edit: "photographyGroupEdit",
+                                  id: 0
                                 }
                               })
                             : _vm._e(),

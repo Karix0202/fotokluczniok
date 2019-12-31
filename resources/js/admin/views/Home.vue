@@ -15,7 +15,7 @@
             </b-col>
 
             <b-col lg="9" md="12">
-              <HomeTable v-if="activeSectionId === 0" :headers="['#', 'Nazwa', 'Akcja']" :header="'Nagłówki'"/>
+              <HomeTable v-if="activeSectionId === 0" :headers="['#', 'Nazwa', 'Akcja']" :header="'Nagłówki'" :items="photographyGroups" :create="'photographyGroupCreate'" :edit="'photographyGroupEdit'" :id="0"/>
               <p v-if="activeSectionId === 1">Fotografie</p>
               <p v-if="activeSectionId === 2">Galerie</p>
             </b-col>
@@ -39,7 +39,11 @@ export default {
   data() {
     return {
       activeSectionId: 0,
+      photographyGroups: [],
     };
+  },
+  created() {
+    this.getPhotographyGroups();
   },
   methods: {
     changeSection(id) {
@@ -47,8 +51,44 @@ export default {
         $(`div[section-id='${this.activeSectionId}']`).removeClass('active');
         $(`div[section-id=${id}]`).addClass('active');
 
+        if (id === 0) this.getPhotographyGroups();
+
         this.activeSectionId = id;
       }
+    },
+    deleteRow(arr, el) {
+      for (let i = 0; i < arr.length; i += 1) {
+        if (arr[i].id === el.id) {
+          arr.splice(i, 1);
+        }
+      }
+    },
+    getPhotographyGroups() {
+      this.$store.dispatch('getPhotographyGroups')
+      .then((resp) => {
+        resp.data.forEach((newEl) => {
+          let count = 0;
+          this.photographyGroups.forEach((el) => {
+            if (el.id === newEl.id) count += 1;
+          });
+
+          if (count === 0) this.photographyGroups.push(newEl);
+        });
+
+        this.photographyGroups.forEach((el) => {
+          let count = 0;
+          resp.data.forEach((newEl) => {
+            if (el.id === newEl.id) count += 1;
+          });
+
+          if (count === 0) {
+            this.deleteRow(this.photographyGroups, el);
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     },
   },
 };

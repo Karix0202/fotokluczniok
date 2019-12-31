@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PhotographyGroup;
+use \Validator;
 
 class PhotographyGroupController extends Controller
 {
@@ -15,5 +16,49 @@ class PhotographyGroupController extends Controller
     public function getAll()
     {
         return response()->json(PhotographyGroup::all());
+    }
+
+    public function store(Request $request)
+    {
+        $validator = $this->getValidator($request->all());
+        if ($validator->fails()) return response()->json([$validator->errors()]);
+
+        $photographyGroup = new PhotographyGroup();
+        $photographyGroup->name = $request->input('name');
+        $photographyGroup->save();
+
+        return response()->json($photographyGroup);
+    }
+
+    public function get(PhotographyGroup $group)
+    {
+        return response()->json($group);
+    }
+
+    public function delete(PhotographyGroup $group)
+    {
+        if (! $group->delete()) return response()->json(['error' => 'Could not delete photography group']);
+
+        return response()->json(['message' => 'success']);
+    }
+
+    public function update(PhotographyGroup $group, Request $request)
+    {
+        $validator = $this->getValidator($request->all());
+        if ($validator->fails()) return response()->json([$validator->errors()]);
+
+        $group->name = $request->input('name');
+        $group->save();
+
+        return response()->json($group);
+    }
+
+    public function getValidator($data)
+    {
+        $validator = Validator::make($data, [
+            'name' => ['required']
+        ]);
+
+        return $validator;
     }
 }
