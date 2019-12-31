@@ -9,9 +9,7 @@
             <b-col lg="3" md="12" class="section-picker-holder">
               <b-list-group>
                 <b-list-group-item class="active" v-on:click="changeSection(0)" section-id="0">Nagłówki</b-list-group-item>
-                <b-list-group-item v-on:click="changeSection(1)" section-id="1">
-                  Fotogrfia
-                </b-list-group-item>
+                <b-list-group-item v-on:click="changeSection(1)" section-id="1">Fotogrfia</b-list-group-item>
                 <b-list-group-item v-on:click="changeSection(2)" section-id="2">Galerie</b-list-group-item>
               </b-list-group>
             </b-col>
