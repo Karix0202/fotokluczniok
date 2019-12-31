@@ -4,7 +4,7 @@
     <b-container>
       <b-row>
         <b-col md="12" lg="4" class="form-holder">
-          <b-form @submit="submit" class="login-form">
+          <b-form @submit="submit" class="custom-form">
             <b-form-group id="email-group" label="Email:" label-for="email">
               <b-form-input id="email" v-model="form.email" type="email" required placeholder="Email"></b-form-input>
             </b-form-group>
@@ -77,38 +77,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-.login-form {
-  input {
-    border: 1px solid #000000;
-    color: #000000;
-    border-radius: 0;
-    outline: none;
-  }
-
-  .btn {
-    border: 1px solid #000000;
-    color: #000000;
-    border-radius: 0;
-    outline: none;
-
-    &:hover {
-      border: 1px solid #000000;
-      background-color: #000000;
-      color: #ffffff;
-    }
-
-    &:focus {
-      outline: none !important;
-      box-shadow: none;
-    }
-  }
-}
-
-.form-holder {
-  margin: 0 auto;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-</style>

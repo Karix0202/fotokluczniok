@@ -30738,7 +30738,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Inconsolata&display=swap);", ""]);
 
 // module
-exports.push([module.i, "* {\n  font-family: \"Inconsolata\", monospace;\n}", ""]);
+exports.push([module.i, "* {\n  font-family: \"Inconsolata\", monospace;\n}\n.custom-form input {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none;\n}\n.custom-form .btn {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none;\n}\n.custom-form .btn:hover {\n  border: 1px solid #000000;\n  background-color: #000000;\n  color: #ffffff;\n}\n.custom-form .btn:focus {\n  outline: none !important;\n  box-shadow: none;\n}\n.form-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}", ""]);
 
 // exports
 
@@ -51848,6 +51848,15 @@ var routes = [{
   },
   component: function component() {
     return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./admin/views/Home.vue */ "./resources/js/admin/views/Home.vue"));
+  }
+}, {
+  path: '/group/create',
+  name: 'photographyGroupCreate',
+  meta: {
+    requiresAuth: true
+  },
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupCreateOrUpdate.vue */ "./resources/js/admin/views/PhotographyGroupCreateOrUpdate.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

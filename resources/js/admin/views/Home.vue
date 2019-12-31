@@ -15,7 +15,7 @@
             </b-col>
 
             <b-col lg="9" md="12">
-              <p v-if="activeSectionId === 0">Nagłówki</p>
+              <HomeTable v-if="activeSectionId === 0" :headers="['#', 'Nazwa', 'Akcja']" :header="'Nagłówki'"/>
               <p v-if="activeSectionId === 1">Fotografie</p>
               <p v-if="activeSectionId === 2">Galerie</p>
             </b-col>
@@ -28,11 +28,13 @@
 
 <script>
 import AdminNav from '../../admin/components/AdminNav.vue';
+import HomeTable from '../../admin/components/HomeTable.vue';
 
 export default {
   name: 'Home',
   components: {
     AdminNav,
+    HomeTable,
   },
   data() {
     return {
@@ -47,7 +49,7 @@ export default {
 
         this.activeSectionId = id;
       }
-    }
+    },
   },
 };
 </script>

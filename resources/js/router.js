@@ -38,6 +38,14 @@ const routes = [
     },
     component: () => import('./admin/views/Home.vue'),
   },
+  {
+    path: '/group/create',
+    name: 'photographyGroupCreate',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./admin/views/PhotographyGroupCreateOrUpdate.vue'),
+  },
 ];
 
 const router = new VueRouter({
