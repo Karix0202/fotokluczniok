@@ -285,9 +285,11 @@ var render = function() {
           attrs: { toggleable: "lg", type: "dark", variant: "info" }
         },
         [
-          _c("b-navbar-brand", { attrs: { href: "#" } }, [
-            _vm._v("Admin Panel")
-          ]),
+          _c(
+            "router-link",
+            { staticClass: "navbar-brand", attrs: { to: { name: "home" } } },
+            [_vm._v("Admin Dashboard")]
+          ),
           _vm._v(" "),
           _c("b-navbar-toggle", { attrs: { target: "nav-collapse" } }),
           _vm._v(" "),

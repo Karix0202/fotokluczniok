@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="info" class="custom-nav">
-      <b-navbar-brand href="#">Admin Panel</b-navbar-brand>
+      <router-link class="navbar-brand" :to="{ name: 'home' }">Admin Dashboard</router-link>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
