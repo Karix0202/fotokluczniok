@@ -84,6 +84,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'HomeTable',
   props: {
@@ -92,7 +94,8 @@ __webpack_require__.r(__webpack_exports__);
     header: String,
     create: String,
     edit: String,
-    id: Number
+    id: Number,
+    keys: Array
   },
   methods: {
     deleteRow: function deleteRow(elId) {
@@ -165,7 +168,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       activeSectionId: 0,
-      photographyGroups: []
+      photographyGroups: [],
+      galleries: []
     };
   },
   created: function created() {
@@ -177,6 +181,7 @@ __webpack_require__.r(__webpack_exports__);
         $("div[section-id='".concat(this.activeSectionId, "']")).removeClass('active');
         $("div[section-id=".concat(id, "]")).addClass('active');
         if (id === 0) this.getPhotographyGroups();
+        if (id === 2) this.getGalleries();
         this.activeSectionId = id;
       }
     },
@@ -211,6 +216,13 @@ __webpack_require__.r(__webpack_exports__);
             _this.deleteRow(_this.photographyGroups, el);
           }
         });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getGalleries: function getGalleries() {
+      this.$store.dispatch('getGalleries').then(function (resp) {
+        console.log(resp);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -530,12 +542,18 @@ var render = function() {
                 _c("thead", [
                   _c(
                     "tr",
-                    _vm._l(_vm.headers, function(header, i) {
-                      return _c("th", { key: i, attrs: { scope: "col" } }, [
-                        _vm._v(_vm._s(header))
-                      ])
-                    }),
-                    0
+                    [
+                      _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+                      _vm._v(" "),
+                      _vm._l(_vm.headers, function(header, i) {
+                        return _c("th", { key: i, attrs: { scope: "col" } }, [
+                          _vm._v(_vm._s(header))
+                        ])
+                      }),
+                      _vm._v(" "),
+                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Akcja")])
+                    ],
+                    2
                   )
                 ]),
                 _vm._v(" "),
@@ -543,43 +561,55 @@ var render = function() {
                   "transition-group",
                   { attrs: { tag: "tbody", name: "fade" } },
                   _vm._l(_vm.items, function(item, i) {
-                    return _c("tr", { key: item.id }, [
-                      _c("th", { attrs: { scope: "row" } }, [
-                        _vm._v(_vm._s(i + 1))
-                      ]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v(_vm._s(item.name))]),
-                      _vm._v(" "),
-                      _c(
-                        "th",
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "delete-row",
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteRow(item.id)
+                    return _c(
+                      "tr",
+                      { key: item.id },
+                      [
+                        _c("th", { attrs: { scope: "row" } }, [
+                          _vm._v(_vm._s(i + 1))
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.keys, function(key, j) {
+                          return _c("th", { key: j }, [
+                            _vm._v(_vm._s(item[key]))
+                          ])
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "delete-row",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteRow(item.id)
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("Usuń")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "router-link",
-                            {
-                              staticClass: "edit-row",
-                              attrs: {
-                                to: { name: _vm.edit, params: { id: item.id } }
-                              }
-                            },
-                            [_vm._v("Edytuj")]
-                          )
-                        ],
-                        1
-                      )
-                    ])
+                              },
+                              [_vm._v("Usuń")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "edit-row",
+                                attrs: {
+                                  to: {
+                                    name: _vm.edit,
+                                    params: { id: item.id }
+                                  }
+                                }
+                              },
+                              [_vm._v("Edytuj")]
+                            )
+                          ],
+                          1
+                        )
+                      ],
+                      2
+                    )
                   }),
                   0
                 )
@@ -697,12 +727,13 @@ var render = function() {
                           _vm.activeSectionId === 0
                             ? _c("HomeTable", {
                                 attrs: {
-                                  headers: ["#", "Nazwa", "Akcja"],
+                                  headers: ["Nazwa"],
                                   header: "Nagłówki",
                                   items: _vm.photographyGroups,
                                   create: "photographyGroupCreate",
                                   edit: "photographyGroupEdit",
-                                  id: 0
+                                  id: 0,
+                                  keys: ["name"]
                                 }
                               })
                             : _vm._e(),

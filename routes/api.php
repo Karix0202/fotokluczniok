@@ -21,3 +21,12 @@ Route::group([
     Route::post('get/{group}', 'PhotographyGroupController@get');
     Route::put('update/{group}', 'PhotographyGroupController@update');
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'gallery'
+], function ($router) {
+    Route::post('', 'GalleryController@getPublic');
+    Route::post('all', 'GalleryController@getAll');
+    Route::post('create', 'GalleryController@store');
+});

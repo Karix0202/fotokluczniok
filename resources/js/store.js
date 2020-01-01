@@ -134,6 +134,19 @@ export default new Vuex.Store({
         });
       });
     },
+    getGalleries(context) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint(`gallery/all`))
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+      });
+    },
   },
   modules: {
   },

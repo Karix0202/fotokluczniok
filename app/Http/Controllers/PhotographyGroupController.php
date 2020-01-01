@@ -21,7 +21,7 @@ class PhotographyGroupController extends Controller
     public function store(Request $request)
     {
         $validator = $this->getValidator($request->all());
-        if ($validator->fails()) return response()->json([$validator->errors()]);
+        if ($validator->fails()) return response()->json([$validator->errors()], 406);
 
         $photographyGroup = new PhotographyGroup();
         $photographyGroup->name = $request->input('name');
@@ -37,7 +37,7 @@ class PhotographyGroupController extends Controller
 
     public function delete(PhotographyGroup $group)
     {
-        if (! $group->delete()) return response()->json(['error' => 'Could not delete photography group']);
+        if (! $group->delete()) return response()->json(['error' => 'Could not delete photography group'], 500);
 
         return response()->json(['message' => 'success']);
     }
@@ -53,10 +53,10 @@ class PhotographyGroupController extends Controller
         return response()->json($group);
     }
 
-    public function getValidator($data)
+    public function getValidator(array $data)
     {
         $validator = Validator::make($data, [
-            'name' => ['required']
+            'name' => ['required', 'string']
         ]);
 
         return $validator;

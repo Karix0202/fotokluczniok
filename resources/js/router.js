@@ -54,6 +54,14 @@ const routes = [
     },
     component: () => import('./admin/views/PhotographyGroupStore.vue'),
   },
+  {
+    path: '/gallery/create',
+    name: 'galleryCreate',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./admin/views/GalleryStore.vue'),
+  },
 ];
 
 const router = new VueRouter({

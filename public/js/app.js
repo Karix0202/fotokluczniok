@@ -30738,7 +30738,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Inconsolata&display=swap);", ""]);
 
 // module
-exports.push([module.i, "* {\n  font-family: \"Inconsolata\", monospace;\n}\n.custom-form input {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none;\n}\n.custom-form .btn {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none;\n}\n.custom-form .btn:hover {\n  border: 1px solid #000000;\n  background-color: #000000;\n  color: #ffffff;\n}\n.custom-form .btn:focus {\n  outline: none !important;\n  box-shadow: none;\n}\n.form-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}", ""]);
+exports.push([module.i, "* {\n  font-family: \"Inconsolata\", monospace;\n}\n.custom-form input {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n}\n.custom-form .btn {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n}\n.custom-form .btn:hover {\n  border: 1px solid #000000;\n  background-color: #000000;\n  color: #ffffff;\n}\n.custom-form .btn:focus {\n  outline: none !important;\n  box-shadow: none;\n}\n.form-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}\ninput, label {\n  outline: none !important;\n}\ninput:focus, label:focus {\n  outline: none !important;\n}", ""]);
 
 // exports
 
@@ -51856,7 +51856,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
   }
 }, {
   path: '/group/edit/:id',
@@ -51865,7 +51865,16 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
+  }
+}, {
+  path: '/gallery/create',
+  name: 'galleryCreate',
+  meta: {
+    requiresAuth: true
+  },
+  component: function component() {
+    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./admin/views/GalleryStore.vue */ "./resources/js/admin/views/GalleryStore.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -52026,6 +52035,16 @@ function endpoint(url) {
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(endpoint("group/update/".concat(credentials.id)), {
           name: credentials.name
         }).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
+    },
+    getGalleries: function getGalleries(context) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint("gallery/all")).then(function (resp) {
           resolve(resp);
         })["catch"](function (err) {
           reject(err);

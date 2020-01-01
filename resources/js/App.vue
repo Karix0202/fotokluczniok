@@ -22,14 +22,14 @@ export default {
     border: 1px solid #000000;
     color: #000000;
     border-radius: 0;
-    outline: none;
+    outline: none !important;
   }
 
   .btn {
     border: 1px solid #000000;
     color: #000000;
     border-radius: 0;
-    outline: none;
+    outline: none !important;
 
     &:hover {
       border: 1px solid #000000;
@@ -48,5 +48,13 @@ export default {
   margin: 0 auto;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+
+input, label {
+  outline: none !important;
+
+  &:focus {
+    outline: none !important;
+  }
 }
 </style>

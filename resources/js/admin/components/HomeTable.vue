@@ -15,13 +15,15 @@
         <table class="table table-striped custom-table">
           <thead>
             <tr>
+              <th scope="col">#</th>
               <th v-for="(header, i) in headers" :key="i" scope="col">{{ header }}</th>
+              <th scope="col">Akcja</th>
             </tr>
           </thead>
           <transition-group tag="tbody" name="fade">
             <tr v-for="(item, i) in items" :key="item.id">
               <th scope="row">{{ i+1 }}</th>
-              <th>{{ item.name }}</th>
+              <th v-for="(key, j) in keys" :key="j">{{ item[key] }}</th>
               <th>
                 <button class="delete-row" v-on:click="deleteRow(item.id)">Usuń</button>
                 <router-link :to="{ name: edit, params: {id: item.id} }" class="edit-row">Edytuj</router-link>
@@ -43,7 +45,8 @@ export default {
     header: String,
     create: String,
     edit: String,
-    id: Number
+    id: Number,
+    keys: Array,
   },
   methods: {
     deleteRow(elId) {

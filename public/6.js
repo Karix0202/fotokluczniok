@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[3],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[6],{
 
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/views/GalleryStore.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************!*\
@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _admin_components_AdminNav_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../admin/components/AdminNav.vue */ "./resources/js/admin/components/AdminNav.vue");
+/* harmony import */ var _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Spinner.vue */ "./resources/js/components/Spinner.vue");
 //
 //
 //
@@ -32,8 +34,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'GalleryStore',
+  components: {
+    AdminNav: _admin_components_AdminNav_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   data: function data() {
     return {
       form: {
@@ -56,6 +68,12 @@ __webpack_require__.r(__webpack_exports__);
       this.displaySpinner = true;
       this.id = this.$route.params.id;
       this.action = 1;
+    }
+  },
+  methods: {
+    submit: function submit(e) {
+      e.preventDefault();
+      console.log(this.form);
     }
   }
 });
@@ -123,6 +141,27 @@ var render = function() {
                               expression: "form.name"
                             }
                           })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-form-group",
+                        { attrs: { id: "private-group" } },
+                        [
+                          _c(
+                            "b-form-checkbox",
+                            {
+                              model: {
+                                value: _vm.form.private,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "private", $$v)
+                                },
+                                expression: "form.private"
+                              }
+                            },
+                            [_vm._v("Check that out")]
+                          )
                         ],
                         1
                       ),

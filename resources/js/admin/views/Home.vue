@@ -15,7 +15,7 @@
             </b-col>
 
             <b-col lg="9" md="12">
-              <HomeTable v-if="activeSectionId === 0" :headers="['#', 'Nazwa', 'Akcja']" :header="'Nagłówki'" :items="photographyGroups" :create="'photographyGroupCreate'" :edit="'photographyGroupEdit'" :id="0"/>
+              <HomeTable v-if="activeSectionId === 0" :headers="['Nazwa']" :header="'Nagłówki'" :items="photographyGroups" :create="'photographyGroupCreate'" :edit="'photographyGroupEdit'" :id="0" :keys="['name']"/>
               <p v-if="activeSectionId === 1">Fotografie</p>
               <p v-if="activeSectionId === 2">Galerie</p>
             </b-col>
@@ -40,6 +40,7 @@ export default {
     return {
       activeSectionId: 0,
       photographyGroups: [],
+      galleries: [],
     };
   },
   created() {
@@ -52,6 +53,7 @@ export default {
         $(`div[section-id=${id}]`).addClass('active');
 
         if (id === 0) this.getPhotographyGroups();
+        if (id === 2) this.getGalleries();
 
         this.activeSectionId = id;
       }
@@ -90,6 +92,15 @@ export default {
         console.log(err);
       });
     },
+    getGalleries() {
+      this.$store.dispatch('getGalleries')
+      .then((resp) => {
+        console.log(resp);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
   },
 };
 </script>
