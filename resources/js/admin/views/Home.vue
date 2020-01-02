@@ -17,7 +17,7 @@
             <b-col lg="9" md="12">
               <HomeTable v-if="activeSectionId === 0" :headers="['Nazwa']" :header="'Nagłówki'" :items="photographyGroups" :create="'photographyGroupCreate'" :edit="'photographyGroupEdit'" :id="0" :keys="['name']"/>
               <p v-if="activeSectionId === 1">Fotografie</p>
-              <p v-if="activeSectionId === 2">Galerie</p>
+              <HomeTable v-if="activeSectionId === 2" :headers="['Nazwa', 'Prywatna']" :header="'Galerie'" :items="galleries" :create="'galleryCreate'" :edit="'editGallery'" :id="2" :keys="['name', 'private']"/>
             </b-col>
           </b-row>
         </b-col>
@@ -65,28 +65,31 @@ export default {
         }
       }
     },
+    checkElements(oldArr, newArr) {
+      oldArr.forEach((el) => {
+        let count = 0;
+        newArr.forEach((newEl) => {
+          if (newEl.id === el.id) count += 1;
+        });
+
+        if (count === 0) this.deleteRow(oldArr, el);
+      });
+    },
+    addNewElementsToArr(oldArr, newArr) {
+      newArr.forEach((newEl) => {
+        let count = 0;
+        oldArr.forEach((el) => {
+          if (el.id === newEl.id) count += 1
+        });
+
+        if (count === 0) oldArr.push(newEl);
+      });
+    },
     getPhotographyGroups() {
       this.$store.dispatch('getPhotographyGroups')
       .then((resp) => {
-        resp.data.forEach((newEl) => {
-          let count = 0;
-          this.photographyGroups.forEach((el) => {
-            if (el.id === newEl.id) count += 1;
-          });
-
-          if (count === 0) this.photographyGroups.push(newEl);
-        });
-
-        this.photographyGroups.forEach((el) => {
-          let count = 0;
-          resp.data.forEach((newEl) => {
-            if (el.id === newEl.id) count += 1;
-          });
-
-          if (count === 0) {
-            this.deleteRow(this.photographyGroups, el);
-          }
-        });
+        this.addNewElementsToArr(this.photographyGroups, resp.data);
+        this.checkElements(this.photographyGroups, resp.data);
       })
       .catch((err) => {
         console.log(err);
@@ -95,7 +98,8 @@ export default {
     getGalleries() {
       this.$store.dispatch('getGalleries')
       .then((resp) => {
-        console.log(resp);
+        this.addNewElementsToArr(this.galleries, resp.data);
+        this.checkElements(this.galleries, resp.data);
       })
       .catch((err) => {
         console.log(err);

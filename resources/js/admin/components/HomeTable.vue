@@ -3,7 +3,7 @@
     <b-row>
       <b-col lg="12" md="12">
         <b-row>
-          <b-col lg="6" md="6" sm="6" cols="6" class="section-header">
+          <b-col lg="6" md="6" sm="6" cols="6" class="section-header" :id="header">
             {{ header }}
           </b-col>
           <b-col lg="6" md="6" sm="6" cols="6" class="section-header">
@@ -54,6 +54,14 @@ export default {
         this.$store.dispatch('deletePhotographyGroup', {id: elId})
         .then((resp) => {
           this.$parent.deleteRow(this.$parent.photographyGroups, {id: elId});
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      } else if (this.id === 2) {
+        this.$store.dispatch('deleteGallery', {id: elId})
+        .then((resp) => {
+          this.$parent.deleteRow(this.$parent.galleries, {id: elId});
         })
         .catch((err) => {
           console.log(err);

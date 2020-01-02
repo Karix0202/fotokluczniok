@@ -62,6 +62,14 @@ const routes = [
     },
     component: () => import('./admin/views/GalleryStore.vue'),
   },
+  {
+    path: '/gallery/edit/:id',
+    name: 'editGallery',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./admin/views/GalleryStore.vue'),
+  },
 ];
 
 const router = new VueRouter({

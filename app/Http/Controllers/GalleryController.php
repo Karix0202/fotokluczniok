@@ -33,7 +33,7 @@ class GalleryController extends Controller
         $group->private = $request->input('private');
         $group->save();
 
-        return $group;
+        return response()->json($group);
     }
 
     public function getValidator(array $data)
@@ -44,5 +44,17 @@ class GalleryController extends Controller
         ]);
 
         return $validator;
+    }
+
+    public function get(Gallery $gallery)
+    {
+        return response()->json($gallery);
+    }
+
+    public function delete(Gallery $gallery)
+    {
+        if (! $gallery->delete()) return response()->json(['error' => 'Could not delete gallery'], 500);
+
+        return response()->json(['message' => 'success']);
     }
 }

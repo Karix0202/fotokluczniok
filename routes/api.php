@@ -29,4 +29,6 @@ Route::group([
     Route::post('', 'GalleryController@getPublic');
     Route::post('all', 'GalleryController@getAll');
     Route::post('create', 'GalleryController@store');
+    Route::post('get/{gallery}', 'GalleryController@get');
+    Route::delete('delete/{gallery}', 'GalleryController@delete');
 });

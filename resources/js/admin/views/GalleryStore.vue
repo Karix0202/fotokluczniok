@@ -11,7 +11,7 @@
             </b-form-group>
 
             <b-form-group id="private-group">
-              <b-form-checkbox v-model="form.private">Check that out</b-form-checkbox>
+              <b-form-checkbox v-model="form.private">Prywatna</b-form-checkbox>
             </b-form-group>
 
             <b-alert variant="danger" v-if="errorVisible" show>Coś poszło nie tak. Spróbuj ponownie teraz lub później.</b-alert>
@@ -57,12 +57,33 @@ export default {
       this.displaySpinner = true;
       this.id = this.$route.params.id;
       this.action = 1;
+      this.$store.dispatch('getGalleryForEdit', {id: this.$route.params.id})
+      .then((resp) => {
+        this.form.name = resp.data.name;
+        this.form.private = resp.data.private === 0 ? false : true;
+        this.displaySpinner = false;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     }
   },
   methods: {
     submit(e) {
       e.preventDefault();
-      console.log(this.form);
+      this.errorVisible = false;
+      this.isProcessing = true;
+      if (this.action === 0) {
+        this.$store.dispatch('createGallery', { name: this.form.name, private: this.form.private })
+        .then((resp) => {
+          console.log(resp.data);
+          // redirect to gallery single page
+        })
+        .catch((err) => {
+          this.errorVisible = true;
+          this.isProcessing = false;
+        });
+      }
     }
   },
 };
