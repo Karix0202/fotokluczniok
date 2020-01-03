@@ -51838,7 +51838,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./auth/views/Logout.vue */ "./resources/js/auth/views/Logout.vue"));
+    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./auth/views/Logout.vue */ "./resources/js/auth/views/Logout.vue"));
   }
 }, {
   path: '/admin/home',
@@ -51892,7 +51892,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -52082,7 +52082,7 @@ function endpoint(url) {
         });
       });
     },
-    getGalleryForEdit: function getGalleryForEdit(context, credentials) {
+    getGallery: function getGallery(context, credentials) {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint("gallery/get/".concat(credentials.id))).then(function (resp) {

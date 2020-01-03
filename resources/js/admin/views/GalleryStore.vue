@@ -57,7 +57,7 @@ export default {
       this.displaySpinner = true;
       this.id = this.$route.params.id;
       this.action = 1;
-      this.$store.dispatch('getGalleryForEdit', {id: this.$route.params.id})
+      this.$store.dispatch('getGallery', {id: this.$route.params.id})
       .then((resp) => {
         this.form.name = resp.data.name;
         this.form.private = resp.data.private === 0 ? false : true;

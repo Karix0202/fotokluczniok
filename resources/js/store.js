@@ -50,7 +50,7 @@ export default new Vuex.Store({
     },
     destroyToken(context) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
-      
+
       if (context.getters.loggedIn) {
         return new Promise((resolve, reject) => {
           axios.post(endpoint('auth/logout'))
@@ -160,7 +160,7 @@ export default new Vuex.Store({
         });
       });
     },
-    getGalleryForEdit(context, credentials) {
+    getGallery(context, credentials) {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
 
       return new Promise((resolve, reject) => {

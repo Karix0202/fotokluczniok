@@ -70,7 +70,7 @@ __webpack_require__.r(__webpack_exports__);
       this.displaySpinner = true;
       this.id = this.$route.params.id;
       this.action = 1;
-      this.$store.dispatch('getGalleryForEdit', {
+      this.$store.dispatch('getGallery', {
         id: this.$route.params.id
       }).then(function (resp) {
         _this.form.name = resp.data.name;

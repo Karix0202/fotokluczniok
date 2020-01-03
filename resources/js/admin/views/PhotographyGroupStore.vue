@@ -74,7 +74,7 @@ export default {
         id: this.id,
       })
       .then((resp) => {
-        this.$router.push({ name: 'home' });        
+        this.$router.push({ name: 'home' });
       })
       .catch((err) => {
         this.errorVisible = true;
