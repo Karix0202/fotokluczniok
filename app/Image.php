@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class Image extends Model
 {
@@ -11,7 +12,7 @@ class Image extends Model
         parent::boot();
 
         static::creating(function ($user) {
-            $user->{$user->getKeyName()} = (string) Str::uuid();
+            $user->{$user->getKeyName()} = (string) Uuid::uuid4();
         });
     }
 
@@ -23,5 +24,10 @@ class Image extends Model
     public function getKeyType()
     {
         return 'string';
+    }
+
+    public function gallery()
+    {
+        return $this->belongsTo('App\Gallery');
     }
 }

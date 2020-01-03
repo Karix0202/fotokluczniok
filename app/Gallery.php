@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Str;
+use Ramsey\Uuid\Uuid;
 
 class Gallery extends Model
 {
@@ -12,7 +12,7 @@ class Gallery extends Model
         parent::boot();
 
         static::creating(function ($user) {
-            $user->{$user->getKeyName()} = (string) Str::uuid();
+            $user->{$user->getKeyName()} = (string) Uuid::uuid4();
         });
     }
 
@@ -24,5 +24,10 @@ class Gallery extends Model
     public function getKeyType()
     {
         return 'string';
+    }
+
+    public function images()
+    {
+        return $this->hasMany('App\Image');
     }
 }

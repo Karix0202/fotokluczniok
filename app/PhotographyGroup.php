@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Str;
+use Ramsey\Uuid\Uuid;
 
 class PhotographyGroup extends Model
 {
@@ -12,7 +12,7 @@ class PhotographyGroup extends Model
         parent::boot();
 
         static::creating(function ($user) {
-            $user->{$user->getKeyName()} = (string) Str::uuid();
+            $user->{$user->getKeyName()} = (string) Uuid::uuid4();
         });
     }
 

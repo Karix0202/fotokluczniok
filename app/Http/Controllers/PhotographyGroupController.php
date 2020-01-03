@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PhotographyGroup;
-use \Validator;
+use Illuminate\Validation\Validator;
 
 class PhotographyGroupController extends Controller
 {

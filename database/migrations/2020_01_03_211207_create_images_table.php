@@ -18,6 +18,7 @@ class CreateImagesTable extends Migration
             $table->string('original_name');
             $table->string('name')->unique();
             $table->string('path')->unique();
+            $table->string('full_path')->unique();
             $table->uuid('gallery_id');
             $table->timestamps();
         });

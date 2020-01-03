@@ -5,7 +5,7 @@ namespace App;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Str;
+use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -43,7 +43,7 @@ class User extends Authenticatable implements JWTSubject
         parent::boot();
 
         static::creating(function ($user) {
-            $user->{$user->getKeyName()} = (string) Str::uuid();
+            $user->{$user->getKeyName()} = (string) Uuid::uuid4();
         });
     }
 
