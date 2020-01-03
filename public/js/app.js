@@ -51829,7 +51829,7 @@ var routes = [{
     requiresVisitor: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
   }
 }, {
   path: '/logout',
@@ -51841,49 +51841,58 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./auth/views/Logout.vue */ "./resources/js/auth/views/Logout.vue"));
   }
 }, {
-  path: '/home',
+  path: '/admin/home',
   name: 'home',
   meta: {
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./admin/views/Home.vue */ "./resources/js/admin/views/Home.vue"));
+    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./admin/views/Home.vue */ "./resources/js/admin/views/Home.vue"));
   }
 }, {
-  path: '/group/create',
+  path: '/admin/group/create',
   name: 'photographyGroupCreate',
   meta: {
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
   }
 }, {
-  path: '/group/edit/:id',
+  path: '/admin/group/edit/:id',
   name: 'photographyGroupEdit',
   meta: {
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
   }
 }, {
-  path: '/gallery/create',
+  path: '/admin/gallery/create',
   name: 'galleryCreate',
   meta: {
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./admin/views/GalleryStore.vue */ "./resources/js/admin/views/GalleryStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./admin/views/GalleryStore.vue */ "./resources/js/admin/views/GalleryStore.vue"));
   }
 }, {
-  path: '/gallery/edit/:id',
+  path: '/admin/gallery/edit/:id',
   name: 'editGallery',
   meta: {
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./admin/views/GalleryStore.vue */ "./resources/js/admin/views/GalleryStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ./admin/views/GalleryStore.vue */ "./resources/js/admin/views/GalleryStore.vue"));
+  }
+}, {
+  path: '/admin/gallery/get/:id',
+  name: 'singleGallery',
+  meta: {
+    requiresAuth: true
+  },
+  component: function component() {
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

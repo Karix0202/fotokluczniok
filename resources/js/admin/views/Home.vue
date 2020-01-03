@@ -15,9 +15,9 @@
             </b-col>
 
             <b-col lg="9" md="12">
-              <HomeTable v-if="activeSectionId === 0" :headers="['Nazwa']" :header="'Nagłówki'" :items="photographyGroups" :create="'photographyGroupCreate'" :edit="'photographyGroupEdit'" :id="0" :keys="['name']"/>
+              <PhotographyGroupTable v-if="activeSectionId === 0" :items="photographyGroups" />
               <p v-if="activeSectionId === 1">Fotografie</p>
-              <HomeTable v-if="activeSectionId === 2" :headers="['Nazwa', 'Prywatna']" :header="'Galerie'" :items="galleries" :create="'galleryCreate'" :edit="'editGallery'" :id="2" :keys="['name', 'private']"/>
+              <GalleryTable v-if="activeSectionId === 2" :items="galleries" />
             </b-col>
           </b-row>
         </b-col>
@@ -28,13 +28,15 @@
 
 <script>
 import AdminNav from '../../admin/components/AdminNav.vue';
-import HomeTable from '../../admin/components/HomeTable.vue';
+import PhotographyGroupTable from '../../admin/components/PhotographyGroupTable.vue';
+import GalleryTable from '../../admin/components/GalleryTable.vue';
 
 export default {
   name: 'Home',
   components: {
     AdminNav,
-    HomeTable,
+    PhotographyGroupTable,
+    GalleryTable,
   },
   data() {
     return {
@@ -142,5 +144,69 @@ export default {
   background-color: #000 !important;
   border-color: #000 !important;
   box-shadow: none !important;
+}
+
+.custom-table {
+  border-top: none !important;
+}
+
+.section-header {
+  $padding: 12px;
+  padding-top: $padding;
+  padding-bottom: $padding;
+  &:last-child {
+    text-align: right;
+  }
+}
+
+.section-add-btn {
+  text-decoration: none;
+  color: #000;
+  border: 1px solid #000;
+  padding: 8px;
+  transition: all 0.1s ease-out;
+
+  &:hover {
+    text-decoration: none !important;
+    color: #fff;
+    background: #000;
+  }
+}
+
+.delete-row {
+  color: red;
+  text-decoration: underline;
+  border: none;
+  background: none;
+
+  &:hover {
+    color: red;
+  }
+}
+
+.edit-row {
+  color: #FFC107;
+  text-decoration: underline;
+
+  &:hover {
+    color: #FFC107;
+  }
+}
+
+.single-gallery-link {
+  color: #000;
+  text-decoration: underline;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all 1.5s;
+}
+.fade-enter, .fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>

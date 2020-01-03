@@ -76,8 +76,7 @@ export default {
       if (this.action === 0) {
         this.$store.dispatch('createGallery', { name: this.form.name, private: this.form.private })
         .then((resp) => {
-          console.log(resp.data);
-          // redirect to gallery single page
+          this.$router.push({ name: 'singleGallery', params: { id: resp.data.id } });
         })
         .catch((err) => {
           this.errorVisible = true;

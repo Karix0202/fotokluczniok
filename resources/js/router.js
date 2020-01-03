@@ -31,7 +31,7 @@ const routes = [
     component: () => import('./auth/views/Logout.vue'),
   },
   {
-    path: '/home',
+    path: '/admin/home',
     name: 'home',
     meta: {
       requiresAuth: true,
@@ -39,7 +39,7 @@ const routes = [
     component: () => import('./admin/views/Home.vue'),
   },
   {
-    path: '/group/create',
+    path: '/admin/group/create',
     name: 'photographyGroupCreate',
     meta: {
       requiresAuth: true,
@@ -47,7 +47,7 @@ const routes = [
     component: () => import('./admin/views/PhotographyGroupStore.vue'),
   },
   {
-    path: '/group/edit/:id',
+    path: '/admin/group/edit/:id',
     name: 'photographyGroupEdit',
     meta: {
       requiresAuth: true,
@@ -55,7 +55,7 @@ const routes = [
     component: () => import('./admin/views/PhotographyGroupStore.vue'),
   },
   {
-    path: '/gallery/create',
+    path: '/admin/gallery/create',
     name: 'galleryCreate',
     meta: {
       requiresAuth: true,
@@ -63,12 +63,20 @@ const routes = [
     component: () => import('./admin/views/GalleryStore.vue'),
   },
   {
-    path: '/gallery/edit/:id',
+    path: '/admin/gallery/edit/:id',
     name: 'editGallery',
     meta: {
       requiresAuth: true,
     },
     component: () => import('./admin/views/GalleryStore.vue'),
+  },
+  {
+    path: '/admin/gallery/get/:id',
+    name: 'singleGallery',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./admin/views/Gallery.vue'),
   },
 ];
 
