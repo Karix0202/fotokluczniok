@@ -11,6 +11,7 @@ function endpoint(url) {
 export default new Vuex.Store({
   state: {
     token: localStorage.getItem('access_token') || null,
+    apiUrl: 'http://127.0.0.1:8000/api/',
   },
   mutations: {
     retrieveToken(state, token) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     getApiToken(state) {
       return state.token;
+    },
+    getApiUrl(state) {
+      return state.apiUrl;
     },
   },
   actions: {
@@ -186,6 +190,19 @@ export default new Vuex.Store({
         });
       });
     },
+    deleteImages(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint(`image/delete`), { images: credentials.images })
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+      });
+    }
   },
   modules: {
   },

@@ -48,6 +48,7 @@ class GalleryController extends Controller
 
     public function get(Gallery $gallery)
     {
+        $gallery['images'] = $gallery->images;
         return response()->json($gallery);
     }
 

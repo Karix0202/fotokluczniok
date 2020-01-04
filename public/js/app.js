@@ -30738,7 +30738,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Inconsolata&display=swap);", ""]);
 
 // module
-exports.push([module.i, "* {\n  font-family: \"Inconsolata\", monospace;\n}\n.custom-form input {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n}\n.custom-form .btn {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n}\n.custom-form .btn:hover {\n  border: 1px solid #000000;\n  background-color: #000000;\n  color: #ffffff;\n}\n.custom-form .btn:focus {\n  outline: none !important;\n  box-shadow: none;\n}\n.form-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}\ninput, label {\n  outline: none !important;\n}\ninput:focus, label:focus {\n  outline: none !important;\n}", ""]);
+exports.push([module.i, "* {\n  font-family: \"Inconsolata\", monospace;\n}\n.custom-form input {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n}\n.custom-form .btn {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n}\n.custom-form .btn:hover {\n  border: 1px solid #000000;\n  background-color: #000000;\n  color: #ffffff;\n}\n.custom-form .btn:focus {\n  outline: none !important;\n  box-shadow: none;\n}\n.form-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}\ninput, label {\n  outline: none !important;\n}\ninput:focus, label:focus {\n  outline: none !important;\n}\n.section-header {\n  padding-top: 12px;\n  padding-bottom: 12px;\n}\n.section-header:last-child {\n  text-align: right;\n}\n.section-add-btn {\n  text-decoration: none;\n  color: #000;\n  border: 1px solid #000;\n  padding: 8px;\n  -webkit-transition: all 0.1s ease-out;\n  transition: all 0.1s ease-out;\n}\n.section-add-btn:hover {\n  text-decoration: none !important;\n  color: #fff;\n  background: #000;\n}\n.delete-row {\n  color: red;\n  text-decoration: underline;\n  border: none;\n  background: none;\n}\n.delete-row:hover {\n  color: red;\n}\n.edit-row {\n  color: #FFC107;\n  text-decoration: underline;\n}\n.edit-row:hover {\n  color: #FFC107;\n}\n.single-gallery-link {\n  color: #000;\n  text-decoration: underline;\n}\n.single-gallery-link:hover {\n  color: #000;\n}\n.fade-enter-active, .fade-leave-active {\n  -webkit-transition: all 1.5s;\n  transition: all 1.5s;\n}\n.fade-enter, .fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.delete-checkbox-label {\n  cursor: pointer;\n}", ""]);
 
 // exports
 
@@ -51892,7 +51892,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(0), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -51955,7 +51955,8 @@ function endpoint(url) {
 
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    token: localStorage.getItem('access_token') || null
+    token: localStorage.getItem('access_token') || null,
+    apiUrl: 'http://127.0.0.1:8000/api/'
   },
   mutations: {
     retrieveToken: function retrieveToken(state, token) {
@@ -51971,6 +51972,9 @@ function endpoint(url) {
     },
     getApiToken: function getApiToken(state) {
       return state.token;
+    },
+    getApiUrl: function getApiUrl(state) {
+      return state.apiUrl;
     }
   },
   actions: {
@@ -52096,6 +52100,18 @@ function endpoint(url) {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"](endpoint("gallery/delete/".concat(credentials.id))).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
+    },
+    deleteImages: function deleteImages(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint("image/delete"), {
+          images: credentials.images
+        }).then(function (resp) {
           resolve(resp);
         })["catch"](function (err) {
           reject(err);

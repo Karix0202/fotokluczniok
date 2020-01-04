@@ -32,3 +32,11 @@ Route::group([
     Route::post('get/{gallery}', 'GalleryController@get');
     Route::delete('delete/{gallery}', 'GalleryController@delete');
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'image'
+], function ($router) {
+    Route::post('create/{gallery}', 'ImageController@store');
+    Route::post('delete', 'ImageController@deleteSeries');
+});

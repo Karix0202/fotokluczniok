@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Image;
 use App\Gallery;
-use Illuminate\Validation\Validator;
+use \Validator;
 
 class ImageController extends Controller
 {
@@ -26,12 +26,27 @@ class ImageController extends Controller
         $image->full_path = asset($path . '/' . $newName);
         $image->gallery_id = $gallery->id;
 
-        if (! ($image->save() && $file->move($path, $newName))) return response()->json(["error" => "Something went wrong. Try again later."], 500);;
+        if (! ($image->save() && $file->move($path, $newName))) return response()->json(["error" => "Something went wrong. Try again later.", "data" => $request->all()], 500);;
 
         return response()->json($image);
     }
 
-    public function getValidator(array $data) : Validator
+    public function deleteSeries(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'images' => ['required', 'array', 'min:1'],
+        ]);
+        if ($validator->fails()) return response()->json([$validator->errors()], 406);
+
+        foreach($request->input('images') as $id) {
+            $image = Image::find($id);
+            if ($image != null) $image->delete();
+        }
+
+        return response()->json($request->input('images'));
+    }
+
+    public function getValidator(array $data)
     {
         $validator = Validator::make($data, [
             'file' => ['required', 'mimes:jpg,jpeg,png']

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
+use File;
 
 class Image extends Model
 {
@@ -29,5 +30,11 @@ class Image extends Model
     public function gallery()
     {
         return $this->belongsTo('App\Gallery');
+    }
+
+    public function delete()
+    {
+        File::delete($this->path);
+        return parent::delete();
     }
 }

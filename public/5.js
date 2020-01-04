@@ -11,6 +11,10 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_components_AdminNav_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../admin/components/AdminNav.vue */ "./resources/js/admin/components/AdminNav.vue");
 /* harmony import */ var _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Spinner.vue */ "./resources/js/components/Spinner.vue");
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue2-dropzone */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.js");
+/* harmony import */ var vue2_dropzone__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-dropzone/dist/vue2Dropzone.min.css */ "./node_modules/vue2-dropzone/dist/vue2Dropzone.min.css");
+/* harmony import */ var vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue2_dropzone_dist_vue2Dropzone_min_css__WEBPACK_IMPORTED_MODULE_3__);
 //
 //
 //
@@ -27,18 +31,62 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Gallery',
   components: {
     AdminNav: _admin_components_AdminNav_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    vue2Dropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_2___default.a
   },
   data: function data() {
     return {
       displaySpinner: true,
-      gallery: null
+      gallery: null,
+      dropzoneOptions: {
+        url: '/',
+        dictDefaultMessage: 'Upuść lub kliknij',
+        maxFiles: 500,
+        autoProcessQueue: true,
+        thumbnailWidth: 100,
+        thumbnailHeight: 100
+      },
+      images: [],
+      selectedImages: []
     };
   },
   created: function created() {
@@ -49,9 +97,49 @@ __webpack_require__.r(__webpack_exports__);
     }).then(function (resp) {
       _this.displaySpinner = false;
       _this.gallery = resp.data;
+      _this.dropzoneOptions.url = _this.$store.getters.getApiUrl + "image/create/".concat(_this.gallery.id);
+      resp.data.images.forEach(function (image) {
+        image['newName'] = image.name.replace(image.name.substr(6, 20), '...');
+
+        _this.images.push(image);
+      });
     })["catch"](function (err) {
       console.log(err);
     });
+  },
+  methods: {
+    deleteImages: function deleteImages(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      this.$store.dispatch('deleteImages', {
+        images: this.selectedImages
+      }).then(function (resp) {
+        console.log(resp);
+        resp.data.forEach(function (deletedEl) {
+          for (var i = 0; i < _this2.images.length; i++) {
+            if (_this2.images[i].id === deletedEl) _this2.images.splice(i, 1);
+          }
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    dropzoneSuccess: function dropzoneSuccess(file, resp) {
+      resp['newName'] = resp.name.replace(resp.name.substr(6, 20), '...');
+      this.images.push(resp);
+    },
+    handleChange: function handleChange(e) {
+      var id = e.target.value;
+
+      if (e.target.checked) {
+        this.selectedImages.push(id);
+      } else {
+        for (var i = 0; i < this.selectedImages.length; i++) {
+          if (this.selectedImages[i] === id) this.selectedImages.splice(i, 1);
+        }
+      }
+    }
   }
 });
 
@@ -69,7 +157,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".content-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}", ""]);
+exports.push([module.i, ".content-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}\n.vue-dropzone {\n  border-color: #000;\n  color: #000;\n}\n.vue-dropzone .dz-image:hover {\n  background-color: #000;\n}\n.image-holder {\n  margin-top: 26px;\n}\n.delete-selected-images {\n  margin-bottom: 8px;\n  background-color: white;\n  color: #000;\n  border: 1px solid #E53935;\n  border-radius: 0;\n}\n.delete-selected-images:hover {\n  color: #fff;\n  background-color: #E53935;\n}", ""]);
 
 // exports
 
@@ -144,8 +232,138 @@ var render = function() {
                     [
                       _c("h2", [_vm._v(_vm._s(_vm.gallery.name))]),
                       _vm._v(" "),
-                      _c("hr")
-                    ]
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c(
+                        "b-row",
+                        [
+                          _c(
+                            "b-col",
+                            { attrs: { cols: "12" } },
+                            [
+                              _c("vue2Dropzone", {
+                                ref: "myVueDropzone",
+                                attrs: {
+                                  id: "dropzone",
+                                  options: _vm.dropzoneOptions
+                                },
+                                on: { "vdropzone-success": _vm.dropzoneSuccess }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-col",
+                            {
+                              staticClass: "image-holder",
+                              attrs: { lg: "6", md: "12" }
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn delete-selected-images",
+                                  attrs: {
+                                    disabled: _vm.selectedImages.length === 0
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.deleteImages($event)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Usuń zaznaczone")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "table",
+                                {
+                                  staticClass:
+                                    "table table-striped custom-table"
+                                },
+                                [
+                                  _c("thead", [
+                                    _c("tr", [
+                                      _c("th", { attrs: { scope: "col" } }, [
+                                        _vm._v("#")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("th", { attrs: { scope: "col" } }, [
+                                        _vm._v("Nazwa")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("th", { attrs: { scope: "col" } }, [
+                                        _vm._v("Akcja")
+                                      ])
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "transition-group",
+                                    { attrs: { tag: "tbody", name: "fade" } },
+                                    _vm._l(_vm.images, function(item, i) {
+                                      return _c("tr", { key: item.id }, [
+                                        _c("th", { attrs: { scope: "row" } }, [
+                                          _vm._v(_vm._s(i + 1))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _c(
+                                            "a",
+                                            {
+                                              staticClass:
+                                                "single-gallery-link",
+                                              attrs: {
+                                                href: item.full_path,
+                                                "data-lightbox": "image",
+                                                "data-title": item.name
+                                              }
+                                            },
+                                            [_vm._v(_vm._s(item.newName))]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _c(
+                                            "label",
+                                            {
+                                              staticClass:
+                                                "delete-checkbox-label"
+                                            },
+                                            [
+                                              _c("input", {
+                                                staticClass: "delete-checkbox",
+                                                attrs: { type: "checkbox" },
+                                                domProps: { value: item.id },
+                                                on: {
+                                                  change: function($event) {
+                                                    return _vm.handleChange(
+                                                      $event
+                                                    )
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(
+                                                "\n                      Usuń\n                    "
+                                              )
+                                            ]
+                                          )
+                                        ])
+                                      ])
+                                    }),
+                                    0
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
                   )
                 ],
                 1
