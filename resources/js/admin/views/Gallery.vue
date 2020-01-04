@@ -15,10 +15,14 @@
             <b-col lg="6" md="12" class="image-holder">
               <ImageTable :images="images" />
             </b-col>
+            <b-col lg="6" md="12" class="image-holder">
+              <FileTable :files="files" />
+            </b-col>
           </b-row>
         </b-col>
       </b-row>
     </b-container>
+    <FileCreateModal :id="gallery.id" v-if="gallery !== null" :files="files"/>
   </div>
 </template>
 
@@ -28,6 +32,8 @@ import Spinner from '../../components/Spinner.vue';
 import vue2Dropzone from 'vue2-dropzone';
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 import ImageTable from '../../admin/components/ImageTable.vue';
+import FileTable from '../../admin/components/FileTable.vue';
+import FileCreateModal from '../../admin/components/FileCreateModal.vue';
 
 export default {
   name: 'Gallery',
@@ -35,7 +41,9 @@ export default {
     AdminNav,
     Spinner,
     vue2Dropzone,
+    FileCreateModal,
     ImageTable,
+    FileTable,
   },
   data() {
     return {
@@ -50,6 +58,7 @@ export default {
         thumbnailHeight: 100,
       },
       images: [],
+      files: [],
     };
   },
   created() {
@@ -61,6 +70,9 @@ export default {
       resp.data.images.forEach((image) => {
         image['newName'] = image.name.replace(image.name.substr(6, 20), '...');
         this.images.push(image);
+      });
+      resp.data.files.forEach((file) => {
+        this.files.push(file);
       });
     })
     .catch((err) => {
@@ -116,5 +128,28 @@ export default {
   @media (min-width: 992px) {
     float: right;
   }
+}
+
+.add-file {
+  float: left;
+  margin-bottom: 8px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 0;
+  margin-right: 4px;
+
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
+
+  @media (min-width: 992px) {
+    float: right;
+  }
+}
+
+.delete-checkbox-label {
+  width: 60px;
 }
 </style>

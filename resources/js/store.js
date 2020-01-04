@@ -202,7 +202,33 @@ export default new Vuex.Store({
           reject(err);
         });
       });
-    }
+    },
+    createFile(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint(`file/create/${credentials.id}`), { name: credentials.link, link: credentials.link })
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+      });
+    },
+    deleteFiles(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint(`file/delete`), { files: credentials.files })
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+      });
+    },
   },
   modules: {
   },

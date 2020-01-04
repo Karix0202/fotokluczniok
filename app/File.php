@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
-class Gallery extends Model
+class File extends Model
 {
     protected static function boot()
     {
@@ -26,13 +26,8 @@ class Gallery extends Model
         return 'string';
     }
 
-    public function images()
+    public function gallery()
     {
-        return $this->hasMany('App\Image');
-    }
-
-    public function files()
-    {
-        return $this->hasMany('App\File');
+        return $this->belongsTo('App\Gallery');
     }
 }

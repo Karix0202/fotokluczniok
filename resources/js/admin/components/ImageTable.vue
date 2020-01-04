@@ -1,7 +1,8 @@
 <template>
   <div>
     <button class="btn delete-selected-images" :disabled="selectedImages.length === 0" v-on:click="deleteImages($event)">Usuń zaznaczone</button>
-    <table class="table table-striped custom-table">
+    <div class="table-responsive">
+      <table class="table table-striped custom-table">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -24,6 +25,7 @@
         </tr>
       </transition-group>
     </table>
+    </div>
   </div>
 </template>
 

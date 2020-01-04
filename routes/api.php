@@ -40,3 +40,12 @@ Route::group([
     Route::post('create/{gallery}', 'ImageController@store');
     Route::post('delete', 'ImageController@deleteSeries');
 });
+
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'file'
+], function ($router) {
+    Route::post('create/{gallery}', 'FileController@store');
+    Route::post('delete', 'FileController@deleteSeries');
+});

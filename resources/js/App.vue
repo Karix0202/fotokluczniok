@@ -121,4 +121,9 @@ input, label {
 .delete-checkbox-label {
   cursor: pointer;
 }
+
+.modal-backdrop
+{
+    opacity:0.5 !important;
+}
 </style>
