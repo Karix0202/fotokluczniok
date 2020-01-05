@@ -197,6 +197,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _admin_components_AdminNav_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../admin/components/AdminNav.vue */ "./resources/js/admin/components/AdminNav.vue");
 /* harmony import */ var _admin_components_PhotographyGroupTable_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../admin/components/PhotographyGroupTable.vue */ "./resources/js/admin/components/PhotographyGroupTable.vue");
 /* harmony import */ var _admin_components_GalleryTable_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../admin/components/GalleryTable.vue */ "./resources/js/admin/components/GalleryTable.vue");
+/* harmony import */ var _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/Spinner.vue */ "./resources/js/components/Spinner.vue");
 //
 //
 //
@@ -225,6 +226,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 
@@ -233,26 +236,35 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AdminNav: _admin_components_AdminNav_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     PhotographyGroupTable: _admin_components_PhotographyGroupTable_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    GalleryTable: _admin_components_GalleryTable_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    GalleryTable: _admin_components_GalleryTable_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
-      activeSectionId: 0,
       photographyGroups: [],
-      galleries: []
+      galleries: [],
+      displaySpinner: true,
+      loaded: false
     };
   },
   created: function created() {
-    this.getPhotographyGroups();
+    this.changeSection(this.$store.getters.getLastSectionId);
   },
   methods: {
     changeSection: function changeSection(id) {
-      if (id !== this.activeSectionId) {
-        $("div[section-id='".concat(this.activeSectionId, "']")).removeClass('active');
-        $("div[section-id=".concat(id, "]")).addClass('active');
-        if (id === 0) this.getPhotographyGroups();
-        if (id === 2) this.getGalleries();
-        this.activeSectionId = id;
+      var _this = this;
+
+      if (id !== this.$store.getters.getLastSectionId || !this.loaded) {
+        var oldId = this.$store.getters.getLastSectionId;
+        if (!this.loaded) this.loaded = true;
+        this.$store.dispatch('changeLastSectionId', {
+          id: id
+        }).then(function (resp) {
+          if (_this.getLastId === 0) _this.getPhotographyGroups();
+          if (_this.getLastId === 2) _this.getGalleries();
+          $("div[section-id='".concat(oldId, "']")).removeClass('active');
+          $("div[section-id=".concat(id, "]")).addClass('active');
+        });
       }
     },
     deleteRow: function deleteRow(arr, el) {
@@ -263,14 +275,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     checkElements: function checkElements(oldArr, newArr) {
-      var _this = this;
+      var _this2 = this;
 
       oldArr.forEach(function (el) {
         var count = 0;
         newArr.forEach(function (newEl) {
           if (newEl.id === el.id) count += 1;
         });
-        if (count === 0) _this.deleteRow(oldArr, el);
+        if (count === 0) _this2.deleteRow(oldArr, el);
       });
     },
     addNewElementsToArr: function addNewElementsToArr(oldArr, newArr) {
@@ -283,26 +295,31 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getPhotographyGroups: function getPhotographyGroups() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$store.dispatch('getPhotographyGroups').then(function (resp) {
-        _this2.addNewElementsToArr(_this2.photographyGroups, resp.data);
+        _this3.addNewElementsToArr(_this3.photographyGroups, resp.data);
 
-        _this2.checkElements(_this2.photographyGroups, resp.data);
+        _this3.checkElements(_this3.photographyGroups, resp.data);
       })["catch"](function (err) {
         console.log(err);
       });
     },
     getGalleries: function getGalleries() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$store.dispatch('getGalleries').then(function (resp) {
-        _this3.addNewElementsToArr(_this3.galleries, resp.data);
+        _this4.addNewElementsToArr(_this4.galleries, resp.data);
 
-        _this3.checkElements(_this3.galleries, resp.data);
+        _this4.checkElements(_this4.galleries, resp.data);
       })["catch"](function (err) {
         console.log(err);
       });
+    }
+  },
+  computed: {
+    getLastId: function getLastId() {
+      return parseInt(this.$store.getters.getLastSectionId);
     }
   }
 });
@@ -852,7 +869,6 @@ var render = function() {
                               _c(
                                 "b-list-group-item",
                                 {
-                                  staticClass: "active",
                                   attrs: { "section-id": "0" },
                                   on: {
                                     click: function($event) {
@@ -899,17 +915,17 @@ var render = function() {
                         "b-col",
                         { attrs: { lg: "9", md: "12" } },
                         [
-                          _vm.activeSectionId === 0
+                          _vm.getLastId === 0
                             ? _c("PhotographyGroupTable", {
                                 attrs: { items: _vm.photographyGroups }
                               })
                             : _vm._e(),
                           _vm._v(" "),
-                          _vm.activeSectionId === 1
+                          _vm.getLastId === 1
                             ? _c("p", [_vm._v("Fotografie")])
                             : _vm._e(),
                           _vm._v(" "),
-                          _vm.activeSectionId === 2
+                          _vm.getLastId === 2
                             ? _c("GalleryTable", {
                                 attrs: { items: _vm.galleries }
                               })

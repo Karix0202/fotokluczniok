@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <AdminNav />
 
     <b-container>
@@ -8,16 +9,16 @@
           <b-row>
             <b-col lg="3" md="12" class="section-picker-holder">
               <b-list-group>
-                <b-list-group-item class="active" v-on:click="changeSection(0)" section-id="0">Nagłówki</b-list-group-item>
+                <b-list-group-item v-on:click="changeSection(0)" section-id="0">Nagłówki</b-list-group-item>
                 <b-list-group-item v-on:click="changeSection(1)" section-id="1">Fotogrfia</b-list-group-item>
                 <b-list-group-item v-on:click="changeSection(2)" section-id="2">Galerie</b-list-group-item>
               </b-list-group>
             </b-col>
 
             <b-col lg="9" md="12">
-              <PhotographyGroupTable v-if="activeSectionId === 0" :items="photographyGroups" />
-              <p v-if="activeSectionId === 1">Fotografie</p>
-              <GalleryTable v-if="activeSectionId === 2" :items="galleries" />
+              <PhotographyGroupTable v-if="getLastId === 0" :items="photographyGroups" />
+              <p v-if="getLastId === 1">Fotografie</p>
+              <GalleryTable v-if="getLastId === 2" :items="galleries" />
             </b-col>
           </b-row>
         </b-col>
@@ -30,6 +31,7 @@
 import AdminNav from '../../admin/components/AdminNav.vue';
 import PhotographyGroupTable from '../../admin/components/PhotographyGroupTable.vue';
 import GalleryTable from '../../admin/components/GalleryTable.vue';
+import Spinner from '../../components/Spinner.vue';
 
 export default {
   name: 'Home',
@@ -37,27 +39,34 @@ export default {
     AdminNav,
     PhotographyGroupTable,
     GalleryTable,
+    Spinner,
   },
   data() {
     return {
-      activeSectionId: 0,
       photographyGroups: [],
       galleries: [],
+      displaySpinner: true,
+      loaded: false,
     };
   },
   created() {
-    this.getPhotographyGroups();
+    this.changeSection(this.$store.getters.getLastSectionId);
   },
   methods: {
     changeSection(id) {
-      if (id !== this.activeSectionId) {
-        $(`div[section-id='${this.activeSectionId}']`).removeClass('active');
-        $(`div[section-id=${id}]`).addClass('active');
+      if (id !== this.$store.getters.getLastSectionId || !this.loaded) {
+        const oldId = this.$store.getters.getLastSectionId;
 
-        if (id === 0) this.getPhotographyGroups();
-        if (id === 2) this.getGalleries();
+        if (!this.loaded) this.loaded = true;
 
-        this.activeSectionId = id;
+        this.$store.dispatch('changeLastSectionId', { id: id })
+        .then((resp) => {
+          if (this.getLastId === 0) this.getPhotographyGroups();
+          if (this.getLastId === 2) this.getGalleries();
+
+          $(`div[section-id='${oldId}']`).removeClass('active');
+          $(`div[section-id=${id}]`).addClass('active');
+        });
       }
     },
     deleteRow(arr, el) {
@@ -108,6 +117,11 @@ export default {
       });
     }
   },
+  computed: {
+    getLastId() {
+      return parseInt(this.$store.getters.getLastSectionId);
+    }
+  }
 };
 </script>
 

@@ -52172,7 +52172,8 @@ function endpoint(url) {
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     token: localStorage.getItem('access_token') || null,
-    apiUrl: 'http://127.0.0.1:8000/api/'
+    apiUrl: 'http://127.0.0.1:8000/api/',
+    lastSectionId: localStorage.getItem('last_section_id') || 0
   },
   mutations: {
     retrieveToken: function retrieveToken(state, token) {
@@ -52180,6 +52181,9 @@ function endpoint(url) {
     },
     destroyToken: function destroyToken(state) {
       state.token = null;
+    },
+    changeLastSectionId: function changeLastSectionId(state, id) {
+      state.lastSectionId = id;
     }
   },
   getters: {
@@ -52191,9 +52195,22 @@ function endpoint(url) {
     },
     getApiUrl: function getApiUrl(state) {
       return state.apiUrl;
+    },
+    getLastSectionId: function getLastSectionId(state) {
+      return state.lastSectionId;
     }
   },
   actions: {
+    changeLastSectionId: function changeLastSectionId(context, credentials) {
+      return new Promise(function (resolve, reject) {
+        var id = credentials.id;
+        localStorage.setItem('last_section_id', id);
+        context.commit('changeLastSectionId', id);
+        resolve({
+          id: id
+        });
+      });
+    },
     retrieveToken: function retrieveToken(context, credentials) {
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint('auth/login'), {

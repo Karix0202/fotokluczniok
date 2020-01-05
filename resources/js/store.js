@@ -12,6 +12,7 @@ export default new Vuex.Store({
   state: {
     token: localStorage.getItem('access_token') || null,
     apiUrl: 'http://127.0.0.1:8000/api/',
+    lastSectionId: localStorage.getItem('last_section_id') || 0,
   },
   mutations: {
     retrieveToken(state, token) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     destroyToken(state) {
       state.token = null;
     },
+    changeLastSectionId(state, id) {
+      state.lastSectionId = id;
+    }
   },
   getters: {
     loggedIn(state) {
@@ -31,8 +35,21 @@ export default new Vuex.Store({
     getApiUrl(state) {
       return state.apiUrl;
     },
+    getLastSectionId(state) {
+      return state.lastSectionId;
+    }
   },
   actions: {
+    changeLastSectionId(context, credentials) {
+      return new Promise((resolve, reject) => {
+        const id = credentials.id;
+
+        localStorage.setItem('last_section_id', id);
+        context.commit('changeLastSectionId', id);
+
+        resolve({ id: id });
+      });
+    },
     retrieveToken(context, credentials) {
       return new Promise((resolve, reject) => {
         axios.post(endpoint('auth/login'), {
