@@ -229,6 +229,17 @@ export default new Vuex.Store({
         });
       });
     },
+    loadIndexData(context) {
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint(''))
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        })
+      });
+    },
   },
   modules: {
   },

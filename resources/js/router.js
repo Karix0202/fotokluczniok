@@ -9,9 +9,9 @@ const routes = [
   {
     path: '/',
     name: 'index',
-    meta: {
-      requiresVisitor: true,
-    },
+    // meta: {
+    //   requiresVisitor: true,
+    // },
     component: Index,
   },
   {

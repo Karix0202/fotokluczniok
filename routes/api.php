@@ -49,3 +49,5 @@ Route::group([
     Route::post('create/{gallery}', 'FileController@store');
     Route::post('delete', 'FileController@deleteSeries');
 });
+
+Route::post('/', 'PublicContentController@index');

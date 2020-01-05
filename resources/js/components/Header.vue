@@ -1,6 +1,6 @@
 <template>
   <header>
-    <Nav />
+    <Nav :galleries="galleries"/>
     <nav class="navbar nvbar-light custom-navbar">
       <b-container>
         <a href="/" class="navbar-brand">FOTOKLUCZNIOK</a>
@@ -21,6 +21,14 @@ export default {
   components: {
     Nav
   },
+  props: {
+    displaySpinner: Boolean,
+  },
+  data() {
+    return {
+      galleries: [],
+    };
+  },
   methods: {
     burgerMenu() {
       $(window).scrollTop(0);
@@ -28,9 +36,24 @@ export default {
       if (!$('.burger').hasClass('active')) {
         $('.burger').addClass('active');
       } else {
-        $('.burger').removeClass('active');        
+        $('.burger').removeClass('active');
       }
     },
+    loadIndexData() {
+      this.$store.dispatch('loadIndexData')
+      .then((resp) => {
+        this.$parent.changeDisplaySpinner();
+        resp.data.galleries.forEach((el) => {
+          this.galleries.push(el);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+  },
+  created() {
+    this.loadIndexData();
   },
 };
 </script>
@@ -81,7 +104,7 @@ export default {
     }
 
     &:after {
-      top: 26px;      
+      top: 26px;
     }
 
     span {

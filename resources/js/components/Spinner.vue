@@ -36,7 +36,7 @@ export default {
   height: 100%;
   position: fixed;
   z-index: 9000;
-  background-color: #E0E0E0;
+  background-color: #f5f5f5;
   opacity: 0.6;
 }
 </style>
