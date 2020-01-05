@@ -44,8 +44,10 @@ __webpack_require__.r(__webpack_exports__);
         name: '',
         link: ''
       },
-      isProcessing: false,
-      errorVisible: false
+      errors: {
+        link: false
+      },
+      isProcessing: false
     };
   },
   methods: {
@@ -54,7 +56,7 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       this.isProcessing = true;
-      this.errorVisible = false;
+      this.errors.link = true;
       this.$store.dispatch('createFile', {
         id: this.id,
         name: this.form.name,
@@ -67,7 +69,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.isProcessing = false;
       })["catch"](function (err) {
         _this.isProcessing = false;
-        _this.errorVisible = true;
+        if (typeof err.response.link !== "undefined") _this.errors.link = true;
       });
     },
     hide: function hide(e) {
@@ -398,7 +400,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".content-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}\n.vue-dropzone {\n  border-color: #000;\n  color: #000;\n}\n.vue-dropzone .dz-image:hover {\n  background-color: #000;\n}\n.image-holder {\n  margin-top: 26px;\n}\n.delete-selected-images, .delete-selected-files {\n  margin-bottom: 8px;\n  background-color: white;\n  color: #000;\n  border: 1px solid #E53935;\n  border-radius: 0;\n}\n.delete-selected-images:hover, .delete-selected-files:hover {\n  color: #fff;\n  background-color: #E53935;\n}\n.delete-selected-files {\n  float: left;\n}\n@media (min-width: 992px) {\n.delete-selected-files {\n    float: right;\n}\n}\n.add-file {\n  float: left;\n  margin-bottom: 8px;\n  background-color: #fff;\n  color: #000;\n  border: 1px solid #000;\n  border-radius: 0;\n  margin-right: 4px;\n}\n.add-file:hover {\n  color: #fff;\n  background-color: #000;\n}\n@media (min-width: 992px) {\n.add-file {\n    float: right;\n}\n}\n.delete-checkbox-label {\n  width: 60px;\n}", ""]);
+exports.push([module.i, ".content-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}\n.vue-dropzone {\n  border-color: #000;\n  color: #000;\n}\n.vue-dropzone .dz-image:hover {\n  background-color: #000;\n}\n.image-holder {\n  margin-top: 26px;\n}\n.delete-selected-images, .delete-selected-files {\n  margin-bottom: 8px;\n  background-color: white;\n  color: #000;\n  border: 1px solid #E53935;\n  border-radius: 0;\n}\n.delete-selected-images:hover, .delete-selected-files:hover {\n  color: #fff;\n  background-color: #E53935;\n}\n.delete-selected-files {\n  float: left;\n}\n@media (min-width: 992px) {\n.delete-selected-files {\n    float: right;\n}\n}\n.add-file {\n  float: left;\n  margin-bottom: 8px;\n  background-color: #fff;\n  color: #000;\n  border: 1px solid #000;\n  border-radius: 0;\n  margin-left: 4px;\n}\n.add-file:hover {\n  color: #fff;\n  background-color: #000;\n}\n@media (min-width: 992px) {\n.add-file {\n    float: right;\n    margin-right: 4px;\n}\n}\n.delete-checkbox-label {\n  width: 60px;\n}", ""]);
 
 // exports
 
@@ -552,10 +554,10 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _vm.errorVisible
+              _vm.errors.link
                 ? _c("b-alert", { attrs: { variant: "danger", show: "" } }, [
                     _vm._v(
-                      "Coś poszło nie tak. Spróbuj ponownie teraz lub później."
+                      'Link musi zaczynać się od "https://" lub "http://".'
                     )
                   ])
                 : _vm._e(),

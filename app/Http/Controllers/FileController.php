@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use \Validator;
 use App\Gallery;
 use App\File;
+use App\Rules\Link;
 
 class FileController extends Controller
 {
@@ -41,7 +42,7 @@ class FileController extends Controller
     public function getValidator(array $data)
     {
         $validator = Validator::make($data, [
-            'link' => ['required', 'string'],
+            'link' => ['required', 'string', new Link],
             'name' => ['required', 'string'],
         ]);
 

@@ -137,7 +137,7 @@ export default {
   color: #000;
   border: 1px solid #000;
   border-radius: 0;
-  margin-right: 4px;
+  margin-left: 4px;
 
   &:hover {
     color: #fff;
@@ -146,6 +146,7 @@ export default {
 
   @media (min-width: 992px) {
     float: right;
+    margin-right: 4px;
   }
 }
 

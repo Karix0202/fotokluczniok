@@ -10,7 +10,7 @@
           <b-form-input id="link" v-model="form.link" type="text" required placeholder="Link do pliku"/>
         </b-form-group>
 
-        <b-alert variant="danger" v-if="errorVisible" show>Coś poszło nie tak. Spróbuj ponownie teraz lub później.</b-alert>
+        <b-alert variant="danger" v-if="errors.link" show>Link musi zaczynać się od "https://" lub "http://".</b-alert>
 
         <b-button type="submit" variant="outline-primary" :disabled="isProcessing">Dodaj</b-button>
       </b-form>
@@ -34,15 +34,17 @@ export default {
         name: '',
         link: ''
       },
+      errors: {
+        link: false,
+      },
       isProcessing: false,
-      errorVisible: false,
     };
   },
   methods: {
     submit(e) {
       e.preventDefault();
       this.isProcessing = true;
-      this.errorVisible = false;
+      this.errors.link = true;
       this.$store.dispatch('createFile', { id: this.id, name: this.form.name, link: this.form.link })
       .then((resp) => {
         this.$refs['file-creation-modal'].hide();
@@ -51,7 +53,7 @@ export default {
       })
       .catch((err) => {
         this.isProcessing = false;
-        this.errorVisible = true;
+        if (typeof err.response.link !== "undefined") this.errors.link = true;
       });
     },
     hide(e) {
