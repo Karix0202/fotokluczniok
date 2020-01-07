@@ -18,11 +18,19 @@ export default {
 }
 
 .custom-form {
-  input {
+  input, select, textarea {
     border: 1px solid #000000;
     color: #000000;
     border-radius: 0;
     outline: none !important;
+    resize: none;
+  }
+
+  .custom-file {
+    label {
+      border: 1px solid #000;
+      border-radius: 0;
+    }
   }
 
   .btn {

@@ -201,6 +201,22 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+ * @license Copyright (c) 2003-2019, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.md.
+ */
+!function(t,e){ true?module.exports=e():undefined}(window,function(){return function(t){var e={};function n(i){if(e[i])return e[i].exports;var r=e[i]={i:i,l:!1,exports:{}};return t[i].call(r.exports,r,r.exports,n),r.l=!0,r.exports}return n.m=t,n.c=e,n.d=function(t,e,i){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:i})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var i=Object.create(null);if(n.r(i),Object.defineProperty(i,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)n.d(i,r,function(e){return t[e]}.bind(null,r));return i},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=2)}([function(t,e,n){"use strict";(function(t){var n="object"==typeof t&&t&&t.Object===Object&&t;e.a=n}).call(this,n(1))},function(t,e){var n;n=function(){return this}();try{n=n||new Function("return this")()}catch(t){"object"==typeof window&&(n=window)}t.exports=n},function(t,e,n){"use strict";n.r(e);var i=function(t){var e=typeof t;return null!=t&&("object"==e||"function"==e)},r=n(0),o="object"==typeof self&&self&&self.Object===Object&&self,u=r.a||o||Function("return this")(),a=function(){return u.Date.now()},c=u.Symbol,s=Object.prototype,f=s.hasOwnProperty,l=s.toString,d=c?c.toStringTag:void 0;var p=function(t){var e=f.call(t,d),n=t[d];try{t[d]=void 0;var i=!0}catch(t){}var r=l.call(t);return i&&(e?t[d]=n:delete t[d]),r},v=Object.prototype.toString;var y=function(t){return v.call(t)},b="[object Null]",h="[object Undefined]",m=c?c.toStringTag:void 0;var g=function(t){return null==t?void 0===t?h:b:m&&m in Object(t)?p(t):y(t)};var j=function(t){return null!=t&&"object"==typeof t},O="[object Symbol]";var w=function(t){return"symbol"==typeof t||j(t)&&g(t)==O},x=NaN,$=/^\s+|\s+$/g,S=/^[-+]0x[0-9a-f]+$/i,E=/^0b[01]+$/i,T=/^0o[0-7]+$/i,_=parseInt;var D=function(t){if("number"==typeof t)return t;if(w(t))return x;if(i(t)){var e="function"==typeof t.valueOf?t.valueOf():t;t=i(e)?e+"":e}if("string"!=typeof t)return 0===t?t:+t;t=t.replace($,"");var n=E.test(t);return n||T.test(t)?_(t.slice(2),n?2:8):S.test(t)?x:+t},M="Expected a function",P=Math.max,N=Math.min;var F=function(t,e,n){var r,o,u,c,s,f,l=0,d=!1,p=!1,v=!0;if("function"!=typeof t)throw new TypeError(M);function y(e){var n=r,i=o;return r=o=void 0,l=e,c=t.apply(i,n)}function b(t){var n=t-f;return void 0===f||n>=e||n<0||p&&t-l>=u}function h(){var t=a();if(b(t))return m(t);s=setTimeout(h,function(t){var n=e-(t-f);return p?N(n,u-(t-l)):n}(t))}function m(t){return s=void 0,v&&r?y(t):(r=o=void 0,c)}function g(){var t=a(),n=b(t);if(r=arguments,o=this,f=t,n){if(void 0===s)return function(t){return l=t,s=setTimeout(h,e),d?y(t):c}(f);if(p)return clearTimeout(s),s=setTimeout(h,e),y(f)}return void 0===s&&(s=setTimeout(h,e)),c}return e=D(e)||0,i(n)&&(d=!!n.leading,u=(p="maxWait"in n)?P(D(n.maxWait)||0,e):u,v="trailing"in n?!!n.trailing:v),g.cancel=function(){void 0!==s&&clearTimeout(s),l=0,r=f=o=s=void 0},g.flush=function(){return void 0===s?c:m(a())},g};var U={name:"ckeditor",render(t){return t(this.tagName)},props:{editor:{type:Function,default:null},value:{type:String,default:""},config:{type:Object,default:()=>({})},tagName:{type:String,default:"div"},disabled:{type:Boolean,default:!1}},data:()=>({instance:null,$_lastEditorData:{type:String,default:""}}),mounted(){const t=Object.assign({},this.config);this.value&&(t.initialData=this.value),this.editor.create(this.$el,t).then(t=>{this.instance=t,t.isReadOnly=this.disabled,this.$_setUpEditorEvents(),this.$emit("ready",t)}).catch(t=>{console.error(t)})},beforeDestroy(){this.instance&&(this.instance.destroy(),this.instance=null),this.$emit("destroy",this.instance)},watch:{value(t,e){t!==e&&t!==this.$_lastEditorData&&this.instance.setData(t)},disabled(t){this.instance.isReadOnly=t}},methods:{$_setUpEditorEvents(){const t=this.instance;t.model.document.on("change:data",F(e=>{const n=this.$_lastEditorData=t.getData();this.$emit("input",n,e,t)},300)),t.editing.view.document.on("focus",e=>{this.$emit("focus",e,t)}),t.editing.view.document.on("blur",e=>{this.$emit("blur",e,t)})}}};const k={install(t){t.component("ckeditor",U)},component:U};e.default=k}]).default});
+//# sourceMappingURL=ckeditor.js.map
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -30840,7 +30856,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Inconsolata&display=swap);", ""]);
 
 // module
-exports.push([module.i, "* {\n  font-family: \"Inconsolata\", monospace;\n}\n.custom-form input {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n}\n.custom-form .btn {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n}\n.custom-form .btn:hover {\n  border: 1px solid #000000;\n  background-color: #000000;\n  color: #ffffff;\n}\n.custom-form .btn:focus {\n  outline: none !important;\n  box-shadow: none;\n}\n.form-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}\ninput, label {\n  outline: none !important;\n}\ninput:focus, label:focus {\n  outline: none !important;\n}\n.section-header {\n  padding-top: 12px;\n  padding-bottom: 12px;\n}\n.section-header:last-child {\n  text-align: right;\n}\n.section-add-btn {\n  text-decoration: none;\n  color: #000;\n  border: 1px solid #000;\n  padding: 8px;\n  -webkit-transition: all 0.1s ease-out;\n  transition: all 0.1s ease-out;\n}\n.section-add-btn:hover {\n  text-decoration: none !important;\n  color: #fff;\n  background: #000;\n}\n.delete-row {\n  color: red;\n  text-decoration: underline;\n  border: none;\n  background: none;\n}\n.delete-row:hover {\n  color: red;\n}\n.edit-row {\n  color: #FFC107;\n  text-decoration: underline;\n}\n.edit-row:hover {\n  color: #FFC107;\n}\n.single-gallery-link {\n  color: #000;\n  text-decoration: underline;\n}\n.single-gallery-link:hover {\n  color: #000;\n}\n.fade-enter-active, .fade-leave-active {\n  -webkit-transition: all 1.5s;\n  transition: all 1.5s;\n}\n.fade-enter, .fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.delete-checkbox-label {\n  cursor: pointer;\n}\n.modal-backdrop {\n  opacity: 0.5 !important;\n}", ""]);
+exports.push([module.i, "* {\n  font-family: \"Inconsolata\", monospace;\n}\n.custom-form input, .custom-form select, .custom-form textarea {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n  resize: none;\n}\n.custom-form .custom-file label {\n  border: 1px solid #000;\n  border-radius: 0;\n}\n.custom-form .btn {\n  border: 1px solid #000000;\n  color: #000000;\n  border-radius: 0;\n  outline: none !important;\n}\n.custom-form .btn:hover {\n  border: 1px solid #000000;\n  background-color: #000000;\n  color: #ffffff;\n}\n.custom-form .btn:focus {\n  outline: none !important;\n  box-shadow: none;\n}\n.form-holder {\n  margin: 0 auto;\n  margin-top: 50px;\n  margin-bottom: 50px;\n}\ninput, label {\n  outline: none !important;\n}\ninput:focus, label:focus {\n  outline: none !important;\n}\n.section-header {\n  padding-top: 12px;\n  padding-bottom: 12px;\n}\n.section-header:last-child {\n  text-align: right;\n}\n.section-add-btn {\n  text-decoration: none;\n  color: #000;\n  border: 1px solid #000;\n  padding: 8px;\n  -webkit-transition: all 0.1s ease-out;\n  transition: all 0.1s ease-out;\n}\n.section-add-btn:hover {\n  text-decoration: none !important;\n  color: #fff;\n  background: #000;\n}\n.delete-row {\n  color: red;\n  text-decoration: underline;\n  border: none;\n  background: none;\n}\n.delete-row:hover {\n  color: red;\n}\n.edit-row {\n  color: #FFC107;\n  text-decoration: underline;\n}\n.edit-row:hover {\n  color: #FFC107;\n}\n.single-gallery-link {\n  color: #000;\n  text-decoration: underline;\n}\n.single-gallery-link:hover {\n  color: #000;\n}\n.fade-enter-active, .fade-leave-active {\n  -webkit-transition: all 1.5s;\n  transition: all 1.5s;\n}\n.fade-enter, .fade-leave-to {\n  -webkit-transform: translateX(10px);\n          transform: translateX(10px);\n  opacity: 0;\n}\n.delete-checkbox-label {\n  cursor: pointer;\n}\n.modal-backdrop {\n  opacity: 0.5 !important;\n}", ""]);
 
 // exports
 
@@ -51896,9 +51912,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/esm/index.js");
-/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
+/* harmony import */ var _ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ckeditor/ckeditor5-vue */ "./node_modules/@ckeditor/ckeditor5-vue/dist/ckeditor.js");
+/* harmony import */ var _ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store */ "./resources/js/store.js");
+
 
 
 
@@ -51906,11 +51925,12 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.config.productionTip = false;
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(_ckeditor_ckeditor5_vue__WEBPACK_IMPORTED_MODULE_2___default.a);
 new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
-  router: _router__WEBPACK_IMPORTED_MODULE_3__["default"],
-  store: _store__WEBPACK_IMPORTED_MODULE_4__["default"],
+  router: _router__WEBPACK_IMPORTED_MODULE_4__["default"],
+  store: _store__WEBPACK_IMPORTED_MODULE_5__["default"],
   render: function render(h) {
-    return h(_App_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
+    return h(_App_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
   }
 }).$mount('#app');
 
@@ -52286,9 +52306,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var routes = [{
   path: '/',
   name: 'index',
-  // meta: {
-  //   requiresVisitor: true,
-  // },
   component: _views_Index_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
   path: '/login',
@@ -52297,7 +52314,7 @@ var routes = [{
     requiresVisitor: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
+    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
   }
 }, {
   path: '/logout',
@@ -52324,7 +52341,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
+    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
   }
 }, {
   path: '/admin/group/edit/:id',
@@ -52333,7 +52350,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
+    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyGroupStore.vue */ "./resources/js/admin/views/PhotographyGroupStore.vue"));
   }
 }, {
   path: '/admin/gallery/create',
@@ -52342,7 +52359,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./admin/views/GalleryStore.vue */ "./resources/js/admin/views/GalleryStore.vue"));
+    return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./admin/views/GalleryStore.vue */ "./resources/js/admin/views/GalleryStore.vue"));
   }
 }, {
   path: '/admin/gallery/edit/:id',
@@ -52351,7 +52368,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./admin/views/GalleryStore.vue */ "./resources/js/admin/views/GalleryStore.vue"));
+    return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./admin/views/GalleryStore.vue */ "./resources/js/admin/views/GalleryStore.vue"));
   }
 }, {
   path: '/admin/gallery/get/:id',
@@ -52360,7 +52377,16 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
+  }
+}, {
+  path: '/admin/photography/create',
+  name: 'photographyCreate',
+  meta: {
+    requiresAuth: true
+  },
+  component: function component() {
+    return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyStore.vue */ "./resources/js/admin/views/PhotographyStore.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

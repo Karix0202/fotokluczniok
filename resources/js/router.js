@@ -9,9 +9,6 @@ const routes = [
   {
     path: '/',
     name: 'index',
-    // meta: {
-    //   requiresVisitor: true,
-    // },
     component: Index,
   },
   {
@@ -77,6 +74,14 @@ const routes = [
       requiresAuth: true,
     },
     component: () => import('./admin/views/Gallery.vue'),
+  },
+  {
+    path: '/admin/photography/create',
+    name: 'photographyCreate',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./admin/views/PhotographyStore.vue'),
   },
 ];
 
