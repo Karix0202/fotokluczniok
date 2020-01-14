@@ -12,8 +12,8 @@ class Photography extends Model
     {
         parent::boot();
 
-        static::creating(function ($user) {
-            $user->{$user->getKeyName()} = (string) Uuid::uuid4();
+        static::creating(function ($photography) {
+            $photography->{$photography->getKeyName()} = (string) Uuid::uuid4();
         });
     }
 
@@ -30,5 +30,11 @@ class Photography extends Model
     public function group()
     {
         return $this->belongsTo('App\PhotographyGroup');
+    }
+
+    public function delete()
+    {
+        File::delete($this->thumbnail_path);
+        return parent::delete();
     }
 }

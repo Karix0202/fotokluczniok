@@ -69,7 +69,7 @@ export default {
     this.$store.dispatch('getPhotographyGroups')
     .then((resp) => {
       resp.data.forEach((el) => {
-        this.photographyGroups.push(el.name);
+        this.photographyGroups.push({text: el.name, value: el.id});
       });
     })
     .catch((err) => {
@@ -86,13 +86,20 @@ export default {
   methods: {
     submit(e) {
       e.preventDefault();
-      console.log(this.form);
+      this.isProcessing = true;
+
+      this.$store.dispatch('createPhotography', this.form)
+      .then((resp) => {
+        this.$router.push({ name: 'home' });
+      })
+      .catch((err) => {
+        this.isProcessing = false;
+      });
     },
   },
   computed: {
     displaySpinner() {
       if (this.action === 0) return this.photographyGroups.length - 1 === 0;
-
       return this.photographyGroups.length - 1 === 0 && this.photography !== null;
     },
   },

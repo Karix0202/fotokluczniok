@@ -12,8 +12,8 @@ class Image extends Model
     {
         parent::boot();
 
-        static::creating(function ($user) {
-            $user->{$user->getKeyName()} = (string) Uuid::uuid4();
+        static::creating(function ($image) {
+            $image->{$image->getKeyName()} = (string) Uuid::uuid4();
         });
     }
 

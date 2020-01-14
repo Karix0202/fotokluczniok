@@ -125,7 +125,10 @@ __webpack_require__.r(__webpack_exports__);
 
     this.$store.dispatch('getPhotographyGroups').then(function (resp) {
       resp.data.forEach(function (el) {
-        _this.photographyGroups.push(el.name);
+        _this.photographyGroups.push({
+          text: el.name,
+          value: el.id
+        });
       });
     })["catch"](function (err) {
       console.log(err);
@@ -140,8 +143,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit(e) {
+      var _this2 = this;
+
       e.preventDefault();
-      console.log(this.form);
+      this.isProcessing = true;
+      this.$store.dispatch('createPhotography', this.form).then(function (resp) {
+        _this2.$router.push({
+          name: 'home'
+        });
+      })["catch"](function (err) {
+        _this2.isProcessing = false;
+      });
     }
   },
   computed: {

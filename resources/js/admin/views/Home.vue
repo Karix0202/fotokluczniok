@@ -17,7 +17,7 @@
 
             <b-col lg="9" md="12">
               <PhotographyGroupTable v-if="getLastId === 0" :items="photographyGroups" />
-              <p v-if="getLastId === 1">Fotografie</p>
+              <PhotographyTable v-if="getLastId === 1" :items="photographies" />
               <GalleryTable v-if="getLastId === 2" :items="galleries" />
             </b-col>
           </b-row>
@@ -30,6 +30,7 @@
 <script>
 import AdminNav from '../../admin/components/AdminNav.vue';
 import PhotographyGroupTable from '../../admin/components/PhotographyGroupTable.vue';
+import PhotographyTable from '../../admin/components/PhotographyTable.vue';
 import GalleryTable from '../../admin/components/GalleryTable.vue';
 import Spinner from '../../components/Spinner.vue';
 
@@ -39,12 +40,14 @@ export default {
     AdminNav,
     PhotographyGroupTable,
     GalleryTable,
+    PhotographyTable,
     Spinner,
   },
   data() {
     return {
       photographyGroups: [],
       galleries: [],
+      photographies: [],
       displaySpinner: true,
       loaded: false,
     };

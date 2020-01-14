@@ -11,8 +11,8 @@ class PhotographyGroup extends Model
     {
         parent::boot();
 
-        static::creating(function ($user) {
-            $user->{$user->getKeyName()} = (string) Uuid::uuid4();
+        static::creating(function ($photographyGroup) {
+            $photographyGroup->{$photographyGroup->getKeyName()} = (string) Uuid::uuid4();
         });
     }
 
@@ -24,5 +24,16 @@ class PhotographyGroup extends Model
     public function getKeyType()
     {
         return 'string';
+    }
+
+    public function photographies()
+    {
+        return $this->hasMany('App\Photography');
+    }
+
+    public function delete()
+    {
+        foreach($this->photographies as $photography) $photography->delete();
+        return parent::delete();
     }
 }

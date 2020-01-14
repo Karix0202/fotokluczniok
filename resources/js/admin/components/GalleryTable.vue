@@ -29,7 +29,7 @@
               </th>
               <th>{{ item.private ? 'tak' : 'nie' }}</th>
               <th>
-                <button class="delete-row" v-on:click="deleteRow(item.id)">Usuń</button>
+                <button class="delete-row" v-on:click="deleteGallery(item.id)">Usuń</button>
                 <router-link :to="{ name: 'editGallery', params: { id: item.id } }" class="edit-row">Edytuj</router-link>
               </th>
             </tr>
@@ -47,10 +47,14 @@ export default {
     items: Array,
   },
   methods: {
-    deleteRow(elId) {
+    deleteGallery(elId) {
       this.$store.dispatch('deleteGallery', {id: elId})
       .then((resp) => {
-        this.$parent.deleteRow(this.$parent.deleteGallery, {id: elId});
+        for(let i = 0; i < this.items.length; i++) {
+          if (this.items[i].id === elId) {
+            this.items.splice(i, 1);
+          }
+        }
       })
       .catch((err) => {
         console.log(err);

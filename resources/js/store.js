@@ -257,6 +257,25 @@ export default new Vuex.Store({
         })
       });
     },
+    createPhotography(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        const formData = new FormData();
+        formData.append('thumbnail', credentials.thumbnail);
+        formData.append('name', credentials.name);
+        formData.append('description', credentials.description);
+        formData.append('photography_group_id', credentials.photographyGroup);
+
+        axios.post(endpoint('photography/create'), formData)
+        .then((resp) => {
+          resolve(resp);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+      });
+    },
   },
   modules: {
   },

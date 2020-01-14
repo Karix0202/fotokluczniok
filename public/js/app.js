@@ -52662,6 +52662,21 @@ function endpoint(url) {
           reject(err);
         });
       });
+    },
+    createPhotography: function createPhotography(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        var formData = new FormData();
+        formData.append('thumbnail', credentials.thumbnail);
+        formData.append('name', credentials.name);
+        formData.append('description', credentials.description);
+        formData.append('photography_group_id', credentials.photographyGroup);
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint('photography/create'), formData).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
     }
   },
   modules: {}

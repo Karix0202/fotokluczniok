@@ -35,4 +35,10 @@ class Gallery extends Model
     {
         return $this->hasMany('App\File');
     }
+
+    public function delete()
+    {
+        foreach($this->images as $image) $image->delete();
+        return parent::delete();
+    }
 }
