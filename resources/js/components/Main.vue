@@ -8,21 +8,27 @@
           </b-col>
           <b-col md="12" lg="6" class="text-left text-lg-right">
             <div id="filters" class="filters">
-              <a href="/">Rodzinna</a>
-              <a href="/">Rodzinna</a>
-              <a href="/">Rodzinna</a>
-              <a href="/">Rodzinna</a>
+              <a href="/" v-for="(photographyGroup, i) in photographyGroups" :key="i">{{ photographyGroup.name }}</a>
             </div>
           </b-col>
         </b-row>
+        <PhotographyGrid :photographyGroups="photographyGroups" />
       </b-container>
     </div>
   </main>
 </template>
 
 <script>
+import PhotographyGrid from '../components/PhotographyGrid.vue';
+
 export default {
   name: 'Main',
+  components: {
+    PhotographyGrid,
+  },
+  props: {
+    photographyGroups: Array,
+  },
 };
 </script>
 

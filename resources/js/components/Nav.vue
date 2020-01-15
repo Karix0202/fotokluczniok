@@ -4,6 +4,7 @@
       <div class="row align-items-start">
         <div class="col-md-2">
           <ul class="custom-menu">
+            <li><router-link :to="{ name: 'index' }">Home</router-link></li>
             <li v-for="gallery in galleries" :key="gallery.id"><a href="/">{{ gallery.name }}</a></li>
           </ul>
         </div>

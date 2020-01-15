@@ -1,8 +1,8 @@
 <template>
   <div>
     <Spinner v-if="displaySpinner" />
-    <Header :displaySpinner="displaySpinner" />
-    <Main />
+    <Header :displaySpinner="displaySpinner" :galleries="galleries"/>
+    <Main :photographyGroups="photographyGroups"/>
   </div>
 </template>
 
@@ -21,12 +21,29 @@ export default {
   data() {
     return {
       displaySpinner: true,
+      galleries: [],
+      photographyGroups: [],
     };
   },
   methods: {
-    changeDisplaySpinner() {
-      this.displaySpinner = false;
-    }
+    getData() {
+      this.$store.dispatch('loadIndexData')
+      .then((resp) => {
+        this.displaySpinner = false;
+        resp.data.galleries.forEach((el) => {
+          this.galleries.push(el);
+        });
+        resp.data.photography_groups.forEach((el) => {
+          this.photographyGroups.push(el);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
+  },
+  created() {
+    this.getData();
   },
 };
 </script>

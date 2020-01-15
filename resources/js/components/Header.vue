@@ -1,4 +1,4 @@
-<template>
+x<template>
   <header>
     <Nav :galleries="galleries"/>
     <nav class="navbar nvbar-light custom-navbar">
@@ -19,41 +19,20 @@ import Nav from './Nav.vue';
 export default {
   name: 'Header',
   components: {
-    Nav
+    Nav,
   },
   props: {
-    displaySpinner: Boolean,
-  },
-  data() {
-    return {
-      galleries: [],
-    };
+    galleries: Array,
   },
   methods: {
     burgerMenu() {
       $(window).scrollTop(0);
-
       if (!$('.burger').hasClass('active')) {
         $('.burger').addClass('active');
       } else {
         $('.burger').removeClass('active');
       }
     },
-    loadIndexData() {
-      this.$store.dispatch('loadIndexData')
-      .then((resp) => {
-        this.$parent.changeDisplaySpinner();
-        resp.data.galleries.forEach((el) => {
-          this.galleries.push(el);
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    },
-  },
-  created() {
-    this.loadIndexData();
   },
 };
 </script>
