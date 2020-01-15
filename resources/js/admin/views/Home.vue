@@ -65,6 +65,7 @@ export default {
         this.$store.dispatch('changeLastSectionId', { id: id })
         .then((resp) => {
           if (this.getLastId === 0) this.getPhotographyGroups();
+          if (this.getLastId === 1) this.getPhotographies();
           if (this.getLastId === 2) this.getGalleries();
 
           $(`div[section-id='${oldId}']`).removeClass('active');
@@ -118,7 +119,17 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    }
+    },
+    getPhotographies() {
+      this.$store.dispatch('getPhotographies')
+      .then((resp) => {
+        this.addNewElementsToArr(this.photographies, resp.data);
+        this.checkElements(this.photographies, resp.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    },
   },
   computed: {
     getLastId() {

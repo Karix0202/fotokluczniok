@@ -15,7 +15,7 @@
             </b-form-group>
 
             <b-form-group id="thumbnail-group" label="Miniaturka:" label-for="thumbnail">
-              <b-form-file v-model="form.thumbnail" id="thumbnail-group" placeholder="Wybierz miniaturkę" drop-placeholder="Upuść miniaturkę tutaj" accept="image/jpg, image/png, image/jpeg"></b-form-file>
+              <b-form-file v-model="form.thumbnail" id="thumbnail-group" placeholder="Wybierz miniaturkę" drop-placeholder="Upuść miniaturkę tutaj" accept="image/jpg, image/png, image/jpeg" @change="thumbnailOnChange"></b-form-file>
             </b-form-group>
 
             <b-form-group id="photography-group-group" label="Nagłówek:" label-for="photography-group">
@@ -84,6 +84,9 @@ export default {
     }
   },
   methods: {
+    thumbnailOnChange(e) {
+      this.form.thumbnail = e.target.files[0];
+    },
     submit(e) {
       e.preventDefault();
       this.isProcessing = true;
@@ -105,3 +108,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.ck-content {
+  p {
+    margin: 4px 0 !important;
+  }
+}
+</style>

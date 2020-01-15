@@ -221,13 +221,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PhotographyTable',
   props: {
     items: Array
   },
   methods: {
-    deleteRow: function deleteRow(elId) {}
+    deletePhotography: function deletePhotography(elId) {
+      var _this = this;
+
+      this.$store.dispatch('deletePhotographies', {
+        id: elId
+      }).then(function (resp) {
+        for (var i = 0; i < _this.items.length; i++) {
+          if (_this.items[i].id === elId) {
+            _this.items.splice(i, 1);
+          }
+        }
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
   }
 });
 
@@ -313,6 +339,7 @@ __webpack_require__.r(__webpack_exports__);
           id: id
         }).then(function (resp) {
           if (_this.getLastId === 0) _this.getPhotographyGroups();
+          if (_this.getLastId === 1) _this.getPhotographies();
           if (_this.getLastId === 2) _this.getGalleries();
           $("div[section-id='".concat(oldId, "']")).removeClass('active');
           $("div[section-id=".concat(id, "]")).addClass('active');
@@ -364,6 +391,17 @@ __webpack_require__.r(__webpack_exports__);
         _this4.addNewElementsToArr(_this4.galleries, resp.data);
 
         _this4.checkElements(_this4.galleries, resp.data);
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getPhotographies: function getPhotographies() {
+      var _this5 = this;
+
+      this.$store.dispatch('getPhotographies').then(function (resp) {
+        _this5.addNewElementsToArr(_this5.photographies, resp.data);
+
+        _this5.checkElements(_this5.photographies, resp.data);
       })["catch"](function (err) {
         console.log(err);
       });
@@ -942,11 +980,45 @@ var render = function() {
               "table",
               { staticClass: "table table-striped custom-table" },
               [
-                _c("thead"),
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Nazwa")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Akcja")])
+                  ])
+                ]),
                 _vm._v(" "),
-                _c("transition-group", {
-                  attrs: { tag: "tbody", name: "fade" }
-                })
+                _c(
+                  "transition-group",
+                  { attrs: { tag: "tbody", name: "fade" } },
+                  _vm._l(_vm.items, function(item, i) {
+                    return _c("tr", { key: item.id }, [
+                      _c("th", { attrs: { scope: "row" } }, [
+                        _vm._v(_vm._s(i + 1))
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [_vm._v(_vm._s(item.name))]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "delete-row",
+                            on: {
+                              click: function($event) {
+                                return _vm.deletePhotography(item.id)
+                              }
+                            }
+                          },
+                          [_vm._v("Usuń")]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
               ],
               1
             )

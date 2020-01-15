@@ -55,6 +55,7 @@ Route::group([
 ], function ($router) {
     Route::post('create', 'PhotographyController@store');
     Route::post('', 'PhotographyController@index');
+    Route::delete('delete/{photography}', 'PhotographyController@delete');
 });
 
 Route::post('/', 'PublicContentController@index');

@@ -38,4 +38,11 @@ class PhotographyController extends Controller
     {
         return response()->json(Photography::all());
     }
+
+    public function delete(Photography $photography)
+    {
+        if(! $photography->delete()) return response()->json(['error' => 'Could not delete photography'], 500);
+
+        return response()->json(['message' => 'success']);
+    }
 }
