@@ -2,7 +2,7 @@
   <div>
     <Spinner v-if="displaySpinner" />
     <Header :displaySpinner="displaySpinner" :galleries="galleries"/>
-    <Main :photographyGroups="photographyGroups"/>
+    <Main :photographyGroups="photographyGroups" :photographies="photographies"/>
   </div>
 </template>
 
@@ -23,6 +23,7 @@ export default {
       displaySpinner: true,
       galleries: [],
       photographyGroups: [],
+      photographies: [],
     };
   },
   methods: {
@@ -35,6 +36,9 @@ export default {
         });
         resp.data.photography_groups.forEach((el) => {
           this.photographyGroups.push(el);
+          el.photographies.forEach((photography) => {
+            this.photographies.push(photography);
+          });
         });
       })
       .catch((err) => {

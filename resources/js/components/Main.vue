@@ -8,33 +8,65 @@
           </b-col>
           <b-col md="12" lg="6" class="text-left text-lg-right">
             <div id="filters" class="filters">
-              <a href="/" v-for="(photographyGroup, i) in photographyGroups" :key="i">{{ photographyGroup.name }}</a>
+              <a href="#" data-filter="*" class="active" @click="filterClick">Wszystkie</a>
+              <a href="#" v-for="photographyGroup in photographyGroups" :key="photographyGroup.id" :data-filter="photographyGroup.id" @click="filterClick">{{ photographyGroup.name }}</a>
             </div>
           </b-col>
         </b-row>
-        <PhotographyGrid :photographyGroups="photographyGroups" />
+
+        <b-row class="no-gutter">
+          <PhotographyItem v-for="photography in filtered" :key="photography.id" :photography="photography"/>
+        </b-row>
       </b-container>
     </div>
   </main>
 </template>
 
 <script>
-import PhotographyGrid from '../components/PhotographyGrid.vue';
+import PhotographyItem from '../components/PhotographyItem.vue';
 
 export default {
   name: 'Main',
   components: {
-    PhotographyGrid,
+    PhotographyItem,
   },
   props: {
     photographyGroups: Array,
+    photographies: Array,
+  },
+  data() {
+    return {
+      filter: '*',
+    };
+  },
+  methods: {
+    filterClick(e) {
+      e.preventDefault();
+
+      this.filter = $(e.target).attr('data-filter');
+
+      $('#filters a').removeClass('active');
+      $(e.target).addClass('active');
+    }
+  },
+  computed: {
+    filtered() {
+      if (this.filter === '*') return this.photographies;
+
+      const els = [];
+      this.photographies.forEach((photography) => {
+        if (photography.photography_group_id === this.filter) els.push(photography);
+      });
+
+      return els;
+    },
   },
 };
 </script>
 
 <style lang="scss">
 .site-section {
-  padding: 7rem 0;
+  padding: 4rem 0;
 }
 
 .filters {
@@ -45,6 +77,10 @@ export default {
     padding-right: 10px;
     font-size: 16px;
     position: relative;
+  }
+
+  .active {
+    text-decoration: underline;
   }
 }
 </style>

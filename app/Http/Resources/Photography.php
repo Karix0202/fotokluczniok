@@ -19,6 +19,7 @@ class Photography extends JsonResource
             'name' => $this->name,
             'thumbnail_path' => $this->thumbnail_full_path,
             'photography_group_id' => $this->photography_group_id,
+            'visible' => true,
         ];
     }
 }

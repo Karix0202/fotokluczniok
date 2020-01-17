@@ -1,5 +1,5 @@
 <template>
-  <div class="item col-sm-6 col-md-4 col-lg-4 mb-4" :class="groupId">
+  <div class="item col-sm-6 col-md-4 col-lg-4 mb-4" :class="photography.photography_group_id">
     <a href="/" class="item-wrap fancybox">
       <div class="photography-info">
         <h3>{{ photography.name }}</h3>
@@ -13,7 +13,6 @@
 export default {
   name: 'PhotographyItem',
   props: {
-    groupId: String,
     photography: Object,
   },
 };
@@ -23,6 +22,7 @@ export default {
 .item {
   border: none;
   margin-bottom: 30px !important;
+  box-sizing: border-box;
 
   .item-wrap {
     display: block;

@@ -16,6 +16,7 @@ class PhotographyGroup extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'photographies' => new PhotographyCollection($this->photographies),
         ];
