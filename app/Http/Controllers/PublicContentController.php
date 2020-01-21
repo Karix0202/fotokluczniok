@@ -7,6 +7,9 @@ use App\PhotographyGroup;
 use App\Gallery;
 use App\Http\Resources\PhotographyGroupCollection;
 use App\Http\Resources\IndexGalleryCollection;
+use App\Http\Resources\Gallery as GalleryResource;
+use App\Http\Resources\ImageCollection;
+use App\Image;
 
 class PublicContentController extends Controller
 {
@@ -16,5 +19,18 @@ class PublicContentController extends Controller
             'photography_groups' => new PhotographyGroupCollection(PhotographyGroup::all()),
             'galleries' => new IndexGalleryCollection(Gallery::where('private', '=', '0')->get()),
         ]);
+    }
+
+    public function getGallery(Gallery $gallery)
+    {
+        return response()->json([
+            'gallery' => new GalleryResource($gallery),
+            'galleries' => new IndexGalleryCollection(Gallery::where('private', '=', '0')->get()),
+        ]);
+    }
+
+    public function getImages(Gallery $gallery)
+    {
+        return new ImageCollection(Image::where('gallery_id', '=', $gallery->id)->orderBy('created_at', 'asc')->paginate());
     }
 }

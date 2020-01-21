@@ -13,7 +13,7 @@ class ImageController extends Controller
     public function store(Gallery $gallery, Request $request)
     {
         $validator = $this->getValidator($request->all());
-        if ($validator->fails()) return response()->json([$validator->errors()], 406);
+        if ($validator->fails()) return response()->json([$validator->errors(), "data" => $request->all()], 406);
 
         $file = $request->file('file');
 
@@ -27,7 +27,8 @@ class ImageController extends Controller
         $image->full_path = asset($path . '/' . $newName);
         $image->gallery_id = $gallery->id;
 
-        if (! ($image->save() || $file->move($path, $newName))) return response()->json(["error" => "Something went wrong. Try again later.", "data" => $request->all()], 500);
+        $file->move($path, $newName);
+        $image->save();
 
         return response()->json($image);
     }

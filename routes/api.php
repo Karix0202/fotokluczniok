@@ -56,6 +56,10 @@ Route::group([
     Route::post('create', 'PhotographyController@store');
     Route::post('', 'PhotographyController@index');
     Route::delete('delete/{photography}', 'PhotographyController@delete');
+    Route::post('get/{photography}', 'PhotographyController@get');
 });
 
 Route::post('/', 'PublicContentController@index');
+Route::post('/gallery/{gallery}', 'PublicContentController@getGallery');
+Route::post('/images/{gallery}', 'PublicContentController@getImages');
+

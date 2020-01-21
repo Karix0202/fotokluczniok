@@ -83,6 +83,19 @@ const routes = [
     },
     component: () => import('./admin/views/PhotographyStore.vue'),
   },
+  {
+    path: '/gallery/:id',
+    name: 'gallery',
+    component: () => import('./views/Gallery.vue'),
+  },
+  {
+    path: '/admin/photography/get/:id',
+    name: 'singlePhotography',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./admin/views/Photography.vue'),
+  },
 ];
 
 const router = new VueRouter({

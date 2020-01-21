@@ -10,7 +10,7 @@
           <hr>
           <b-row>
             <b-col cols="12">
-              <vue2Dropzone id="dropzone" ref="myVueDropzone" :options="dropzoneOptions" @vdropzone-success="dropzoneSuccess"></vue2Dropzone>
+              <vueDropzone id="dropzone" ref="myVueDropzone" :options="dropzoneOptions"  @vdropzone-success="dropzoneSuccess"/>
             </b-col>
             <b-col lg="6" md="12" class="image-holder">
               <ImageTable :images="images" />
@@ -29,7 +29,7 @@
 <script>
 import AdminNav from '../../admin/components/AdminNav.vue';
 import Spinner from '../../components/Spinner.vue';
-import vue2Dropzone from 'vue2-dropzone';
+import vueDropzone from 'vue2-dropzone';
 import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 import ImageTable from '../../admin/components/ImageTable.vue';
 import FileTable from '../../admin/components/FileTable.vue';
@@ -40,7 +40,7 @@ export default {
   components: {
     AdminNav,
     Spinner,
-    vue2Dropzone,
+    vueDropzone,
     FileCreateModal,
     ImageTable,
     FileTable,
@@ -53,9 +53,14 @@ export default {
         url: '/',
         dictDefaultMessage: 'Upuść lub kliknij',
         maxFiles: 500,
+        maxFilesize: 1000,
         autoProcessQueue: true,
         thumbnailWidth: 100,
         thumbnailHeight: 100,
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${this.$store.getters.getApiToken}`,
+        },
       },
       images: [],
       files: [],
@@ -66,11 +71,13 @@ export default {
     .then((resp) => {
       this.displaySpinner = false;
       this.gallery = resp.data;
-      this.dropzoneOptions.url = this.$store.getters.getApiUrl + `image/create/${this.gallery.id}`;
+      this.dropzoneOptions.url = `${this.$store.getters.getApiUrl}image/create/${this.gallery.id}`;
+
       resp.data.images.forEach((image) => {
         image['newName'] = image.name.replace(image.name.substr(6, 20), '...');
         this.images.push(image);
       });
+
       resp.data.files.forEach((file) => {
         this.files.push(file);
       });

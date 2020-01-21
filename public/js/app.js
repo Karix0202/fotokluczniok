@@ -2164,6 +2164,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Nav',
   props: {
@@ -35948,7 +35950,7 @@ var render = function() {
                 _vm._v(" "),
                 _vm._l(_vm.galleries, function(gallery) {
                   return _c("li", { key: gallery.id }, [
-                    _c("a", { attrs: { href: "/" } }, [
+                    _c("a", { attrs: { href: "/gallery/" + gallery.id } }, [
                       _vm._v(_vm._s(gallery.name))
                     ])
                   ])
@@ -52849,7 +52851,7 @@ var routes = [{
     requiresVisitor: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
+    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
   }
 }, {
   path: '/logout',
@@ -52858,7 +52860,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./auth/views/Logout.vue */ "./resources/js/auth/views/Logout.vue"));
+    return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./auth/views/Logout.vue */ "./resources/js/auth/views/Logout.vue"));
   }
 }, {
   path: '/admin/home',
@@ -52912,7 +52914,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
   }
 }, {
   path: '/admin/photography/create',
@@ -52921,7 +52923,22 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyStore.vue */ "./resources/js/admin/views/PhotographyStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(9), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyStore.vue */ "./resources/js/admin/views/PhotographyStore.vue"));
+  }
+}, {
+  path: '/gallery/:id',
+  name: 'gallery',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/Gallery.vue */ "./resources/js/views/Gallery.vue"));
+  }
+}, {
+  path: '/admin/photography/get/:id',
+  name: 'singlePhotography',
+  meta: {
+    requiresAuth: true
+  },
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./admin/views/Photography.vue */ "./resources/js/admin/views/Photography.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -53227,6 +53244,16 @@ function endpoint(url) {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"](endpoint("photography/delete/".concat(credentials.id))).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
+    },
+    getPhotography: function getPhotography(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint("photography/get/".concat(credentials.id))).then(function (resp) {
           resolve(resp);
         })["catch"](function (err) {
           reject(err);

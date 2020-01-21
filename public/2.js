@@ -356,7 +356,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AdminNav: _admin_components_AdminNav_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    vue2Dropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_2___default.a,
+    vueDropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_2___default.a,
     FileCreateModal: _admin_components_FileCreateModal_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
     ImageTable: _admin_components_ImageTable_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     FileTable: _admin_components_FileTable_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
@@ -369,9 +369,14 @@ __webpack_require__.r(__webpack_exports__);
         url: '/',
         dictDefaultMessage: 'Upuść lub kliknij',
         maxFiles: 500,
+        maxFilesize: 1000,
         autoProcessQueue: true,
         thumbnailWidth: 100,
-        thumbnailHeight: 100
+        thumbnailHeight: 100,
+        method: 'POST',
+        headers: {
+          Authorization: "Bearer ".concat(this.$store.getters.getApiToken)
+        }
       },
       images: [],
       files: []
@@ -385,7 +390,7 @@ __webpack_require__.r(__webpack_exports__);
     }).then(function (resp) {
       _this.displaySpinner = false;
       _this.gallery = resp.data;
-      _this.dropzoneOptions.url = _this.$store.getters.getApiUrl + "image/create/".concat(_this.gallery.id);
+      _this.dropzoneOptions.url = "".concat(_this.$store.getters.getApiUrl, "image/create/").concat(_this.gallery.id);
       resp.data.images.forEach(function (image) {
         image['newName'] = image.name.replace(image.name.substr(6, 20), '...');
 
@@ -439,7 +444,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".cancel-file {\n  background-color: white;\n  color: #000;\n  border: 1px solid #E53935;\n  border-radius: 0;\n}\n.cancel-file:hover {\n  color: #fff;\n  background-color: #E53935;\n}", ""]);
+exports.push([module.i, ".cancel-file {\n  background-color: white;\n  color: #000;\n  border: 1px solid #E53935;\n  border-radius: 0;\n}\n.cancel-file:hover {\n  color: #fff;\n  background-color: #E53935;\n}\n.modal-content {\n  border-radius: 0 !important;\n}", ""]);
 
 // exports
 
@@ -1053,7 +1058,7 @@ var render = function() {
                             "b-col",
                             { attrs: { cols: "12" } },
                             [
-                              _c("vue2Dropzone", {
+                              _c("vueDropzone", {
                                 ref: "myVueDropzone",
                                 attrs: {
                                   id: "dropzone",

@@ -75,4 +75,8 @@ export default {
     background-color: #E53935;
   }
 }
+
+.modal-content {
+  border-radius: 0 !important;
+}
 </style>

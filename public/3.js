@@ -233,6 +233,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PhotographyTable',
   props: {
@@ -947,7 +952,7 @@ var render = function() {
                       staticClass: "section-header",
                       attrs: { lg: "6", md: "6", sm: "6", cols: "6" }
                     },
-                    [_vm._v("\n          Fotografie\n        ")]
+                    [_vm._v("\n            Fotografie\n          ")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -976,52 +981,72 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("b-col", { attrs: { lg: "12", md: "12" } }, [
-            _c(
-              "table",
-              { staticClass: "table table-striped custom-table" },
-              [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Nazwa")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Akcja")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "transition-group",
-                  { attrs: { tag: "tbody", name: "fade" } },
-                  _vm._l(_vm.items, function(item, i) {
-                    return _c("tr", { key: item.id }, [
-                      _c("th", { attrs: { scope: "row" } }, [
-                        _vm._v(_vm._s(i + 1))
-                      ]),
+            _c("div", { staticClass: "table-responsive" }, [
+              _c(
+                "table",
+                { staticClass: "table table-striped custom-table" },
+                [
+                  _c("thead", [
+                    _c("tr", [
+                      _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
                       _vm._v(" "),
-                      _c("th", [_vm._v(_vm._s(item.name))]),
+                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Nazwa")]),
                       _vm._v(" "),
-                      _c("th", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "delete-row",
-                            on: {
-                              click: function($event) {
-                                return _vm.deletePhotography(item.id)
-                              }
-                            }
-                          },
-                          [_vm._v("Usuń")]
-                        )
-                      ])
+                      _c("th", { attrs: { scope: "col" } }, [_vm._v("Akcja")])
                     ])
-                  }),
-                  0
-                )
-              ],
-              1
-            )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "transition-group",
+                    { attrs: { tag: "tbody", name: "fade" } },
+                    _vm._l(_vm.items, function(item, i) {
+                      return _c("tr", { key: item.id }, [
+                        _c("th", { attrs: { scope: "row" } }, [
+                          _vm._v(_vm._s(i + 1))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "single-gallery-link",
+                                attrs: {
+                                  to: {
+                                    name: "singlePhotography",
+                                    params: { id: item.id }
+                                  }
+                                }
+                              },
+                              [_vm._v(_vm._s(item.name))]
+                            )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("th", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "delete-row",
+                              on: {
+                                click: function($event) {
+                                  return _vm.deletePhotography(item.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Usuń")]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                ],
+                1
+              )
+            ])
           ])
         ],
         1

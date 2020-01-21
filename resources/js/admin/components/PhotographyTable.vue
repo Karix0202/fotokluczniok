@@ -12,7 +12,9 @@
         </b-row>
       </b-col>
       <b-col lg="12" md="12">
-        <table class="table table-striped custom-table">
+        <div class="table-responsive">
+<table class="table table-striped custom-table">
+
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -23,13 +25,16 @@
           <transition-group tag="tbody" name="fade">
             <tr v-for="(item, i) in items" :key="item.id">
               <th scope="row">{{ i+1 }}</th>
-              <th>{{ item.name }}</th>
+              <th>
+                <router-link :to="{ name: 'singlePhotography', params: { id: item.id } }" class="single-gallery-link">{{ item.name }}</router-link>
+              </th>
               <th>
                 <button class="delete-row" v-on:click="deletePhotography(item.id)">Usuń</button>
               </th>
             </tr>
           </transition-group>
         </table>
+        </div>
       </b-col>
     </b-row>
   </div>

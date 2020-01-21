@@ -23,7 +23,7 @@ export default new Vuex.Store({
     },
     changeLastSectionId(state, id) {
       state.lastSectionId = id;
-    }
+    },
   },
   getters: {
     loggedIn(state) {
@@ -300,6 +300,15 @@ export default new Vuex.Store({
         .catch((err) => {
           reject(err);
         });
+      });
+    },
+    getPhotography(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint(`photography/get/${credentials.id}`))
+        .then((resp) => { resolve(resp) })
+        .catch((err) => { reject(err) });
       });
     },
   },
