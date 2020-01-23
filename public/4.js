@@ -63,21 +63,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'AssignGalleryModal',
   props: {
-    galleries: Array
+    galleries: Array,
+    toAssign: Array,
+    id: ''
   },
   data: function data() {
     return {
       selected: [],
-      isProcessing: false
+      isProcessing: false,
+      showError: false
     };
   },
   methods: {
     submit: function submit(e) {
+      var _this = this;
+
       e.preventDefault();
-      console.log(selected);
+      this.isProcessing = true;
+      this.showError = false;
+
+      if (this.selected.length > 0) {
+        this.$store.dispatch('assignGalleries', {
+          id: this.id,
+          galleries: this.selected
+        }).then(function (resp) {
+          _this.$refs['assign-gallery-modal'].hide();
+
+          resp.data.galleries.forEach(function (gallery) {
+            _this.galleries.push(gallery);
+
+            for (var i = 0; i < _this.toAssign.length; i++) {
+              if (_this.toAssign[i].value === gallery.id) {
+                _this.toAssign.splice(i, 1);
+              }
+            }
+
+            _this.isProcessing = false;
+          });
+        })["catch"](function (err) {
+          console.log(err);
+          _this.isProcessing = true;
+          _this.showError = true;
+        });
+      }
     },
     hide: function hide(e) {
       e.preventDefault();
@@ -175,6 +210,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -203,15 +240,15 @@ __webpack_require__.r(__webpack_exports__);
       console.log(err);
     });
   },
-  mounted: function mounted() {
-    console.log(this.$refs);
-  },
   computed: {
     displaySpinner: function displaySpinner() {
       return this.photography === null;
     },
     galleriesToAssign: function galleriesToAssign() {
       return this.photography === null ? [] : this.photography.galleries_to_assign;
+    },
+    getId: function getId() {
+      return this.photography.id;
     }
   }
 });
@@ -487,7 +524,7 @@ var render = function() {
         [
           _c(
             "b-form",
-            { staticClass: "custom-form" },
+            { staticClass: "custom-form", on: { submit: _vm.submit } },
             [
               _c(
                 "b-form-group",
@@ -502,7 +539,7 @@ var render = function() {
                   _c("b-form-select", {
                     attrs: {
                       id: "galleries-select",
-                      options: _vm.galleries,
+                      options: _vm.toAssign,
                       multiple: ""
                     },
                     model: {
@@ -515,6 +552,24 @@ var render = function() {
                   })
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _vm.showError
+                ? _c("b-alert", { attrs: { variant: "danger", show: "" } }, [
+                    _vm._v("Coś poszło nie tak. Spróbuj ponownie później.")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "b-button",
+                {
+                  attrs: {
+                    type: "submit",
+                    variant: "outline-primary",
+                    disabled: _vm.isProcessing
+                  }
+                },
+                [_vm._v("Dodaj")]
               )
             ],
             1
@@ -661,8 +716,6 @@ var render = function() {
     [
       _vm.displaySpinner ? _c("Spinner") : _vm._e(),
       _vm._v(" "),
-      _c("AssignGalleryModal", { attrs: { galleries: _vm.galleriesToAssign } }),
-      _vm._v(" "),
       _c("AdminNav"),
       _vm._v(" "),
       !_vm.displaySpinner
@@ -709,6 +762,22 @@ var render = function() {
                 ],
                 1
               )
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.photography !== null
+        ? _c(
+            "div",
+            [
+              _c("AssignGalleryModal", {
+                attrs: {
+                  toAssign: _vm.galleriesToAssign,
+                  galleries: _vm.photography.galleries,
+                  id: _vm.photography.id
+                }
+              })
             ],
             1
           )

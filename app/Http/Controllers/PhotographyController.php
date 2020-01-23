@@ -61,7 +61,9 @@ class PhotographyController extends Controller
             $gallery->save();
         }
 
-        return [ 'message' => 'success' ];
+        return [
+            'galleries' => Gallery::whereIn('id', $request->input('galleries'))->get()
+        ];
     }
 
     public function delete(Photography $photography)

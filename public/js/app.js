@@ -53259,6 +53259,18 @@ function endpoint(url) {
           reject(err);
         });
       });
+    },
+    assignGalleries: function assignGalleries(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint("photography/assign/".concat(credentials.id)), {
+          galleries: credentials.galleries
+        }).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
     }
   },
   modules: {}

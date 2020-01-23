@@ -311,6 +311,15 @@ export default new Vuex.Store({
         .catch((err) => { reject(err) });
       });
     },
+    assignGalleries(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.post(endpoint(`photography/assign/${credentials.id}`), { galleries: credentials.galleries })
+        .then((resp) => { resolve(resp) })
+        .catch((err) => { reject(err) });
+      });
+    }
   },
   modules: {
   },

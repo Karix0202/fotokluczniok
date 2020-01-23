@@ -1,7 +1,6 @@
 <template>
   <div>
     <Spinner v-if="displaySpinner" />
-    <AssignGalleryModal :galleries="galleriesToAssign"/>
     <AdminNav />
     <b-container v-if="!displaySpinner">
       <b-row>
@@ -19,6 +18,9 @@
         </b-col>
       </b-row>
     </b-container>
+    <div v-if="photography !== null">
+      <AssignGalleryModal :toAssign="galleriesToAssign" :galleries="photography.galleries" :id="photography.id"/>
+    </div>
   </div>
 </template>
 
@@ -46,9 +48,6 @@ export default {
     .then((resp) => { this.photography = resp.data.data; })
     .catch((err) => { console.log(err); });
   },
-  mounted() {
-    console.log(this.$refs);
-  },
   computed: {
     displaySpinner() {
       return this.photography === null;
@@ -56,6 +55,9 @@ export default {
     galleriesToAssign() {
       return this.photography === null ? [] : this.photography.galleries_to_assign;
     },
+    getId() {
+      return this.photography.id;
+    }
   },
 };
 </script>
