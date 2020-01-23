@@ -52851,7 +52851,7 @@ var routes = [{
     requiresVisitor: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
+    return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
   }
 }, {
   path: '/logout',
@@ -52860,7 +52860,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./auth/views/Logout.vue */ "./resources/js/auth/views/Logout.vue"));
+    return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./auth/views/Logout.vue */ "./resources/js/auth/views/Logout.vue"));
   }
 }, {
   path: '/admin/home',
@@ -52914,7 +52914,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(9), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
   }
 }, {
   path: '/admin/photography/create',
@@ -52923,13 +52923,13 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(9), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyStore.vue */ "./resources/js/admin/views/PhotographyStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(10), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyStore.vue */ "./resources/js/admin/views/PhotographyStore.vue"));
   }
 }, {
   path: '/gallery/:id',
   name: 'gallery',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./views/Gallery.vue */ "./resources/js/views/Gallery.vue"));
+    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/Gallery.vue */ "./resources/js/views/Gallery.vue"));
   }
 }, {
   path: '/admin/photography/get/:id',
@@ -52938,7 +52938,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./admin/views/Photography.vue */ "./resources/js/admin/views/Photography.vue"));
+    return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./admin/views/Photography.vue */ "./resources/js/admin/views/Photography.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

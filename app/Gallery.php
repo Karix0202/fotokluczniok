@@ -36,6 +36,11 @@ class Gallery extends Model
         return $this->hasMany('App\File');
     }
 
+    public function photography()
+    {
+        return $this->belongsTo('App\Photography');
+    }
+
     public function delete()
     {
         foreach($this->images as $image) $image->delete();

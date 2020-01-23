@@ -14,8 +14,19 @@ class CreateSectionsTable extends Migration
     public function up()
     {
         Schema::create('sections', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->uuid('id')->primary();
+            $table->uuid('photography_id');
+            $table->enum('type', ['static', 'slider', 'columns']);
+            $table->longText('description');
+            $table->boolean('galleries');
             $table->timestamps();
+        });
+
+        Schema::table('sections', function (Blueprint $table) {
+            $table->foreign('photography_id')
+                ->references('id')
+                ->on('photographies')
+                ->onDelete('cascade');
         });
     }
 

@@ -32,6 +32,16 @@ class Photography extends Model
         return $this->belongsTo('App\PhotographyGroup');
     }
 
+    public function sections()
+    {
+        return $this->hasMany('App\Section');
+    }
+
+    public function galleries()
+    {
+        return $this->hasMany('App\Gallery');
+    }
+
     public function delete()
     {
         File::delete($this->thumbnail_path);

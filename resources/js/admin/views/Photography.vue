@@ -1,11 +1,21 @@
 <template>
   <div>
     <Spinner v-if="displaySpinner" />
+    <AssignGalleryModal :galleries="galleriesToAssign"/>
     <AdminNav />
-    <b-container>
+    <b-container v-if="!displaySpinner">
       <b-row>
-        <b-col lg="8" md="12">
-
+        <b-col lg="8" md="12" class="content-holder">
+          <h2>{{ photography.name }}</h2>
+          <hr>
+          <b-row>
+            <b-col lg="6" md="12">
+              <p>Sekcje</p>
+            </b-col>
+            <b-col lg="6" md="12">
+              <AssignedGalleriesTable :galleries="photography.galleries" />
+            </b-col>
+          </b-row>
         </b-col>
       </b-row>
     </b-container>
@@ -15,13 +25,16 @@
 <script>
 import AdminNav from '../../admin/components/AdminNav.vue';
 import Spinner from '../../components/Spinner.vue';
-import axios from 'axios';
+import AssignedGalleriesTable from '../components/AssignedGalleriesTable.vue';
+import AssignGalleryModal from '../components/AssignGalleryModal.vue';
 
 export default {
   name: 'Photography',
   components: {
     AdminNav,
     Spinner,
+    AssignedGalleriesTable,
+    AssignGalleryModal,
   },
   data() {
     return {
@@ -29,12 +42,47 @@ export default {
     };
   },
   created() {
-
+    this.$store.dispatch('getPhotography', { id: this.$route.params.id })
+    .then((resp) => { this.photography = resp.data.data; })
+    .catch((err) => { console.log(err); });
+  },
+  mounted() {
+    console.log(this.$refs);
   },
   computed: {
     displaySpinner() {
       return this.photography === null;
     },
+    galleriesToAssign() {
+      return this.photography === null ? [] : this.photography.galleries_to_assign;
+    },
   },
 };
 </script>
+
+<style lang="scss">
+.assign-gallery-btn {
+  margin-bottom: 8px;
+  background-color: white;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 0;
+
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
+}
+
+.assign-gallery-btn {
+  float: left;
+  @media (min-width: 992px) {
+    float: right;
+  }
+}
+.content-holder {
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+</style>

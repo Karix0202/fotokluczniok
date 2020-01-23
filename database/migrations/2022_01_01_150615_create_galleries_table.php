@@ -17,7 +17,15 @@ class CreateGalleriesTable extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->boolean('private');
+            $table->uuid('photography_id')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('galleries', function (Blueprint $table) {
+            $table->foreign('photography_id')
+                ->references('id')
+                ->on('photographies')
+                ->onDelete('cascade');
         });
     }
 

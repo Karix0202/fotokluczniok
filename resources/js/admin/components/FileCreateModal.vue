@@ -48,7 +48,7 @@ export default {
       this.$store.dispatch('createFile', { id: this.id, name: this.form.name, link: this.form.link })
       .then((resp) => {
         this.$refs['file-creation-modal'].hide();
-         this.files.push(resp.data);
+        this.files.push(resp.data);
         this.isProcessing = false;
       })
       .catch((err) => {

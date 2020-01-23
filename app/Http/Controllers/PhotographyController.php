@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Gallery;
 use Illuminate\Http\Request;
 use \Validator;
 use App\Photography;
 use Illuminate\Support\Str;
+use App\Http\Resources\PhotographyAdmin as PhotographyResource;
+use App\Rules\GalleryExist;
 
 class PhotographyController extends Controller
 {
@@ -41,7 +44,24 @@ class PhotographyController extends Controller
 
     public function get(Photography $photography)
     {
-        return $photography;
+        return new PhotographyResource($photography);
+    }
+
+    public function assignGalleries(Photography $photography, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'galleries' => ['required', 'array'],
+            'galleries.*' => [new GalleryExist],
+        ]);
+        if ($validator->fails()) return response()->json([$validator->errors()], 406);
+
+        foreach ($request->input('galleries') as $galleryId) {
+            $gallery = Gallery::find($galleryId);
+            $gallery->photography_id = $photography->id;
+            $gallery->save();
+        }
+
+        return [ 'message' => 'success' ];
     }
 
     public function delete(Photography $photography)
