@@ -31,6 +31,7 @@ Route::group([
     Route::post('create', 'GalleryController@store');
     Route::post('get/{gallery}', 'GalleryController@get');
     Route::delete('delete/{gallery}', 'GalleryController@delete');
+    Route::put('deassign/{gallery}', 'GalleryController@deassign');
 });
 
 Route::group([

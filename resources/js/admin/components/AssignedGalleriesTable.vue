@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <transition-group tag="tbody" name="fade">
-        <tr v-for="(gallery, i) in galleries" :key="i">
+        <tr v-for="(gallery, i) in galleries" :key="gallery.id">
           <th scope="row">{{ i+1 }}</th>
           <th>{{ gallery.name }}</th>
           <th>
@@ -27,10 +27,20 @@ export default {
   name: 'AssignedGalleriesTable',
   props: {
     galleries: Array,
+    toAssign: Array,
   },
   methods: {
     deassign(id) {
-      console.log(id);
+      this.$store.dispatch('deassignGallery', { id: id })
+      .then((resp) => {
+        for (let i = 0; i < this.galleries.length; i++) {
+          if (this.galleries[i].id === resp.data.id) this.galleries.splice(i, 1);
+        }
+        this.toAssign.push(resp.data.to_assign);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     },
     popUpModal(e) {
       $('.assign-gallery-modal').show();
@@ -38,3 +48,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.fade-enter-active, .fade-leave-active {
+  transition: all 1.5s;
+}
+.fade-enter, .fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

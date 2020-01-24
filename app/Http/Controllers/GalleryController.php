@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Gallery;
 use \Validator;
+use App\Http\Resources\GalleriesAvailableToAssign;
 
 class GalleryController extends Controller
 {
@@ -51,6 +52,17 @@ class GalleryController extends Controller
         $gallery['images'] = $gallery->images;
         $gallery['files'] = $gallery->files;
         return response()->json($gallery);
+    }
+
+    public function deassign(Gallery $gallery)
+    {
+        $gallery->photography_id = null;
+        $gallery->save();
+
+        return [
+            'id' => $gallery->id,
+            'to_assign' => new GalleriesAvailableToAssign($gallery),
+        ];
     }
 
     public function delete(Gallery $gallery)
