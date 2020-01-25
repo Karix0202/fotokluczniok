@@ -61,6 +61,13 @@ Route::group([
     Route::post('assign/{photography}', 'PhotographyController@assignGalleries');
 });
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'section'
+], function ($router) {
+    Route::post('create/{photography}', 'SectionController@store');
+});
+
 Route::post('/', 'PublicContentController@index');
 Route::post('/gallery/{gallery}', 'PublicContentController@getGallery');
 Route::post('/images/{gallery}', 'PublicContentController@getImages');

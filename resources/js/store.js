@@ -328,7 +328,23 @@ export default new Vuex.Store({
         .then((resp) => { resolve(resp) })
         .catch((err) => { reject(err) });
       });
-    }
+    },
+    sectionCreate(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        const formData = new FormData();
+        for (let i = 0; i < credentials.images.length; i++) {
+          formData.append(`images[]`, credentials.images[i]);
+        }
+        formData.append('galleries', credentials.galleries);
+        formData.append('description', credentials.description);
+
+        axios.post(endpoint(`section/create/${credentials.id}`), formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        .then((resp) => { resolve(resp) })
+        .catch((err) => { reject(err) });
+      });
+    },
   },
   modules: {
   },

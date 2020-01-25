@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 
-class Section extends Model
+class SectionImage extends Model
 {
     protected static function boot()
     {
@@ -26,13 +26,8 @@ class Section extends Model
         return 'string';
     }
 
-    public function photography()
+    public function section()
     {
-        return $this->belongsTo('App\Photography');
-    }
-
-    public function images()
-    {
-        return $this->hasMany('App\SectionImage');
+        return $this->belongsTo('App\Section');
     }
 }

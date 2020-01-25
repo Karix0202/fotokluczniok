@@ -9,7 +9,7 @@
           <hr>
           <b-row>
             <b-col lg="6" md="12">
-              <p>Sekcje</p>
+              <SectionTable :id="photography.id" :sections="[]" />
             </b-col>
             <b-col lg="6" md="12">
               <AssignedGalleriesTable :galleries="photography.galleries" :toAssign="galleriesToAssign"/>
@@ -29,6 +29,7 @@ import AdminNav from '../../admin/components/AdminNav.vue';
 import Spinner from '../../components/Spinner.vue';
 import AssignedGalleriesTable from '../components/AssignedGalleriesTable.vue';
 import AssignGalleryModal from '../components/AssignGalleryModal.vue';
+import SectionTable from '../components/SectionTable.vue';
 
 export default {
   name: 'Photography',
@@ -37,6 +38,7 @@ export default {
     Spinner,
     AssignedGalleriesTable,
     AssignGalleryModal,
+    SectionTable,
   },
   data() {
     return {
@@ -63,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss">
-.assign-gallery-btn {
+.assign-gallery-btn, .add-section-btn {
   margin-bottom: 8px;
   background-color: white;
   color: #000;

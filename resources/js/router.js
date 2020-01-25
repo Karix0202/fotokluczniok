@@ -96,6 +96,14 @@ const routes = [
     },
     component: () => import('./admin/views/Photography.vue'),
   },
+  {
+    path: '/admin/photography/section/add/:id',
+    name: 'sectionCreate',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('./admin/views/SectionStore.vue'),
+  },
 ];
 
 const router = new VueRouter({

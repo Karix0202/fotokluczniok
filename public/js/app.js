@@ -52923,7 +52923,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(10), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyStore.vue */ "./resources/js/admin/views/PhotographyStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(11), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyStore.vue */ "./resources/js/admin/views/PhotographyStore.vue"));
   }
 }, {
   path: '/gallery/:id',
@@ -52939,6 +52939,15 @@ var routes = [{
   },
   component: function component() {
     return __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.bind(null, /*! ./admin/views/Photography.vue */ "./resources/js/admin/views/Photography.vue"));
+  }
+}, {
+  path: '/admin/photography/section/add/:id',
+  name: 'sectionCreate',
+  meta: {
+    requiresAuth: true
+  },
+  component: function component() {
+    return Promise.all(/*! import() */[__webpack_require__.e(11), __webpack_require__.e(9), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./admin/views/SectionStore.vue */ "./resources/js/admin/views/SectionStore.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -53276,6 +53285,28 @@ function endpoint(url) {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       return new Promise(function (resolve, reject) {
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.put(endpoint("gallery/deassign/".concat(credentials.id))).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
+    },
+    sectionCreate: function sectionCreate(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        var formData = new FormData();
+
+        for (var i = 0; i < credentials.images.length; i++) {
+          formData.append("images[]", credentials.images[i]);
+        }
+
+        formData.append('galleries', credentials.galleries);
+        formData.append('description', credentials.description);
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint("section/create/".concat(credentials.id)), formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (resp) {
           resolve(resp);
         })["catch"](function (err) {
           reject(err);

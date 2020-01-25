@@ -6,7 +6,7 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Galeria</th>
-          <th scope="col">Rozłącz</th>
+          <th scope="col">Akcja</th>
         </tr>
       </thead>
       <transition-group tag="tbody" name="fade">
@@ -14,7 +14,7 @@
           <th scope="row">{{ i+1 }}</th>
           <th>{{ gallery.name }}</th>
           <th>
-            <button class="delete-row" v-on:click="deassign(gallery.id)">Usuń</button>
+            <button class="delete-row" v-on:click="deassign(gallery.id)">Rozłącz</button>
           </th>
         </tr>
       </transition-group>

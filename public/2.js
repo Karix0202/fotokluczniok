@@ -344,6 +344,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -1090,7 +1091,11 @@ var render = function() {
                               staticClass: "image-holder",
                               attrs: { lg: "6", md: "12" }
                             },
-                            [_c("FileTable", { attrs: { files: _vm.files } })],
+                            [
+                              _c("p", [_vm._v(_vm._s(_vm.form.type))]),
+                              _vm._v(" "),
+                              _c("FileTable", { attrs: { files: _vm.files } })
+                            ],
                             1
                           )
                         ],
