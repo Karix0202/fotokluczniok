@@ -9,7 +9,7 @@
           <hr>
           <b-row>
             <b-col lg="6" md="12">
-              <SectionTable :id="photography.id" :sections="[]" />
+              <SectionTable :id="photography.id" :sections="photography.sections" />
             </b-col>
             <b-col lg="6" md="12">
               <AssignedGalleriesTable :galleries="photography.galleries" :toAssign="galleriesToAssign"/>

@@ -221,6 +221,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'SectionTable',
   props: {
@@ -229,7 +231,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     deleteSection: function deleteSection(id) {
-      console.log(id);
+      var _this = this;
+
+      this.$store.dispatch('deleteSection', {
+        id: id
+      }).then(function (resp) {
+        for (var i = 0; i < _this.sections.length; i++) {
+          if (_this.sections[i].id === id) {
+            _this.sections.splice(i, 1);
+          }
+        }
+      })["catch"](function (err) {
+        console.log(err);
+      });
     }
   }
 });
@@ -848,13 +862,23 @@ var render = function() {
             _c(
               "transition-group",
               { attrs: { name: "fade", tag: "tbody" } },
-              _vm._l(_vm.sections, function(setion, i) {
-                return _c("tr", { key: i }, [
+              _vm._l(_vm.sections, function(section, i) {
+                return _c("tr", { key: section.id }, [
                   _c("th", { attrs: { scope: "row" } }, [
                     _vm._v(_vm._s(i + 1))
                   ]),
                   _vm._v(" "),
-                  _c("th", [_vm._v(_vm._s(_vm.section.type))]),
+                  section.type === "static"
+                    ? _c("th", [_vm._v("Zdjęcie statyczne")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  section.type === "columns"
+                    ? _c("th", [_vm._v("Kolumny")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  section.type === "slider"
+                    ? _c("th", [_vm._v("Slider")])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("th", [
                     _c(
@@ -863,7 +887,7 @@ var render = function() {
                         staticClass: "delete-row",
                         on: {
                           click: function($event) {
-                            return _vm.deassign(_vm.gallery.id)
+                            return _vm.deleteSection(section.id)
                           }
                         }
                       },
@@ -952,7 +976,10 @@ var render = function() {
                             { attrs: { lg: "6", md: "12" } },
                             [
                               _c("SectionTable", {
-                                attrs: { id: _vm.photography.id, sections: [] }
+                                attrs: {
+                                  id: _vm.photography.id,
+                                  sections: _vm.photography.sections
+                                }
                               })
                             ],
                             1

@@ -11,11 +11,13 @@
           </tr>
         </thead>
         <transition-group name="fade" tag="tbody">
-          <tr v-for="(setion, i) in sections" :key="i">
+          <tr v-for="(section, i) in sections" :key="section.id">
             <th scope="row">{{ i+1 }}</th>
-            <th>{{ section.type }}</th>
+            <th v-if="section.type === 'static'">Zdjęcie statyczne</th>
+            <th v-if="section.type === 'columns'">Kolumny</th>
+            <th v-if="section.type === 'slider'">Slider</th>
             <th>
-              <button class="delete-row" v-on:click="deassign(gallery.id)">Usuń</button>
+              <button class="delete-row" v-on:click="deleteSection(section.id)">Usuń</button>
             </th>
           </tr>
         </transition-group>
@@ -33,7 +35,15 @@ export default {
   },
   methods: {
     deleteSection(id) {
-      console.log(id);
+      this.$store.dispatch('deleteSection', { id: id })
+      .then((resp) => {
+        for (let i = 0; i < this.sections.length; i++) {
+          if (this.sections[i].id === id) {
+            this.sections.splice(i, 1);
+          }
+        }
+      })
+      .catch((err) => { console.log(err); });
     }
   },
 };

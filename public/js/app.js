@@ -53312,6 +53312,16 @@ function endpoint(url) {
           reject(err);
         });
       });
+    },
+    deleteSection: function deleteSection(context, credentials) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default.a["delete"](endpoint("section/delete/".concat(credentials.id))).then(function (resp) {
+          resolve(resp);
+        })["catch"](function (err) {
+          reject(err);
+        });
+      });
     }
   },
   modules: {}

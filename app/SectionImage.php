@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
+use File;
 
 class SectionImage extends Model
 {
@@ -29,5 +30,11 @@ class SectionImage extends Model
     public function section()
     {
         return $this->belongsTo('App\Section');
+    }
+
+    public function delete()
+    {
+        File::delete($this->path);
+        return parent::delete();
     }
 }

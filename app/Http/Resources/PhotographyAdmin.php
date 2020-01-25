@@ -24,6 +24,7 @@ class PhotographyAdmin extends JsonResource
             'description' => $this->description,
             'galleries' => $this->galleries,
             'galleries_to_assign' => new GalleriesCollection(Gallery::where('photography_id', '=', null)->get()),
+            'sections' => $this->sections,
         ];;
     }
 }

@@ -66,6 +66,7 @@ Route::group([
     'prefix' => 'section'
 ], function ($router) {
     Route::post('create/{photography}', 'SectionController@store');
+    Route::delete('delete/{section}', 'SectionController@delete');
 });
 
 Route::post('/', 'PublicContentController@index');

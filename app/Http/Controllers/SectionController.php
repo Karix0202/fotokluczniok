@@ -44,4 +44,10 @@ class SectionController extends Controller
 
         return response()->json(['message' => 'success']);
     }
+
+    public function delete(Section $section)
+    {
+        $section->delete();
+        return response()->json(['message' => 'success']);
+    }
 }

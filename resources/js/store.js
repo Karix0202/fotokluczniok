@@ -345,6 +345,15 @@ export default new Vuex.Store({
         .catch((err) => { reject(err) });
       });
     },
+    deleteSection(context, credentials) {
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
+
+      return new Promise((resolve, reject) => {
+        axios.delete(endpoint(`section/delete/${credentials.id}`))
+        .then((resp) => { resolve(resp) })
+        .catch((err) => { reject(err) });
+      });
+    },
   },
   modules: {
   },

@@ -35,4 +35,10 @@ class Section extends Model
     {
         return $this->hasMany('App\SectionImage');
     }
+
+    public function delete()
+    {
+        foreach($this->images as $image) $image->delete();
+        return parent::delete();
+    }
 }
