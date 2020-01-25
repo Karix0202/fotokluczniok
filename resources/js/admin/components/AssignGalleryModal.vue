@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal ref="assign-gallery-modal" id="assign-gallery-modal" title="Przypisz galerie" @show="true" class="assign-gallery-modal">
+    <b-modal ref="assign-gallery-modal" id="assign-gallery-modal" title="Przypisz galerie">
       <b-form class="custom-form" @submit="submit">
         <b-form-group id="galleries-select-group" label-for="galleries-select" label="Galerie">
           <b-form-select id="galleries-select" v-model="selected" :options="toAssign" multiple />

@@ -179,7 +179,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     popUpModal: function popUpModal(e) {
-      $('.assign-gallery-modal').show();
+      console.log(this.$refs);
+      $('.assign-gallery-modal').modal('show');
     }
   }
 });
@@ -646,9 +647,7 @@ var render = function() {
         "b-modal",
         {
           ref: "assign-gallery-modal",
-          staticClass: "assign-gallery-modal",
-          attrs: { id: "assign-gallery-modal", title: "Przypisz galerie" },
-          on: { show: true }
+          attrs: { id: "assign-gallery-modal", title: "Przypisz galerie" }
         },
         [
           _c(

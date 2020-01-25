@@ -43,7 +43,9 @@ export default {
       })
     },
     popUpModal(e) {
-      $('.assign-gallery-modal').show();
+      console.log(this.$refs);
+
+      $('.assign-gallery-modal').modal('show');
     }
   },
 };
