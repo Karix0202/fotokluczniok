@@ -14,6 +14,11 @@ use App\Http\Resources\PhotographyPublic;
 
 class PhotographyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['getPublic']]);
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

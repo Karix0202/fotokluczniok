@@ -1,11 +1,14 @@
 <template>
   <div class="item col-sm-6 col-md-4 col-lg-4 mb-4" :class="photography.photography_group_id">
-    <a href="/" class="item-wrap fancybox">
+    <router-link :to="{ name: 'photography', params: { id: photography.id } }" class="item-wrap fancybox">
       <div class="photography-info">
         <h3>{{ photography.name }}</h3>
       </div>
       <img :src="photography.thumbnail_path" class="img-fluid">
-    </a>
+    </router-link>
+    <!-- <a href="/" >
+
+    </a> -->
   </div>
 </template>
 

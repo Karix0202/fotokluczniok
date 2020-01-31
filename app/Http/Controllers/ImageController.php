@@ -11,6 +11,11 @@ use App\Http\Resources\ImageCollection;
 
 class ImageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['getPublic']]);
+    }
+
     public function store(Gallery $gallery, Request $request)
     {
         $validator = $this->getValidator($request->all());

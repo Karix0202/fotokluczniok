@@ -18,6 +18,7 @@ class PhotographyPublic extends JsonResource
     public function toArray($request)
     {
         return [
+            'name' => $this->name,
             'description' => $this->description,
             'sections' => new SectionCollection(
                 Section::where('photography_id', '=', $this->id)->orderBy('created_at', 'asc')->get()

@@ -2195,6 +2195,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PhotographyItem',
   props: {
@@ -35993,17 +35996,27 @@ var render = function() {
       class: _vm.photography.photography_group_id
     },
     [
-      _c("a", { staticClass: "item-wrap fancybox", attrs: { href: "/" } }, [
-        _c("div", { staticClass: "photography-info" }, [
-          _c("h3", [_vm._v(_vm._s(_vm.photography.name))])
-        ]),
-        _vm._v(" "),
-        _c("img", {
-          staticClass: "img-fluid",
-          attrs: { src: _vm.photography.thumbnail_path }
-        })
-      ])
-    ]
+      _c(
+        "router-link",
+        {
+          staticClass: "item-wrap fancybox",
+          attrs: {
+            to: { name: "photography", params: { id: _vm.photography.id } }
+          }
+        },
+        [
+          _c("div", { staticClass: "photography-info" }, [
+            _c("h3", [_vm._v(_vm._s(_vm.photography.name))])
+          ]),
+          _vm._v(" "),
+          _c("img", {
+            staticClass: "img-fluid",
+            attrs: { src: _vm.photography.thumbnail_path }
+          })
+        ]
+      )
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -52929,7 +52942,7 @@ var routes = [{
   path: '/gallery/:id',
   name: 'gallery',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(9), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./views/Gallery.vue */ "./resources/js/views/Gallery.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(12), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./views/Gallery.vue */ "./resources/js/views/Gallery.vue"));
   }
 }, {
   path: '/admin/photography/get/:id',
@@ -52953,7 +52966,7 @@ var routes = [{
   path: '/photography/:id',
   name: 'photography',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/Photography.vue */ "./resources/js/views/Photography.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(12), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./views/Photography.vue */ "./resources/js/views/Photography.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
