@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\SectionImageCollection;
 
 class Section extends JsonResource
 {
@@ -14,6 +15,11 @@ class Section extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'type' => $this->type,
+            'images' => new SectionImageCollection($this->images),
+            'galleries' => $this->galleries,
+            'description' => $this->description,
+        ];
     }
 }

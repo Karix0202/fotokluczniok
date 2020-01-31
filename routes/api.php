@@ -26,7 +26,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'gallery'
 ], function ($router) {
-    Route::post('', 'GalleryController@getPublic');
+    Route::post('public/{gallery}', 'GalleryController@getPublic');
     Route::post('all', 'GalleryController@getAll');
     Route::post('create', 'GalleryController@store');
     Route::post('get/{gallery}', 'GalleryController@get');
@@ -40,6 +40,7 @@ Route::group([
 ], function ($router) {
     Route::post('create/{gallery}', 'ImageController@store');
     Route::post('delete', 'ImageController@deleteSeries');
+    Route::post('public/{gallery}', 'ImageController@getPublic');
 });
 
 Route::group([
@@ -59,6 +60,7 @@ Route::group([
     Route::delete('delete/{photography}', 'PhotographyController@delete');
     Route::post('get/{photography}', 'PhotographyController@get');
     Route::post('assign/{photography}', 'PhotographyController@assignGalleries');
+    Route::post('public/{photography}', 'PhotographyController@getPublic');
 });
 
 Route::group([
@@ -69,7 +71,4 @@ Route::group([
     Route::delete('delete/{section}', 'SectionController@delete');
 });
 
-Route::post('/', 'PublicContentController@index');
-Route::post('/gallery/{gallery}', 'PublicContentController@getGallery');
-Route::post('/images/{gallery}', 'PublicContentController@getImages');
-
+Route::post('/', 'IndexController@index');

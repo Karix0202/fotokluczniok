@@ -52929,7 +52929,7 @@ var routes = [{
   path: '/gallery/:id',
   name: 'gallery',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/Gallery.vue */ "./resources/js/views/Gallery.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(9), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./views/Gallery.vue */ "./resources/js/views/Gallery.vue"));
   }
 }, {
   path: '/admin/photography/get/:id',

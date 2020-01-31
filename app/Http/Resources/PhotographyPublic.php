@@ -3,6 +3,9 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\SectionCollection;
+use App\Http\Resources\IndexGalleryCollection as GalleryCollection;
+use App\Section;
 
 class PhotographyPublic extends JsonResource
 {
@@ -15,7 +18,11 @@ class PhotographyPublic extends JsonResource
     public function toArray($request)
     {
         return [
-            ''
+            'description' => $this->description,
+            'sections' => new SectionCollection(
+                Section::where('photography_id', '=', $this->id)->orderBy('created_at', 'asc')->get()
+            ),
+            'galleries' => new GalleryCollection($this->galleries),
         ];
     }
 }

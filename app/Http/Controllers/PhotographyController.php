@@ -9,6 +9,8 @@ use App\Photography;
 use Illuminate\Support\Str;
 use App\Http\Resources\PhotographyAdmin as PhotographyResource;
 use App\Rules\GalleryExist;
+use App\Http\Resources\IndexGalleryCollection;
+use App\Http\Resources\PhotographyPublic;
 
 class PhotographyController extends Controller
 {
@@ -71,5 +73,13 @@ class PhotographyController extends Controller
         if(! $photography->delete()) return response()->json(['error' => 'Could not delete photography'], 500);
 
         return response()->json(['message' => 'success']);
+    }
+
+    public function getPublic(Photography $photography)
+    {
+        return response()->json([
+            'galleries' => new IndexGalleryCollection(Gallery::where('private', '=', '0')->get()),
+            'photography' => new PhotographyPublic($photography),
+        ]);
     }
 }

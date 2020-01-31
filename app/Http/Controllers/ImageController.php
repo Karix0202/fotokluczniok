@@ -7,6 +7,7 @@ use App\Image;
 use App\Gallery;
 use \Validator;
 use Illuminate\Support\Str;
+use App\Http\Resources\ImageCollection;
 
 class ImageController extends Controller
 {
@@ -46,6 +47,11 @@ class ImageController extends Controller
         }
 
         return response()->json($request->input('images'));
+    }
+
+    public function getPublic(Gallery $gallery)
+    {
+        return new ImageCollection(Image::where('gallery_id', '=', $gallery->id)->orderBy('created_at', 'asc')->paginate());
     }
 
     public function getValidator(array $data)

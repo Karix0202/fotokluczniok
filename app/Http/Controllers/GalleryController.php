@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Gallery;
 use \Validator;
 use App\Http\Resources\GalleriesAvailableToAssign;
+use App\Http\Resources\IndexGallery as GalleryResource;
+use App\Http\Resources\IndexGalleryCollection;
 
 class GalleryController extends Controller
 {
@@ -14,9 +16,12 @@ class GalleryController extends Controller
         $this->middleware('auth:api', ['except' => ['getPublic']]);
     }
 
-    public function getPublic()
+    public function getPublic(Gallery $gallery)
     {
-        return response()->json(Gallery::where('private', 1)->get());
+        return response()->json([
+            'gallery' => new GalleryResource($gallery),
+            'galleries' => new IndexGalleryCollection(Gallery::where('private', '=', '0')->get()),
+        ]);
     }
 
     public function getAll()

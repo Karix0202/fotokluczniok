@@ -33,7 +33,7 @@ export default {
     return {
       galleries: [],
       images: [],
-      url: `${this.$store.getters.getApiUrl}images`,
+      url: `${this.$store.getters.getApiUrl}image/public`,
       loadMore: true,
       loadedCount: 0,
       name: '',
@@ -45,11 +45,11 @@ export default {
       layout: 'fitColumns'
     };
   },
-  created() {
+  async created() {
     const id = this.$route.params.id;
     this.url = `${this.url}/${id}`;
 
-    axios.post(`${this.$store.getters.getApiUrl}gallery/${id}`)
+    await axios.post(`${this.$store.getters.getApiUrl}gallery/public/${id}`)
     .then((resp) => {
       this.name = resp.data.gallery.name;
       resp.data.galleries.forEach((gallery) => {
