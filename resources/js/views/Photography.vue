@@ -13,6 +13,7 @@
         <div class="sections">
           <div v-for="(section, i) in sections" :key="i" >
             <StaticSection v-if="section.type === 'static'" :section="section" :galleries="assignedGalleries"/>
+            <ColumnsSection v-if="section.type === 'columns'" :section="section" :galleries="assignedGalleries"/>
           </div>
         </div>
       </b-container>
@@ -25,6 +26,7 @@ import Header from '../components/Header.vue';
 import Spinner from '../components/Spinner.vue';
 import axios from 'axios';
 import StaticSection from '../components/StaticSection.vue';
+import ColumnsSection from '../components/ColumnsSection.vue';
 
 export default {
   name: 'Photography',
@@ -32,6 +34,7 @@ export default {
     Header,
     Spinner,
     StaticSection,
+    ColumnsSection,
   },
   data() {
     return {
@@ -64,5 +67,37 @@ export default {
 .description {
   font-size: 18px;
   margin-bottom: 38px;
+}
+
+.section-description {
+  font-size: 18px;
+  margin-top: 12px;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+
+.assigned-galleries {
+  font-size: 16px;
+}
+
+.section-description {
+  margin-top: 32px;
+}
+
+.assigned-gallery-link {
+  color: #000;
+  text-decoration: underline;
+  margin-left: 8px;
+  font-weight: 800;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:hover {
+    color: #000;
+  }
 }
 </style>

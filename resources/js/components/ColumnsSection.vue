@@ -1,7 +1,8 @@
 <template>
-  <div class="section static-section">
-    <div class="static-image-holder">
-      <img :src="section.images[0].path" class="img-fluid" >
+  <div class="section columns-section">
+    <div class="columns-image-holder">
+      <!-- <img :src="section.images[0].path" class="img-fluid"> -->
+      <img v-for="(img, i) in section.images" :key="i" :src="img.path">
     </div>
     <div class="section-description" v-html="section.description">
       {{ section.description }}
@@ -19,7 +20,7 @@
 
 <script>
 export default {
-  name: 'StaticSection',
+  name: 'ColumnsSection',
   props: {
     section: Object,
     galleries: Array,
@@ -28,11 +29,17 @@ export default {
 </script>
 
 <style lang="scss">
-.static-image-holder {
-  width: 100%;
+.columns-image-holder {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 5px;
 
   img {
-    width: 100%;
+    justify-self: center;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
   }
 }
 </style>
