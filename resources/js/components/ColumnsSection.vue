@@ -2,7 +2,7 @@
   <div class="section columns-section">
     <div class="columns-image-holder">
       <!-- <img :src="section.images[0].path" class="img-fluid"> -->
-      <img v-for="(img, i) in section.images" :key="i" :src="img.path">
+      <img v-for="(img, i) in section.images" :key="i" :src="img.path" class="img-fluid">
     </div>
     <div class="section-description" v-html="section.description">
       {{ section.description }}

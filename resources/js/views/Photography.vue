@@ -14,6 +14,7 @@
           <div v-for="(section, i) in sections" :key="i" >
             <StaticSection v-if="section.type === 'static'" :section="section" :galleries="assignedGalleries"/>
             <ColumnsSection v-if="section.type === 'columns'" :section="section" :galleries="assignedGalleries"/>
+            <SliderSection v-if="section.type === 'slider'" :section="section" :galleries="assignedGalleries"/>
           </div>
         </div>
       </b-container>
@@ -27,6 +28,7 @@ import Spinner from '../components/Spinner.vue';
 import axios from 'axios';
 import StaticSection from '../components/StaticSection.vue';
 import ColumnsSection from '../components/ColumnsSection.vue';
+import SliderSection from '../components/SliderSection.vue';
 
 export default {
   name: 'Photography',
@@ -35,6 +37,7 @@ export default {
     Spinner,
     StaticSection,
     ColumnsSection,
+    SliderSection,
   },
   data() {
     return {
