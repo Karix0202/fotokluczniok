@@ -334,13 +334,19 @@ export default new Vuex.Store({
 
       return new Promise((resolve, reject) => {
         const formData = new FormData();
-        for (let i = 0; i < credentials.images.length; i++) {
-          formData.append(`images[]`, credentials.images[i]);
-        }
+
         formData.append('galleries', credentials.galleries);
         formData.append('description', credentials.description);
+        formData.append('type', credentials.type);
+        credentials.images.forEach((image) => {
+          formData.append('images[]', image, image.name);
+        });
 
-        axios.post(endpoint(`section/create/${credentials.id}`), formData, { headers: { 'Content-Type': 'multipart/form-data' } })
+        axios.post(endpoint(`section/create/${credentials.id}`), formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
         .then((resp) => { resolve(resp) })
         .catch((err) => { reject(err) });
       });

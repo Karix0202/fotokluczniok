@@ -52851,7 +52851,7 @@ var routes = [{
     requiresVisitor: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
+    return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./auth/views/Login.vue */ "./resources/js/auth/views/Login.vue"));
   }
 }, {
   path: '/logout',
@@ -52860,7 +52860,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./auth/views/Logout.vue */ "./resources/js/auth/views/Logout.vue"));
+    return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./auth/views/Logout.vue */ "./resources/js/auth/views/Logout.vue"));
   }
 }, {
   path: '/admin/home',
@@ -52869,7 +52869,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./admin/views/Home.vue */ "./resources/js/admin/views/Home.vue"));
+    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./admin/views/Home.vue */ "./resources/js/admin/views/Home.vue"));
   }
 }, {
   path: '/admin/group/create',
@@ -52914,7 +52914,7 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(9), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/Gallery.vue */ "./resources/js/admin/views/Gallery.vue"));
   }
 }, {
   path: '/admin/photography/create',
@@ -52923,13 +52923,13 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(11), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyStore.vue */ "./resources/js/admin/views/PhotographyStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(13), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ./admin/views/PhotographyStore.vue */ "./resources/js/admin/views/PhotographyStore.vue"));
   }
 }, {
   path: '/gallery/:id',
   name: 'gallery',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./views/Gallery.vue */ "./resources/js/views/Gallery.vue"));
+    return __webpack_require__.e(/*! import() */ 9).then(__webpack_require__.bind(null, /*! ./views/Gallery.vue */ "./resources/js/views/Gallery.vue"));
   }
 }, {
   path: '/admin/photography/get/:id',
@@ -52947,7 +52947,13 @@ var routes = [{
     requiresAuth: true
   },
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(11), __webpack_require__.e(9), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./admin/views/SectionStore.vue */ "./resources/js/admin/views/SectionStore.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(13), __webpack_require__.e(2), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ./admin/views/SectionStore.vue */ "./resources/js/admin/views/SectionStore.vue"));
+  }
+}, {
+  path: '/photography/:id',
+  name: 'photography',
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ 12).then(__webpack_require__.bind(null, /*! ./views/Photography.vue */ "./resources/js/views/Photography.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -53295,13 +53301,12 @@ function endpoint(url) {
       axios__WEBPACK_IMPORTED_MODULE_2___default.a.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
       return new Promise(function (resolve, reject) {
         var formData = new FormData();
-
-        for (var i = 0; i < credentials.images.length; i++) {
-          formData.append("images[]", credentials.images[i]);
-        }
-
         formData.append('galleries', credentials.galleries);
         formData.append('description', credentials.description);
+        formData.append('type', credentials.type);
+        credentials.images.forEach(function (image) {
+          formData.append('images[]', image, image.name);
+        });
         axios__WEBPACK_IMPORTED_MODULE_2___default.a.post(endpoint("section/create/".concat(credentials.id)), formData, {
           headers: {
             'Content-Type': 'multipart/form-data'

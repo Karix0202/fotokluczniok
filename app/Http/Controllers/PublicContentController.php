@@ -10,6 +10,7 @@ use App\Http\Resources\IndexGalleryCollection;
 use App\Http\Resources\Gallery as GalleryResource;
 use App\Http\Resources\ImageCollection;
 use App\Image;
+use App\Photography;
 
 class PublicContentController extends Controller
 {
@@ -26,6 +27,14 @@ class PublicContentController extends Controller
         return response()->json([
             'gallery' => new GalleryResource($gallery),
             'galleries' => new IndexGalleryCollection(Gallery::where('private', '=', '0')->get()),
+        ]);
+    }
+
+    public function photography(Photography $photography)
+    {
+        return response()->json([
+            'galleries' => new IndexGalleryCollection(Gallery::where('private', '=', '0')->get()),
+
         ]);
     }
 

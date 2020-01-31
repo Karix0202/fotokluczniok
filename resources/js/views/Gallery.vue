@@ -6,9 +6,9 @@
       <b-container>
         <div class="mb-5 align-items-center">
           <h2>{{ name }}</h2>
-          <div class="img-holder">
-            <ImageItem v-for="(image, i) in images" :key="i" :path="image.path" />
-          </div>
+        </div>
+        <div class="img-holder">
+          <ImageItem v-for="(image, i) in images" :key="i" :path="image.path" />
         </div>
         <b-spinner class="custom-spinner" label="Loading..." v-if="isLoading"></b-spinner>
       </b-container>
@@ -92,9 +92,6 @@ export default {
     }
   },
   mounted() {
-    let c = $('.image-item').width();
-    $('.image-item').css({ height: c + 'px' });
-
     window.addEventListener('scroll', (e) => {
       let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
       if (bottomOfWindow && !this.isLoading && this.loadMore) {

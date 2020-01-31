@@ -16,7 +16,6 @@
               <ImageTable :images="images" />
             </b-col>
             <b-col lg="6" md="12" class="image-holder">
-              <p>{{ form.type }}</p>
               <FileTable :files="files" />
             </b-col>
           </b-row>

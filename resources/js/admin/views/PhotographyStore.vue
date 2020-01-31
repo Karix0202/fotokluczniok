@@ -15,7 +15,7 @@
             </b-form-group>
 
             <b-form-group id="thumbnail-group" label="Miniaturka:" label-for="thumbnail">
-              <b-form-file v-model="form.thumbnail" id="thumbnail-group" placeholder="Wybierz miniaturkę" drop-placeholder="Upuść miniaturkę tutaj" accept="image/jpg, image/png, image/jpeg" @change="thumbnailOnChange"></b-form-file>
+              <b-form-file v-model="form.thumbnail" id="thumbnail" placeholder="Wybierz miniaturkę" drop-placeholder="Upuść miniaturkę tutaj" accept="image/jpg, image/png, image/jpeg" @change="thumbnailOnChange"></b-form-file>
             </b-form-group>
 
             <b-form-group id="photography-group-group" label="Nagłówek:" label-for="photography-group">

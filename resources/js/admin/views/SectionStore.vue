@@ -14,10 +14,16 @@
             <b-form-group id="type-group" label="Typ" label-for="type">
               <b-form-select id="type" v-model="form.type" :options="types" @change="typeChange" required></b-form-select>
             </b-form-group>
-            <b-form-group id="dropzone-group" label="Zdjęcia" label-for="dropzone" v-if="this.form.type !== ''">
-               <SectionColumns :images="this.form.images" v-if="this.form.type === 'columns'" />
-               <SectionStatic :images="this.form.images" v-if="this.form.type === 'static'" />
-               <SectionSlider :images="this.form.images" v-if="this.form.type === 'slider'" />
+            <b-form-group id="file-select-group" label="Zdjęcia" label-for="file-select" v-if="this.form.type !== ''">
+              <b-form-file id="file-select" placeholder="Wybierz zdjęcie/zdjęcia" drop-placeholder="Upuść tutaj" accept="image/jpg, image/png, image/jpeg" multiple @change="addImage" />
+              <b-list-group class="image-list">
+                <b-list-group-item v-for="(image, i) in this.form.images" :key="i">
+                  <b-row>
+                    <b-col cols="10">{{ image.name }}</b-col>
+                    <b-col cols="2"><a @click.prevent="form.images.splice(i, 1)" class="delete-image">Usuń</a></b-col>
+                  </b-row>
+                </b-list-group-item>
+              </b-list-group>
             </b-form-group>
 
             <b-button type="submit" variant="outline-primary" :disabled="!validateImages || isProcessing">Dodaj</b-button>
@@ -49,11 +55,10 @@ export default {
       form: {
         description: '',
         galleries: false,
-        type: '',
+        type: 'static',
         images: [],
       },
       types: [
-        { text: 'Wybierz typ', value: null, disabled: true },
         { text: 'Kolumny', value: 'columns' },
         { text: 'Statyczne zdjęcie', value: 'static' },
         { text: 'Slider', value: 'slider' },
@@ -71,7 +76,14 @@ export default {
     submit(e) {
       e.preventDefault();
       this.isProcessing = true;
-      this.$store.dispatch('sectionCreate', { images: this.form.images, id: this.id, description: this.form.description, galleries: this.form.galleries })
+
+      this.$store.dispatch('sectionCreate', {
+        images: this.form.images,
+        id: this.id,
+        description: this.form.description,
+        galleries: this.form.galleries,
+        type: this.form.type
+      })
       .then((resp) => {
         this.$router.push({ name: 'singlePhotography', params: { id: this.id } });
       })
@@ -82,6 +94,11 @@ export default {
     typeChange(val) {
       this.form.images = [];
     },
+    addImage(e) {
+      Array.from(e.target.files).forEach((image) => {
+        if (this.ableToAddImages) this.form.images.push(image);
+      });
+    },
     fileAdded(file) {
       this.form.images.push(file);
     },
@@ -90,9 +107,14 @@ export default {
     validateImages() {
       if (this.form.type === 'static') return this.form.images.length === 1;
       else if (this.form.type === 'columns') return this.form.images.length === 3;
-
       return this.form.images.length >= 2 && this.form.images.length <= 6;
-    }
+    },
+    ableToAddImages() {
+      const type = this.form.type;
+      if (type === 'slider') return this.form.images.length < 6;
+      if (type === 'columns') return this.form.images.length < 3;
+      return this.form.images.length < 1;
+    },
   },
 };
 </script>
@@ -113,5 +135,15 @@ export default {
       background-color: #000;
     }
   }
+}
+
+.image-list {
+  margin-top: 8px;
+}
+
+.delete-image {
+  color: red !important;
+  text-decoration: underline !important;
+  cursor: pointer;
 }
 </style>

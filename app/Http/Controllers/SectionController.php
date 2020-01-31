@@ -19,12 +19,14 @@ class SectionController extends Controller
             'images' => ['required'],
             'images.*' => ['mimes:jpg,jpeg,png'],
             'description' => ['nullable', 'string'],
+            'type' => ['required', 'string'],
         ]);
-        if ($validator->fails()) return response()->json([$validator->errors()], 406);
+        if ($validator->fails()) return response()->json([$validator->errors(), "data" => $request->all()], 406);
 
         $section = new Section();
         $section->description = $request->input('description') === null ? '' : $request->input('description');
         $section->photography_id = $photography->id;
+        $section->type = $request->input('type');
         if (is_string($request->input('galleries'))) $section->galleries = $request->input('galleries') === 'true' ? true : false;
         else $section->galleries = $request->input('galleries');
         $section->save();

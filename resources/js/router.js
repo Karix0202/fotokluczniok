@@ -104,6 +104,11 @@ const routes = [
     },
     component: () => import('./admin/views/SectionStore.vue'),
   },
+  {
+    path: '/photography/:id',
+    name: 'photography',
+    component: () => import('./views/Photography.vue'),
+  }
 ];
 
 const router = new VueRouter({
