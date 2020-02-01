@@ -8,10 +8,10 @@
         </ol>
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img class="d-block w-100" :src="firstImage.path" alt="First slide">
+            <img class="d-block w-100" :src="firstImage.path">
           </div>
           <div v-for="(image, i) in images" :key="i" class="carousel-item">
-            <img class="d-block w-100" :src="image.path" alt="First slide">
+            <img class="d-block w-100" :src="image.path">
           </div>
         </div>
         <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">

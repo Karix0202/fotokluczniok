@@ -19,11 +19,12 @@ export default {
 .image-item {
   overflow: hidden;
   margin-bottom: 30px;
-  height: 290px;
+  height: 320px;
   margin-bottom: 10px;
 
   img {
     max-width: 100%;
+    width: 100%;
   }
 }
 </style>

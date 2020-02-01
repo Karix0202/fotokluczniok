@@ -44,10 +44,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
 
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -81,6 +97,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       galleries: [],
       images: [],
+      files: [],
       url: "".concat(this.$store.getters.getApiUrl, "image/public"),
       loadMore: true,
       loadedCount: 0,
@@ -109,6 +126,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context.next = 4;
               return axios__WEBPACK_IMPORTED_MODULE_4___default.a.post("".concat(this.$store.getters.getApiUrl, "gallery/public/").concat(id)).then(function (resp) {
                 _this.name = resp.data.gallery.name;
+                _this.files = _toConsumableArray(resp.data.gallery.files);
                 resp.data.galleries.forEach(function (gallery) {
                   _this.galleries.push(gallery);
                 });
@@ -134,21 +152,42 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return created;
   }(),
   methods: {
-    loadImages: function loadImages() {
-      var _this2 = this;
+    loadImages: function () {
+      var _loadImages = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var _this2 = this;
 
-      this.isLoading = true;
-      this.loadedCount = this.loadedCount + 1;
-      axios__WEBPACK_IMPORTED_MODULE_4___default.a.post("".concat(this.url, "/?page=").concat(this.loadedCount)).then(function (resp) {
-        _this2.loadMore = resp.data.links.next !== null ? true : false;
-        resp.data.data.forEach(function (image) {
-          _this2.images.push(image);
-        });
-        _this2.isLoading = false;
-      })["catch"](function (err) {
-        console.log(err);
-      });
-    },
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.isLoading = true;
+                this.loadedCount = this.loadedCount + 1;
+                axios__WEBPACK_IMPORTED_MODULE_4___default.a.post("".concat(this.url, "/?page=").concat(this.loadedCount)).then(function (resp) {
+                  _this2.loadMore = resp.data.links.next !== null ? true : false;
+                  resp.data.data.forEach(function (image) {
+                    _this2.images.push(image);
+                  });
+                  _this2.isLoading = false;
+                })["catch"](function (err) {
+                  console.log(err);
+                });
+
+              case 3:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function loadImages() {
+        return _loadImages.apply(this, arguments);
+      }
+
+      return loadImages;
+    }(),
     scroll: function scroll() {
       window.onscroll = function () {
         var bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
@@ -167,13 +206,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     var _this3 = this;
 
-    window.addEventListener('scroll', function (e) {
-      var bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+    window.addEventListener('scroll',
+    /*#__PURE__*/
+    function () {
+      var _ref = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(e) {
+        var bottomOfWindow;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
 
-      if (bottomOfWindow && !_this3.isLoading && _this3.loadMore) {
-        _this3.loadImages();
-      }
-    });
+                if (!(bottomOfWindow && !_this3.isLoading && _this3.loadMore)) {
+                  _context3.next = 4;
+                  break;
+                }
+
+                _context3.next = 4;
+                return _this3.loadImages();
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      return function (_x) {
+        return _ref.apply(this, arguments);
+      };
+    }());
   }
 });
 
@@ -191,7 +256,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".image-item {\n  overflow: hidden;\n  margin-bottom: 30px;\n  height: 290px;\n  margin-bottom: 10px;\n}\n.image-item img {\n  max-width: 100%;\n}", ""]);
+exports.push([module.i, ".image-item {\n  overflow: hidden;\n  margin-bottom: 30px;\n  height: 320px;\n  margin-bottom: 10px;\n}\n.image-item img {\n  max-width: 100%;\n  width: 100%;\n}", ""]);
 
 // exports
 
@@ -210,7 +275,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".main-container {\n  padding: 4rem 0;\n}\n.img-holder {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-gap: 10px;\n}\n@media (max-width: 768px) {\n.img-holder {\n    grid-template-columns: 1fr;\n}\n}\n.custom-spinner {\n  margin: 16px 0;\n  width: 50px;\n  height: 50px;\n  position: absolute;\n  right: 50%;\n}", ""]);
+exports.push([module.i, ".main-container {\n  padding: 4rem 0;\n}\n.img-holder {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-gap: 10px;\n}\n@media (max-width: 768px) {\n.img-holder {\n    grid-template-columns: 1fr;\n}\n}\n.custom-spinner {\n  margin: 16px 0;\n  width: 50px;\n  height: 50px;\n  position: absolute;\n  right: 50%;\n}\n.files-to-download {\n  color: #000;\n  text-decoration: underline;\n  font-size: 15px;\n}\n.files-to-download:hover {\n  color: #000;\n}", ""]);
 
 // exports
 
@@ -335,7 +400,30 @@ var render = function() {
             "b-container",
             [
               _c("div", { staticClass: "mb-5 align-items-center" }, [
-                _c("h2", [_vm._v(_vm._s(_vm.name))])
+                _c("h2", [_vm._v(_vm._s(_vm.name))]),
+                _vm._v(" "),
+                _vm.files.length > 0
+                  ? _c(
+                      "a",
+                      {
+                        directives: [
+                          {
+                            name: "b-modal",
+                            rawName: "v-b-modal.files-modal",
+                            modifiers: { "files-modal": true }
+                          }
+                        ],
+                        staticClass: "mb-0 files-to-download",
+                        attrs: { href: "" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                          }
+                        }
+                      },
+                      [_vm._v("Możliwe pliki do pobrania")]
+                    )
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c(
@@ -361,6 +449,31 @@ var render = function() {
           )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          ref: "files-modal",
+          attrs: { id: "files-modal", title: "Pliki do pobrania" }
+        },
+        [
+          _vm._l(_vm.files, function(file, i) {
+            return _c("div", { key: i }, [
+              _c(
+                "a",
+                {
+                  staticClass: "files-to-download",
+                  attrs: { href: file.link, target: "_blank" }
+                },
+                [_vm._v(_vm._s(file.name))]
+              )
+            ])
+          }),
+          _vm._v(" "),
+          _c("div", { attrs: { slot: "modal-footer" }, slot: "modal-footer" })
+        ],
+        2
       )
     ],
     1

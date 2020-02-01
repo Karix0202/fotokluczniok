@@ -44,7 +44,6 @@ export default {
     submit(e) {
       e.preventDefault();
       this.isProcessing = true;
-      this.errors.link = true;
       this.$store.dispatch('createFile', { id: this.id, name: this.form.name, link: this.form.link })
       .then((resp) => {
         this.$refs['file-creation-modal'].hide();

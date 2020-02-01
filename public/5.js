@@ -95,7 +95,6 @@ __webpack_require__.r(__webpack_exports__);
 
       e.preventDefault();
       this.isProcessing = true;
-      this.errors.link = true;
       this.$store.dispatch('createFile', {
         id: this.id,
         name: this.form.name,
@@ -255,6 +254,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'ImageTable',
   props: {
@@ -268,8 +268,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     handleChange: function handleChange(e) {
       var id = e.target.value;
-
-      if (e.target.checked) {
+      this.addSelectedImage(id, e.target);
+    },
+    addSelectedImage: function addSelectedImage(id, obj) {
+      if (obj.checked) {
         this.selectedImages.push(id);
       } else {
         for (var i = 0; i < this.selectedImages.length; i++) {
@@ -292,6 +294,35 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err);
       });
+    },
+    selectBtn: function selectBtn() {
+      var _this2 = this;
+
+      var checkboxes = this.$refs['image-checkbox'];
+
+      if (this.selectedImages.length === 0) {
+        checkboxes.forEach(function (checkbox) {
+          if (!checkbox.checked) {
+            checkbox.checked = true;
+
+            _this2.addSelectedImage(checkbox.value, checkbox);
+          }
+        });
+      } else {
+        checkboxes.forEach(function (checkbox) {
+          if (checkbox.checked) {
+            checkbox.checked = false;
+
+            _this2.addSelectedImage(checkbox.value, checkbox);
+          }
+        });
+      }
+    }
+  },
+  computed: {
+    selectBtnText: function selectBtnText() {
+      if (this.selectedImages.length > 0) return 'Odznacz wszystkie';
+      return 'Zaznacz wszystkie';
     }
   }
 });
@@ -935,6 +966,20 @@ var render = function() {
       [_vm._v("Usuń zaznaczone")]
     ),
     _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn custom-btn",
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.selectBtn($event)
+          }
+        }
+      },
+      [_vm._v(_vm._s(_vm.selectBtnText))]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "table-responsive" }, [
       _c(
         "table",
@@ -967,11 +1012,14 @@ var render = function() {
                 _c("th", [
                   _c("label", { staticClass: "delete-checkbox-label" }, [
                     _c("input", {
+                      ref: "image-checkbox",
+                      refInFor: true,
                       staticClass: "delete-checkbox",
                       attrs: { type: "checkbox" },
                       domProps: { value: item.id },
                       on: {
                         change: function($event) {
+                          $event.preventDefault()
                           return _vm.handleChange($event)
                         }
                       }

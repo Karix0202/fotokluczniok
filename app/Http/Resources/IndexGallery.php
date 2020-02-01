@@ -17,6 +17,7 @@ class IndexGallery extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'files' => $this->files,
         ];
     }
 }

@@ -115,6 +115,20 @@ input, label {
   }
 }
 
+.custom-btn {
+  margin-bottom: 8px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 0;
+  margin-left: 4px;
+
+  &:hover {
+    background-color: #000;
+    color: #fff;
+  }
+}
+
 .single-gallery-link {
   color: #000;
   text-decoration: underline;

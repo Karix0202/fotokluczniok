@@ -533,7 +533,7 @@ var render = function() {
               _c("div", { staticClass: "carousel-item active" }, [
                 _c("img", {
                   staticClass: "d-block w-100",
-                  attrs: { src: _vm.firstImage.path, alt: "First slide" }
+                  attrs: { src: _vm.firstImage.path }
                 })
               ]),
               _vm._v(" "),
@@ -541,7 +541,7 @@ var render = function() {
                 return _c("div", { key: i, staticClass: "carousel-item" }, [
                   _c("img", {
                     staticClass: "d-block w-100",
-                    attrs: { src: image.path, alt: "First slide" }
+                    attrs: { src: image.path }
                   })
                 ])
               })

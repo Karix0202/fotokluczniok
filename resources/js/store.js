@@ -224,7 +224,7 @@ export default new Vuex.Store({
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + context.state.token;
 
       return new Promise((resolve, reject) => {
-        axios.post(endpoint(`file/create/${credentials.id}`), { name: credentials.link, link: credentials.link })
+        axios.post(endpoint(`file/create/${credentials.id}`), { name: credentials.name, link: credentials.link })
         .then((resp) => {
           resolve(resp);
         })

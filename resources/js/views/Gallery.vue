@@ -6,6 +6,7 @@
       <b-container>
         <div class="mb-5 align-items-center">
           <h2>{{ name }}</h2>
+          <a href="" @click.prevent v-if="files.length > 0" class="mb-0 files-to-download" v-b-modal.files-modal>Możliwe pliki do pobrania</a>
         </div>
         <div class="img-holder">
           <ImageItem v-for="(image, i) in images" :key="i" :path="image.path" />
@@ -13,6 +14,13 @@
         <b-spinner class="custom-spinner" label="Loading..." v-if="isLoading"></b-spinner>
       </b-container>
     </div>
+
+    <b-modal ref="files-modal" id="files-modal" title="Pliki do pobrania">
+      <div v-for="(file, i) in files" :key="i">
+        <a :href="file.link" class="files-to-download" target="_blank">{{ file.name }}</a>
+      </div>
+      <div slot="modal-footer"></div>
+  </b-modal>
   </div>
 </template>
 
@@ -33,6 +41,7 @@ export default {
     return {
       galleries: [],
       images: [],
+      files: [],
       url: `${this.$store.getters.getApiUrl}image/public`,
       loadMore: true,
       loadedCount: 0,
@@ -52,6 +61,7 @@ export default {
     await axios.post(`${this.$store.getters.getApiUrl}gallery/public/${id}`)
     .then((resp) => {
       this.name = resp.data.gallery.name;
+      this.files = [...resp.data.gallery.files];
       resp.data.galleries.forEach((gallery) => {
         this.galleries.push(gallery);
       });
@@ -62,7 +72,7 @@ export default {
     this.loadImages();
   },
   methods: {
-    loadImages() {
+    async loadImages() {
       this.isLoading = true;
       this.loadedCount = this.loadedCount + 1;
       axios.post(`${this.url}/?page=${this.loadedCount}`)
@@ -92,10 +102,10 @@ export default {
     }
   },
   mounted() {
-    window.addEventListener('scroll', (e) => {
+    window.addEventListener('scroll', async (e) => {
       let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
       if (bottomOfWindow && !this.isLoading && this.loadMore) {
-        this.loadImages();
+        await this.loadImages();
       }
     });
   },
@@ -125,4 +135,13 @@ export default {
   right: 50%;
 }
 
+.files-to-download {
+  color: #000;
+  text-decoration: underline;
+  font-size: 15px;
+
+  &:hover {
+    color: #000;
+  }
+}
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div>
     <button class="btn delete-selected-images" :disabled="selectedImages.length === 0" v-on:click="deleteImages($event)">Usuń zaznaczone</button>
+    <button class="btn custom-btn" @click.prevent="selectBtn">{{ selectBtnText }}</button>
     <div class="table-responsive">
       <table class="table table-striped custom-table">
       <thead>
@@ -18,7 +19,7 @@
           </th>
           <th>
             <label class="delete-checkbox-label">
-              <input type="checkbox" :value="item.id" @change="handleChange($event)" class="delete-checkbox">
+              <input type="checkbox" :value="item.id" @change.prevent="handleChange($event)" class="delete-checkbox" ref="image-checkbox">
               Usuń
             </label>
           </th>
@@ -43,7 +44,10 @@ export default {
   methods: {
     handleChange(e) {
       const id = e.target.value;
-      if (e.target.checked) {
+      this.addSelectedImage(id, e.target);
+    },
+    addSelectedImage(id, obj) {
+      if (obj.checked) {
         this.selectedImages.push(id);
       } else {
         for (let i = 0; i < this.selectedImages.length; i++) {
@@ -64,6 +68,31 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+    },
+    selectBtn() {
+      const checkboxes = this.$refs['image-checkbox'];
+
+      if (this.selectedImages.length === 0) {
+        checkboxes.forEach((checkbox) => {
+          if (!checkbox.checked) {
+            checkbox.checked = true;
+            this.addSelectedImage(checkbox.value, checkbox);
+          }
+        });
+      } else {
+        checkboxes.forEach((checkbox) => {
+          if (checkbox.checked) {
+            checkbox.checked = false;
+            this.addSelectedImage(checkbox.value, checkbox);
+          }
+        });
+      }
+    },
+  },
+  computed: {
+    selectBtnText() {
+      if (this.selectedImages.length > 0) return 'Odznacz wszystkie';
+      return 'Zaznacz wszystkie';
     },
   },
 };

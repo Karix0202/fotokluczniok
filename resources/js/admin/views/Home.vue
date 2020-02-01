@@ -153,18 +153,25 @@ export default {
     border-right: none;
     margin-bottom: 16px;
   }
-}
 
-.list-group-item {
-  cursor: pointer;
-  border: 1px solid #000;
-  transition: all 0.1s ease-out;
+  .list-group-item {
+    cursor: pointer;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
 
-  &:hover {
-    background-color: #000 !important;
-    color: #fff;
-    border-color: #000 !important;
-    box-shadow: none !important;
+    &:last-child {
+      border-bottom: 1px solid #000;
+    }
+
+    transition: all 0.1s ease-out;
+
+    &:hover {
+      background-color: #000 !important;
+      color: #fff;
+      border-color: #000 !important;
+      box-shadow: none !important;
+    }
   }
 }
 
