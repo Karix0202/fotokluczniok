@@ -2166,6 +2166,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Nav',
   props: {
@@ -31041,7 +31051,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".custom-navmenu {\n  background: #000;\n}\n.custom-navmenu h3 {\n  font-size: 20px;\n  color: #fff;\n}\n.custom-navmenu p {\n  color: rgba(255, 255, 255, 0.6);\n}\n.custom-navmenu a {\n  color: rgba(255, 255, 255, 0.7);\n}\n.custom-navmenu a:hover {\n  color: #fff;\n}\n.custom-navmenu .custom-menu li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  margin-bottom: 0;\n  font-size: 20px;\n}\n.custom-navmenu .custom-menu li a {\n  color: #fff;\n  padding: 10px 0 !important;\n}\n.custom-navmenu .custom-menu li a:hover {\n  text-decoration: none;\n}", ""]);
+exports.push([module.i, ".custom-navmenu {\n  background: #000;\n}\n.custom-navmenu h3 {\n  font-size: 20px;\n  color: #fff;\n}\n.custom-navmenu p {\n  color: #fff;\n  margin: 0;\n}\n.custom-navmenu a {\n  color: rgba(255, 255, 255, 0.7);\n}\n.custom-navmenu a:hover {\n  color: #fff;\n}\n.custom-navmenu .contact-info {\n  padding-right: 40px;\n  text-align: right;\n}\n@media (max-width: 767px) {\n.custom-navmenu .contact-info {\n    float: left !important;\n    padding-right: 0;\n    text-align: left;\n}\n}\n.custom-navmenu .custom-menu li {\n  padding: 0;\n  margin: 0;\n  list-style: none;\n  margin-bottom: 0;\n  font-size: 20px;\n}\n.custom-navmenu .custom-menu li a {\n  color: #fff;\n  padding: 10px 0 !important;\n  text-decoration: underline;\n}\n.custom-navmenu .custom-menu li a:hover {\n  text-decoration: none;\n}\n.custom-navmenu .mail-link {\n  text-decoration: underline !important;\n}", ""]);
 
 // exports
 
@@ -35720,13 +35730,27 @@ var render = function() {
                 "b-col",
                 { staticClass: "social text-md-right", attrs: { sm: "6" } },
                 [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("span", { staticClass: "icofont-facebook" })
-                  ]),
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: "https://www.facebook.com/fotokluczniok/",
+                        target: "_blank"
+                      }
+                    },
+                    [_c("span", { staticClass: "icofont-facebook" })]
+                  ),
                   _vm._v(" "),
-                  _c("a", { attrs: { href: "#" } }, [
-                    _c("span", { staticClass: "icofont-instagram" })
-                  ])
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: "https://www.instagram.com/fotokluczniok/",
+                        target: "_blank"
+                      }
+                    },
+                    [_c("span", { staticClass: "icofont-instagram" })]
+                  )
                 ]
               )
             ],
@@ -35944,9 +35968,11 @@ var render = function() {
                 _c(
                   "li",
                   [
-                    _c("router-link", { attrs: { to: { name: "index" } } }, [
-                      _vm._v("Home")
-                    ])
+                    _c(
+                      "router-link",
+                      { staticClass: "li", attrs: { to: { name: "index" } } },
+                      [_vm._v("Home")]
+                    )
                   ],
                   1
                 ),
@@ -35961,13 +35987,73 @@ var render = function() {
               ],
               2
             )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-10" }, [
+            _c("div", { staticClass: "float-right contact-info" }, [
+              _c("ul", { staticClass: "custom-menu contact-menu" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "p",
+                    {
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                        }
+                      }
+                    },
+                    [_vm._v("662 252 062")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "p",
+                    {
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                        }
+                      }
+                    },
+                    [_vm._v("Knurów ul. Dworcowa 38a")]
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ])
+            ])
           ])
         ])
       ])
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [_c("p", [_vm._v("Piotr Kluczniok")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c(
+        "a",
+        {
+          staticClass: "mail-link",
+          attrs: { href: "mailto:info@fotokluczniok.pl" }
+        },
+        [_vm._v("info@fotokluczniok.pl")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 

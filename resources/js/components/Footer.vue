@@ -6,8 +6,8 @@
           <p class="mb-1">&copy; Copyright fotokluczniok.pl. All Rights Reserved</p>
         </b-col>
         <b-col sm="6" class="social text-md-right">
-          <a href="#"><span class="icofont-facebook"></span></a>
-          <a href="#"><span class="icofont-instagram"></span></a>
+          <a href="https://www.facebook.com/fotokluczniok/" target="_blank"><span class="icofont-facebook"></span></a>
+          <a href="https://www.instagram.com/fotokluczniok/" target="_blank"><span class="icofont-instagram"></span></a>
         </b-col>
       </b-row>
     </b-container>
